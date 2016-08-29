@@ -73,7 +73,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-                    os.path.join(BASE_DIR, '/app/templates'),
+                    os.path.join(BASE_DIR, 'app/templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -98,7 +98,11 @@ WSGI_APPLICATION = 'ruedala_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.path.join(BASE_DIR, 'ruedala.db'),
+        'NAME': 'd8l46kpuhjh0jn',
+        'USER': 'grqrhqnwteimjm',
+        'PASSWORD': '6NzRVVS8yIasntkB9aNbMV6Hv4',
+        'HOST': 'ec2-54-243-203-87.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
