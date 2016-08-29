@@ -137,10 +137,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 STATIC_ROOT = 'static' # Important for Heroku
-STATIC_URL = '/app/static/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "/app/static"),
+    os.path.join(BASE_DIR, "app/static"),
 )
 
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
