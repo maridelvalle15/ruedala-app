@@ -3,7 +3,9 @@
 from django import forms
 from datetime import *
 from cotizar.models import *
+from reportes.models import *
 from bootstrap3_datetime.widgets import DateTimePicker
+from django.contrib.admin import widgets
 
 
 class DateCotizationForm(forms.Form):
@@ -26,4 +28,28 @@ class BancoForm(forms.ModelForm):
         'tlf': 'Teléfono de Contacto',
         'persona_contacto':'Persona Contacto',
         'email_contacto':'Email de Contacto'
+        }
+
+class PrestamosForm(forms.ModelForm):
+
+    class Meta:
+        model = Prestamos 
+        fields = '__all__'
+        widgets = {
+            'fecha' : widgets.AdminDateWidget()
+        }
+        labels = {
+
+        'nombre' : 'Nombre',
+        'apellido' : 'Apellido',
+        'identificacion' : 'Cédula o Carnet',
+        'telefono' : 'Número de Teléfono',
+        'sabe_manejar' : '¿Sabe manejar bicicleta?',
+        'hora_salida' : 'Hora de salida',
+        'hora_estimada' : 'Hora estimada de llegada',
+        'hora_llegada' : 'Hora de llegada',
+        'tiempo_uso' : 'Tiempo de uso de la bicicleta',
+        'pagado': '¿Pagó?',
+        'fecha' : 'Fecha del préstamo'
+
         }

@@ -46,6 +46,10 @@ urlpatterns = patterns(
         PrestamosView.as_view(),
         name='prestamos'),
     url(
+        r'^agregar-prestamo/$',
+        AgregarPrestamoView.as_view(),
+        name='agregar-prestamo'),
+    url(
         r'^perfil/(?P<pk>\w+)/$',
         PerfilView.as_view(),
         name='perfil'),

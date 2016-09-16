@@ -7,6 +7,7 @@ from cotizar.models import *
 from django.contrib.auth.models import User
 from django.views.defaults import page_not_found
 from reportes.forms import *
+from reportes.models import *
 from cotizar.forms import *
 import datetime
 #from datetime import *
@@ -753,12 +754,20 @@ def sendCotization(request, id):
 
 class PrestamosView(TemplateView):
     template_name = 'reportes/prestamos.html'
-    model = DatosSolicitante
 
-    def get(self, request, *args, **kwargs):
-        context = super(
-            PrestamosView, self).get_context_data(**kwargs)
-        return self.render_to_response(context)
+class AgregarPrestamoView(CreateView):
+    form_class = PrestamosForm
+    template_name = 'reportes/agregar_prestamo.html'
+    def post(self, request, *args, **kwargs):
+        """
+        Handles POST requests, instantiating a form instance with the passed
+        POST variables and then checked for validity.
+        """
+        form = PrestamosForm(request.POST)
+        if form.is_valid():
+            return render(request, 'reportes/banco_registrado.html')
+        else:
+            return render(request, 'reportes/banco_registrado_fail.html')
 
 class RegistrarBancoView(CreateView):
     form_class = BancoForm
