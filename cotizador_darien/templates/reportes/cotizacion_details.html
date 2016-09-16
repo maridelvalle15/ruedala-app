@@ -1,6 +1,6 @@
 {% extends "administrador/base_admin.html" %}
 {% load static %}
-{% block title %}<title>Detalle del Comercio</title>{% endblock title %}
+{% block title %}<title>Datos del Solicitante</title>{% endblock title %}
 
 {# Load the tag library #}
 {% load bootstrap3 %}
@@ -35,12 +35,9 @@
 {% endblock extracss %}
 
 {% block titulo %}
-    <h1 class="col-md-2">
-        COMERCIO
+    <h1 class="col-md-5">
+        Datos del Solicitante
     </h1>
-    <h5 class="col-md-6 pull-left">
-      Última modificación: {{ cotizacion.modified_at|date:'D, d N Y' }}
-    </h5>
 {% endblock titulo %}
 
 {% block content %}
@@ -62,192 +59,98 @@
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover" style="width:100%">
                       <tr>
-                        <th>Datos del Comercio</th>
+                        <th>Datos Personales</th>
                         <th></th>
                         <th></th>
-                        <th>Datos del Representante Legal</th>
+                        <th>Datos Laborales</th>
                         <th></th>
                       <tr>
-                        <td style="width: 30%;">Nombre Comercial</td>
-                        <td>{{ cotizacion.nombre }}</td>
+                        <td style="width: 30%;">Nombre</td>
+                        <td>{{ solicitante.user.first_name }}</td>
                         <td></td>
-                        <td>Nombre</td>
-                        <td>{{ cotizacion.nombre_rl}}</td>
+                        <td>Lugar de Trabajo</td>
+                        <td>{{ solicitante.lugar_trabajo }}</td>
                       </tr>
                       <tr>
-                        <td style="width: 30%;">RUC</td>
-                        <td>{{ cotizacion.RUC }}</td>
+                        <td style="width: 30%;">Apellido</td>
+                        <td>{{ solicitante.user.last_name }}</td>
                         <td></td>
-                        <td>Apellido</td>
-                        <td>{{ cotizacion.apellido_rl}}</td>
+                        <td>Ocupación</td>
+                        <td>{{ solicitante.ocupacion }}</td>
                       </tr>
                       <tr>
-                        <td style="width: 30%;">Razón Social</td>
-                        <td>{{ cotizacion.razon }}</td>
+                        <td style="width: 30%;">Cédula o Pasaporte</td>
+                        <td>{{ solicitante.identificador }}</td>
                         <td></td>
-                        <td>Cédula</td>
-                        <td>{{ cotizacion.cedula_rl}}</td>
+                        <td>Dirección</td>
+                        <td>{{ solicitante.direccion }}</td>
                       </tr>
                       <tr>
-                        <td style="width: 30%;">Teléfono Principal</td>
-                        <td>{{ cotizacion.telefono1 }}</td>
+                        <td style="width: 30%;">Teléfono</td>
+                        <td>{{ solicitante.telefono }}</td>
                         <td></td>
-                        <td>Teléfono de Contacto</td>
-                        <td>{{ cotizacion.telefono_rl}}</td>
-                      </tr>
-                      <tr>
-                        <td style="width: 30%;">Teléfono Opcional</td>
-                        <td>{{ cotizacion.telefono2 }}</td>
-                        <td></td>
-                        <td>Correo Electrónico</td>
-                        <td>{{ cotizacion.email_rl }}</td>
-                      </tr>
-                      <tr>
-                        <td style="width: 30%;">Dirección</td>
-                        <td>{{ cotizacion.direccion }}</td>
-                        <td></td>
-                        <td>Nombre Persona Contacto Adicional</td>
-                        <td>{{cotizacion.nombre_extra}}</td>
-                      </tr>
-                      <tr>
-                        <td style="width: 30%;">Geolocalización-Latitud</td>
-                        <td>{{ cotizacion.latitud }}</td>
-                        <td></td>
-                        <td>Teléfono</td>
-                        <td>{{cotizacion.telefono_extra}}</td>
-                      </tr>
-                      <tr>
-                        <td style="width: 30%;">Geolocalización-Longitud</td>
-                        <td>{{ cotizacion.longitud }}</td>
-                        <td></td>
-                        <td>Correo</td>
-                        <td>{{cotizacion.correo_extra}}</td>
+                        <td>Cargo</td>
+                        <td>{{ solicitante.cargo }}</td>
                       </tr>
                       <tr>
                         <td style="width: 30%;">Correo Electrónico</td>
-                        <td>{{ cotizacion.email }}</td>
+                        <td>{{ solicitante.user.email }}</td>
                         <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>Salario</td>
+                        <td>{{ solicitante.salario }}</td>
                       </tr>
                       <tr>
-                        <td style="width: 30%;">Programa de Beneficios del Banco o Entidad</td>
-                        <td>{{ cotizacion.programa_beneficios }}</td>
+                        <td style="width: 30%;">Ingreso Familiar Mensual</td>
+                        <td>{{ solicitante.ingreso }}</td>
                         <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>Fecha de Ingreso</td>
+                        <td>{{ solicitante.fecha_ingreso }}</td>
                       </tr>
-                      <tr>
-                        <td style="width: 30%;">Beneficios</td>
-                        <td>{{ cotizacion.beneficios }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td style="width: 30%;">Restricciones de la campaña</td>
-                        <td>{{ cotizacion.disclaimer }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td style="width: 30%;">Duración</td>
-                        <td>{{ cotizacion.disc_long }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td style="width: 30%;">Fecha de expiración</td>
-                        <td>{{ exp_date }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td style="width: 30%;">Días restantes de contrato</td>
-                        <td>{{ cotizacion.deadline }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td style="width: 30%;">¿Solicita POS?</td>
-                        <td>{{ cotizacion.desea_pos }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <th>Resumen de status:</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                      <tr>
-                      <tr>
-                        <td>Recibido</td>
-                        <td>{{cotizacion.fecha_recibido.date}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>Preaprobado</td>
-                        <td>{{cotizacion.fecha_preaprobado.date}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>Rechazado</td>
-                        <td>{{cotizacion.fecha_rechazado.date}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>En visita</td>
-                        <td>{{cotizacion.fecha_visita.date}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        {% if cotizacion.status == 'Documentos por enviar' %}
-                        <td>Documentos por enviar &nbsp;&nbsp;&nbsp;<span><button id="id_submit" type="submit" class="btn btn-xs selec-documentos">
-                          <a href="{% url 'documentos' cotizacion.pk %}" style="color:white;">Adjuntar</a>
-                      </button></span></td>
-                      {% else %}
-                        <td>Documentos por enviar &nbsp;&nbsp;&nbsp;<span><button id="id_submit" type="submit" class="btn btn-xs selec-documentos" disabled>
-                          <a href="{% url 'documentos' cotizacion.pk %}" style="color:white; pointer-events: none;">Adjuntar</a>
-                      </button></span></td>
-                      {% endif %}
-                        <td>{{cotizacion.fecha_docs.date}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>Aprobado</td>
-                        <td>{{cotizacion.fecha_aprobado.date}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      
                     </table>
-                    
                     <br>
-                    <img src='{{cotizacion.img_front.url}}'>
-                    <img src='{{cotizacion.img_inside.url}}'>
+
+                    <div class="row">
+                      <div class="col-xs-12" style="padding-right: 2%;">
+                        <div class="box box-default color-palette-box">
+                          <div class="box-header">
+                            <h3 class="box-title">Status de Crédito: {{solicitante.user.first_name}} {{solicitante.user.last_name}}</h3>
+                          </div>
+                          <div class="box-body" style="overflow-x:auto;">
+                            <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                              <thead>
+                                <tr>
+                                  <th>Monto del crédito</th>
+                                  <th>Fecha de Solicitud</th>
+                                  <th>Días Solicitados</th>
+                                  <th>Fecha de Pago</th>
+                                  <th>Status</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              {% for credito in creditos %}
+                                <tr role="row">
+                                  <td> {{ credito.monto }}</td>
+                                  <td> {{ credito.fecha_solicitud }}</td>
+                                  <td> {{ credito.dias }} </td>
+                                  <td> {{ credito.fecha_tope }} </td>
+                                  <td> {{ credito.status }} </td>
+                                </tr>
+                              {% endfor %}
+                              </tbody>
+                              <tfoot>
+                              </tfoot>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                     </div><!-- /.box-body -->
                     </div><!-- /.box -->
 
                     <div class="col-xs-12">
                       <button id="id_submit" type="submit" class="btn btn-lg calculate editar-comercio">
-                          <a href="{% url 'editar-comercio' cotizacion.pk %}" style="color:white;">Editar</a>
+                          <a href="#" style="color:white;">Editar</a>
                       </button>
                       <br>
                       <br>

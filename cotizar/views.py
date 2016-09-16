@@ -20,6 +20,8 @@ import ast
 from geolocation.main import GoogleMaps
 from urllib2 import urlopen
 from contextlib import closing
+from darientSessions.forms import *
+from darientSessions.models import *
 
 
 def CargarCarros(request):
@@ -969,3 +971,52 @@ class getLocation(generic.View):
         request.session['latitud'] = tree['latitude']
         request.session['longitud'] = tree['longitude']
         return JsonResponse(data)
+
+
+class LoadSignup(generic.TemplateView):
+    template_name="wizard_form.html"
+
+
+class Signup(generic.CreateView):
+    form_class = SolicitanteForm
+    template_name="wizard_form.html"
+    model = DatosSolicitante
+    
+    def post(self, request, *args, **kwargs):
+        """
+        Handles POST requests, instantiating a form instance with the passed
+        POST variables and then checked for validity.
+        """
+        form = self.get_form()
+        #if form.is_valid():
+        user = form.save()
+        datos = DatosSolicitante(
+            user=user,
+            fecha_nacimiento=form.cleaned_data['fecha_nacimiento'],
+            identificador=form.cleaned_data['identificador'],
+            ingreso=form.cleaned_data['ingreso'],
+            telefono=form.cleaned_data['telefono'],
+            lugar_trabajo=form.cleaned_data['lugar_trabajo'],
+            ocupacion=form.cleaned_data['ocupacion'],
+            direccion=form.cleaned_data['direccion'],
+            cargo=form.cleaned_data['cargo'],
+            salario=form.cleaned_data['salario'],
+            fecha_ingreso=form.cleaned_data['fecha_ingreso']
+        )
+        datos.save()
+        credito = Credito(solicitante=datos,monto=request.POST['monto'],dias=request.POST['dias'])
+        tope = credito.fecha_solicitud + datetime.timedelta(days=int(credito.dias))
+        credito.fecha_tope = tope
+        credito.save()
+        ctx = {}
+        message = get_template('email_registro_solicitante.html').render(Context(ctx))
+        msg = EmailMessage('Bienvenido a CEMBI Venezuela', message, to=[user.email], from_email='noreply@crediexpress.com')
+        msg.content_subtype = 'html'
+        msg.send()
+        return HttpResponseRedirect(reverse_lazy('after_signup'))
+        #else:
+        #    return self.form_invalid(form)
+
+
+class AfterSignUp(generic.TemplateView):
+    template_name = 'solicitante_registrado.html'

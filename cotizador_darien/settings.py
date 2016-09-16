@@ -102,15 +102,17 @@ WSGI_APPLICATION = 'cotizador_darien.wsgi.application'
 # DATABASES['default'] = dj_database_url.config()
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd3c6em585p72oa',
-        'USER': 'vpqtgrfxbentuk',
-        'PASSWORD': 'RZZN0Ys_Ah0eos0bxKs1Zq9YJV',
-        'HOST': 'ec2-54-243-55-26.compute-1.amazonaws.com',
+      'default': {
+          'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.path.join(BASE_DIR, 'ruedala.db'),
+        'NAME': 'd8l46kpuhjh0jn',
+        'USER': 'grqrhqnwteimjm',
+        'PASSWORD': '6NzRVVS8yIasntkB9aNbMV6Hv4',
+        'HOST': 'ec2-54-243-203-87.compute-1.amazonaws.com',
         'PORT': '5432',
-    }
-}
+      }
+  }
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -174,6 +176,6 @@ EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'app54185388@heroku.com'
 EMAIL_HOST_PASSWORD = 'yn6pwtdq2528'
-DEFAULT_FROM_EMAIL = 'Afiapp <noreply@darient.com>'
+DEFAULT_FROM_EMAIL = 'CEMBI Venezuela <noreply@cembi-venezuela.com>'
 
 GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyB3vIO8-FSOpwFg0_jAVFeaH8OY1VBtOss'

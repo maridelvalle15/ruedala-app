@@ -1269,10 +1269,10 @@ a:focus {
   box-shadow: none;
 }
 .form-group.has-error label {
-  color: #5168F9;
+  color: #ED673B;
 }
 .form-group.has-error .form-control {
-  border-color: #5168F9;
+  border-color: #ED673B;
   box-shadow: none;
 }
 /* Input group */
@@ -1426,7 +1426,7 @@ a:focus {
 }
 .progress-bar-red,
 .progress-bar-danger {
-  background-color: #5168F9;
+  background-color: #ED673B;
 }
 .progress-striped .progress-bar-red,
 .progress-striped .progress-bar-danger {
@@ -1532,7 +1532,7 @@ a:focus {
   border-top-color: #00c0ef;
 }
 .box.box-danger {
-  border-top-color: #5168F9;
+  border-top-color: #ED673B;
 }
 .box.box-warning {
   border-top-color: #f39c12;
@@ -1611,12 +1611,12 @@ a:focus {
   color: #ffffff;
 }
 .box.box-solid.box-danger {
-  border: 1px solid #5168F9;
+  border: 1px solid #ED673B;
 }
 .box.box-solid.box-danger > .box-header {
   color: #ffffff;
-  background: #5168F9;
-  background-color: #5168F9;
+  background: #ED673B;
+  background-color: #ED673B;
 }
 .box.box-solid.box-danger > .box-header a,
 .box.box-solid.box-danger > .box-header .btn {
@@ -1881,7 +1881,7 @@ a:focus {
 .todo-list > li .tools {
   display: none;
   float: right;
-  color: #5168F9;
+  color: #ED673B;
 }
 .todo-list > li .tools > .fa,
 .todo-list > li .tools > .glyphicon,
@@ -1903,7 +1903,7 @@ a:focus {
   background: #d2d6de !important;
 }
 .todo-list .danger {
-  border-left-color: #5168F9;
+  border-left-color: #ED673B;
 }
 .todo-list .warning {
   border-left-color: #f39c12;
@@ -1947,7 +1947,7 @@ a:focus {
   border: 2px solid #00a65a;
 }
 .chat .item > .offline {
-  border: 2px solid #5168F9;
+  border: 2px solid #ED673B;
 }
 .chat .item > .message {
   margin-left: 55px;
@@ -2244,7 +2244,7 @@ a:focus {
   background-color: #00acd6;
 }
 .btn-danger {
-  background-color: #5168F9;
+  background-color: #ED673B;
   border-color: #d73925;
 }
 .btn-danger:hover,
@@ -2831,13 +2831,13 @@ table.text-center th {
   color: #999;
 }
 .direct-chat-danger .right > .direct-chat-text {
-  background: #5168F9;
-  border-color: #5168F9;
+  background: #ED673B;
+  border-color: #ED673B;
   color: #ffffff;
 }
 .direct-chat-danger .right > .direct-chat-text:after,
 .direct-chat-danger .right > .direct-chat-text:before {
-  border-left-color: #5168F9;
+  border-left-color: #ED673B;
 }
 .direct-chat-primary .right > .direct-chat-text {
   background: #3c8dbc;
@@ -3591,7 +3591,7 @@ table.text-center th {
 }
 .btn-google {
   color: #ffffff;
-  background-color: #5168F9;
+  background-color: #ED673B;
   border-color: rgba(0, 0, 0, 0.2);
 }
 .btn-google:hover,
@@ -3610,7 +3610,7 @@ table.text-center th {
   background-image: none;
 }
 .btn-google .badge {
-  color: #5168F9;
+  color: #ED673B;
   background-color: #ffffff;
 }
 .btn-instagram {
@@ -4207,7 +4207,7 @@ table.text-center th {
 .alert-error,
 .label-danger,
 .modal-danger .modal-body {
-  background-color: #5168F9 !important;
+  background-color: #ED673B !important;
 }
 .bg-yellow,
 .callout.callout-warning,
@@ -4326,7 +4326,7 @@ table.text-center th {
   filter: alpha(opacity=65);
 }
 .text-red {
-  color: #5168F9 !important;
+  color: #ED673B !important;
 }
 .text-yellow {
   color: #f39c12 !important;
@@ -4498,12 +4498,12 @@ table.text-center th {
   color: #fff;
 }
 .bg-red-gradient {
-  background: #5168F9 !important;
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #5168F9), color-stop(1, #e47365)) !important;
-  background: -ms-linear-gradient(bottom, #5168F9, #e47365) !important;
-  background: -moz-linear-gradient(center bottom, #5168F9 0%, #e47365 100%) !important;
-  background: -o-linear-gradient(#e47365, #5168F9) !important;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e47365', endColorstr='#5168F9', GradientType=0) !important;
+  background: #ED673B !important;
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #ED673B), color-stop(1, #e47365)) !important;
+  background: -ms-linear-gradient(bottom, #ED673B, #e47365) !important;
+  background: -moz-linear-gradient(center bottom, #ED673B 0%, #e47365 100%) !important;
+  background: -o-linear-gradient(#e47365, #ED673B) !important;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e47365', endColorstr='#ED673B', GradientType=0) !important;
   color: #fff;
 }
 .bg-black-gradient {

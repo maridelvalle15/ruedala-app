@@ -9,7 +9,7 @@
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 {% load static %}
-{% block title %}<title>Resumen Gerencial - Registrar Banco</title>{% endblock title %}
+{% block title %}<title>Resumen Gerencial - Registrar Analista</title>{% endblock title %}
 {% block extracss %}
 <style type="text/css">
 	.box {
@@ -20,7 +20,7 @@
         min-width: 130px;
     }
     .box.box-danger {
-    border-top-color: #82C539 !important;
+    border-top-color: #3c6ab4 !important;
 	}
 	@media screen and (max-width: 768px) {
 	    h4{
@@ -44,23 +44,23 @@
         }
     }
     #link-acerta {
-        color: #abbdd1;
+        color: #ED673B;
     }
     input:focus {
-        border-color: #abbdd1 !important;
-        color: #abbdd1 !important;
+        border-color: #ED673B !important;
+        color: #ED673B !important;
     }
     input:focus::-webkit-input-placeholder {
-        color: #abbdd1 !important;
+        color: #ED673B !important;
     }
     input:focus::-moz-placeholder {
-        color: #abbdd1 !important;
+        color: #ED673B !important;
     }
     input:focus:-moz-placeholder {
-        color: #abbdd1 !important;
+        color: #ED673B !important;
     }
     input:focus:-ms-input-placeholder {
-        color: #abbdd1 !important;
+        color: #ED673B !important;
     }
     .calculate {
         color: #FFFFFF;
@@ -103,11 +103,11 @@
                 <div class="box-header with-border">
                 	<div class="col-xs-12" style="text-align: center;position: relative;">
                         <div class="col-md-12">
-                        	<h1 id="titulo-login" class="text-center"><strong>REGISTRAR BANCO</strong></h1>
+                        	<h1 id="titulo-login" class="text-center"><strong>REGISTRAR ANALISTA</strong></h1>
                             <div class="hidden">
                                 {% bootstrap_form_errors form %}
                             </div>
-                            <form id="form-banco" action="" method="post" role="form" class="form-horizontal form-group" enctype="multipart/form-data">
+                            <form id="form-banco" action="{% url 'registrar-banco' %}" method="post" role="form" class="form-horizontal form-group" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <h2 id="titulo-login" class="text-center"><strong></strong></h2>
                             {% bootstrap_form form layout='horizontal' %}

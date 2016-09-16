@@ -1,0 +1,143 @@
+/*
+	back:	rgb(230,230,230)
+	dark:	rgb(90,97,90)
+	medium	rgb(189,190,189)
+	*/
+
+.dynamic-slider-control {
+	position:			relative;
+	margin-top:			30px;
+	background-color:	rgb(230,230,230);
+	border-radius: 		10px;
+	-moz-user-focus:	normal;
+	-moz-user-select:	none;
+	cursor:				default;
+}
+
+.horizontal {
+	width:				100%;
+	height:				70px;
+}
+
+.dynamic-slider-control input {
+	display:	none;
+}
+
+.dynamic-slider-control .handle {
+	position:			absolute;	
+	font-size:			1px;
+	overflow:			hidden;
+	-moz-user-select:	none;
+	cursor:				default;
+}
+
+.dynamic-slider-control.horizontal .handle {
+	width:				32px;
+	height:				32px;
+	background-image:	url("/img/express/boton_barra.png");
+}
+
+.dynamic-slider-control.horizontal .handle div {}
+.dynamic-slider-control.horizontal .handle.hover {}
+
+
+.dynamic-slider-control .line {
+	position:			absolute;
+	font-size:			0.01mm;
+	overflow:			hidden;
+	/*border:				1px solid rgb(90,97,90);*/
+	border-radius: 		6px;
+	background:			#ED673B;
+
+	behavior:			url("css/boxsizing.htc"); /* ie path bug */
+	box-sizing:			content-box;
+	-moz-box-sizing:	content-box;
+}
+
+.dynamic-slider-control.horizontal .line {
+	height:				30px;
+}
+
+.dynamic-slider-control .line div {
+	width:		1px;
+	height:		1px;
+	
+	/*border:				1px solid;*/
+	border-color:		rgb(230,230,230) rgb(189,190,189)
+						rgb(189,190,189) rgb(230,230,230);
+}
+
+.input-barra {
+	width:              200px;
+    height:             80px;
+    font-size:          30px;
+    font-weight:        bold;
+    text-align:         center;
+    padding:            1px;
+    margin-right:       40px;
+    color:              rgb(255,255,255);
+    border-radius:      6px;
+    border-color:       rgb(230,230,230) rgb(189,190,189)
+                        rgb(189,190,189) rgb(230,230,230);
+    background-color:   #3C6AB4;
+}
+
+.secuencia-barra1 {
+    position: absolute; 
+    top: 20px; 
+    width: 70px; 
+    height: 50px; 
+    font-size: 13px; 
+    font-weight: bold; 
+    color: #000000; 
+    text-align: center;
+}
+
+.secuencia-barra2 {
+    position: absolute; 
+    top: 140px; 
+    width: 70px; 
+    height: 50px; 
+    font-size: 13px; 
+    font-weight: bold; 
+    color: #000000; 
+    text-align: center;
+}
+
+.sliders-home {
+	background:	transparent;
+
+	width:		100%;
+	height:		100%;
+}
+
+.sliders-home td {
+	padding:			10px;
+}
+
+.sliders-home input {
+	text-align:	center;
+	width:		50px;
+	height: 	50px;
+}
+
+.sliders-home td,
+.sliders-home input {
+	margin-top: 		30px;
+	font:	Message-Box;
+	font:	MessageBox;
+}
+
+.sliders-home td,
+.sliders-home label {
+	vertical-align: 	middle;
+	margin-top: 		30px;
+	font-size: 			25px;
+}
+
+.cuadro {
+	color: rgb(255,255,255); 
+	text-align: center;
+	vertical-align: top;
+	font-size: 15px;
+}

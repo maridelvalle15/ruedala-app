@@ -16,7 +16,7 @@
     #titulo-login {
         font-family: Arial;
         font-size: 29px;
-        color: #53585a;
+        color: #B5B6B8;
     }
     @media only screen and (max-width: 435px) {
         #titulo-login {
@@ -26,23 +26,23 @@
         }
     }
     #link-acerta {
-        color: #abbdd1;
+        color: #ED673B;
     }
     input:focus {
-        border-color: #abbdd1 !important;
-        color: #abbdd1 !important;
+        border-color: #ED673B !important;
+        color: #ED673B !important;
     }
     input:focus::-webkit-input-placeholder {
-        color: #abbdd1 !important;
+        color: #ED673B !important;
     }
     input:focus::-moz-placeholder {
-        color: #abbdd1 !important;
+        color: #ED673B !important;
     }
     input:focus:-moz-placeholder {
-        color: #abbdd1 !important;
+        color: #ED673B !important;
     }
     input:focus:-ms-input-placeholder {
-        color: #abbdd1 !important;
+        color: #ED673B !important;
     }
     .login-box-body {
         margin-left: 20%;
@@ -57,7 +57,7 @@
       transition: all 0.8s ease;
     }
     .calculate:hover {
-      background: #abbdd1;
+      background: #ED673B;
       color: #FFFFFF;
     }
     .first {
@@ -69,26 +69,14 @@
         }
     }
     .recuadro{
+        border-style: solid;
+        border-width: 3px;
+        border-radius: 10px;
+        border-color: #ED673B;
         text-decoration: none;
     }
     .recuadro a, .recuadro a:hover{
-        color: #FFFFFF;    
-        font-weight: bold;    
-    }
-    .ingresar{
-        background-color: #009943;
-        float: right;
-        width: 165px;
-        height: 40px;
-    }
-    .registrar{
-        background-color: #a1d65b;
-        float: left;
-        width: 165px;
-        height: 40px;
-    }
-    html{
-        background: #FFFFFF url({% static 'img/fondo-afiapp-2.jpg' %}) no-repeat fixed center;
+        color: #B5B6B8;        
     }
 </style>
 
@@ -99,31 +87,8 @@
 <div class="row">
     <div class="col-xs-12 first">
         <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4"></div>
-                <div class="col-md-4 text-center">
-                    <h1 id="titulo-login" class="text-center"><strong>¡BIENVENIDO!</strong></h1>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-            <div class="col-md-12">
-                <br>
-                <br>
-                <div class="col-xs-6 recuadro recuadro-ingresar">
-                    <br>
-                    <button class="btn ingresar"><a href="{% url 'login' %}">Ingresar</a></button>
-                    <br>
-                    <br>
-                    <br>
-                </div>
-                <div class="col-xs-6 recuadro recuadro-registrar">
-                    <br>
-                    <button class="btn registrar"><a href="{% url 'registrar-comercio' %}">Registrar mi comercio</a></button>
-                    <br>
-                    <br>
-                    <br>
-                </div>
-                <div class="col-md-4"></div>
+            <div class="col-xs-10 col-xs-push-2">
+                <button><a href="{% url 'signup' %}">Entrar</a></button>
             </div>
         </div>
     </div>

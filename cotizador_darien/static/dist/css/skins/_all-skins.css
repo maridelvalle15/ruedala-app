@@ -3,10 +3,10 @@
  * ----------
  */
 .skin-blue .main-header .navbar {
-  background-color: #abbdd1;
+  background-color: #ED673B;
 }
 .skin-blue .main-header .navbar .nav > li > a {
-  color: #abbdd1;
+  color: #ED673B;
 }
 .skin-blue .main-header .navbar .nav > li > a:hover,
 .skin-blue .main-header .navbar .nav > li > a:active,
@@ -15,25 +15,25 @@
 .skin-blue .main-header .navbar .nav .open > a:hover,
 .skin-blue .main-header .navbar .nav .open > a:focus,
 .skin-blue .main-header .navbar .nav > .active > a {
-  background: #abbdd1;
+  background: #ED673B;
   color: #f6f6f6;
 }
 .skin-blue .main-header .navbar .sidebar-toggle {
-  color: #abbdd1;
+  color: #ED673B;
 }
 .skin-blue .main-header .navbar .sidebar-toggle:hover {
   color: #f6f6f6;
-  background: #abbdd1;
+  background: #ED673B;
 }
 .skin-blue .main-header .navbar .sidebar-toggle {
-  color: #abbdd1;
+  color: #ED673B;
 }
 .skin-blue .main-header .navbar .sidebar-toggle:hover {
   background-color: #367fa9;
 }
 @media (max-width: 767px) {
   .skin-blue .main-header .navbar .dropdown-menu li.divider {
-    background-color: #abbdd1;
+    background-color: #ED673B;
   }
   .skin-blue .main-header .navbar .dropdown-menu li a {
     color: #fff;
@@ -932,7 +932,7 @@
  * ---------
  */
 .skin-red .main-header .navbar {
-  background-color: #5168F9;
+  background-color: #ED673B;
 }
 .skin-red .main-header .navbar .nav > li > a {
   color: #ffffff;
@@ -980,7 +980,7 @@
   background-color: #d33724;
 }
 .skin-red .main-header li.user-header {
-  background-color: #5168F9;
+  background-color: #ED673B;
 }
 .skin-red .content-header {
   background: transparent;
@@ -1005,7 +1005,7 @@
 .skin-red .sidebar-menu > li.active > a {
   color: #ffffff;
   background: #1e282c;
-  border-left-color: #5168F9;
+  border-left-color: #ED673B;
 }
 .skin-red .sidebar-menu > li > .treeview-menu {
   margin: 0 1px;
@@ -1066,7 +1066,7 @@
  * ---------
  */
 .skin-red-light .main-header .navbar {
-  background-color: #5168F9;
+  background-color: #ED673B;
 }
 .skin-red-light .main-header .navbar .nav > li > a {
   color: #ffffff;
@@ -1106,7 +1106,7 @@
   }
 }
 .skin-red-light .main-header .logo {
-  background-color: #5168F9;
+  background-color: #ED673B;
   color: #ffffff;
   border-bottom: 0 solid transparent;
 }
@@ -1114,7 +1114,7 @@
   background-color: #dc4735;
 }
 .skin-red-light .main-header li.user-header {
-  background-color: #5168F9;
+  background-color: #ED673B;
 }
 .skin-red-light .content-header {
   background: transparent;
@@ -1151,7 +1151,7 @@
   background: #f4f4f5;
 }
 .skin-red-light .sidebar-menu > li.active {
-  border-left-color: #5168F9;
+  border-left-color: #ED673B;
 }
 .skin-red-light .sidebar-menu > li.active > a {
   font-weight: 600;

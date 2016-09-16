@@ -1,0 +1,81 @@
+{% extends "administrador/base_admin.html" %}
+{% block title %}<title>Solicitar Crédito</title>{% endblock title %}
+
+{% block extracss %}
+
+
+{% endblock extracss %}
+
+{% block content %}
+
+            <!-- Info boxes -->
+            <h3>Seleccione el tipo de préstamos que desea solicitar:</h3>
+            <br>
+            <br>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <a href="{% url 'solicitar-credito' %}">
+                    <span class="info-box-icon bg-white"><img src="/static/panacredit/img/express/seccion-prestamos/personal.png" style="width:40%;"></span>
+                    <div class="info-box-content">
+                      <span class="info-box-text" style="color: black;">Préstamos <br>Personales</span>
+                      <!-- <span class="info-box-number">90<small>%</small></span> -->
+                    </div><!-- /.info-box-content -->
+                </a>
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <a href="{% url 'solicitar-credito' %}">
+                    <span class="info-box-icon bg-white"><img src="/static/panacredit/img/express/seccion-prestamos/Hipotecario.png" style="width:40%;"></span>
+                    <div class="info-box-content">
+                      <span class="info-box-text" style="color: black;">Préstamos<br>Hipotecarios</span>
+                      <!-- <span class="info-box-number">90<small>%</small></span> -->
+                    </div><!-- /.info-box-content -->
+                </a>
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+
+            <!-- fix for small devices only -->
+            <div class="clearfix visible-sm-block"></div>
+
+
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <a href="{% url 'solicitar-credito' %}">
+                    <span class="info-box-icon bg-white"><img src="/static/panacredit/img/express/seccion-prestamos/auto.png" style="width:40%;"></span>
+                    <div class="info-box-content">
+                      <span class="info-box-text" style="color: black;">Préstamos<br> de autos</span>
+                      <!-- <span class="info-box-number">90<small>%</small></span> -->
+                    </div><!-- /.info-box-content -->
+                </a>
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <a href="{% url 'solicitar-credito' %}">
+                    <span class="info-box-icon bg-white"><img src="/static/panacredit/img/express/seccion-prestamos/comercial.png" style="width:40%;"></span>
+                    <div class="info-box-content">
+                      <span class="info-box-text" style="color: black;">Préstamos<br> Comerciales</span>
+                      <!-- <span class="info-box-number">90<small>%</small></span> -->
+                    </div><!-- /.info-box-content -->
+                </a>
+              </div><!-- /.info-box -->
+
+            </div><!-- /.col -->
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <a href="{% url 'solicitar-credito' %}">
+                    <span class="info-box-icon bg-white"><img src="/static/panacredit/img/express/seccion-prestamos/leasing.png" style="width:40%;"></span>
+                    <div class="info-box-content">
+                      <span class="info-box-text" style="color: black;">Leasing</span>
+                      <!-- <span class="info-box-number">90<small>%</small></span> -->
+                    </div><!-- /.info-box-content -->
+                </a>
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+
+          </div><!-- /.row -->
+
+{% endblock content %}

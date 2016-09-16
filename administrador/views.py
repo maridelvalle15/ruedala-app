@@ -11,7 +11,10 @@ from cotizar.models import Modelo, Marca
 from django.http import FileResponse, Http404
 
 
-class Factores(LoginRequiredMixin, AdminRequiredMixin, generic.TemplateView):
+#class Factores(LoginRequiredMixin, AdminRequiredMixin, generic.TemplateView):
+#    template_name = "administrador/dashboard.html"
+
+class Factores(generic.TemplateView):
     template_name = "administrador/dashboard.html"
 
 

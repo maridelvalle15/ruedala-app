@@ -28,17 +28,6 @@
             </div><!-- /.col -->
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="info-box">
-                <a href="{% url 'list_historial_transito' %}">
-                    <span class="info-box-icon bg-yellow"><i class="fa fa-car"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text" style="color: black;">Historial de<br> Tránsito</span>
-                      <!-- <span class="info-box-number">90<small>%</small></span> -->
-                    </div><!-- /.info-box-content -->
-                </a>
-              </div><!-- /.info-box -->
-            </div><!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box">
                 <a href="{% url 'list_estado_civil' %}">
                     <span class="info-box-icon bg-green"><i class="fa fa-venus-mars"></i></span>
                     <div class="info-box-content">
@@ -48,82 +37,17 @@
                 </a>
               </div><!-- /.info-box -->
             </div><!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box">
-                <a href="{% url 'list_antiguedad' %}">
-                    <span class="info-box-icon bg-red"><i class="fa fa-hourglass-3"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text" style="color: black;">Antigüedad</span>
-                      <!-- <span class="info-box-number">90<small>%</small></span> -->
-                    </div><!-- /.info-box-content -->
-                </a>
-              </div><!-- /.info-box -->
-            </div><!-- /.col -->
 
             <!-- fix for small devices only -->
             <div class="clearfix visible-sm-block"></div>
 
+
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="info-box">
-                <a href="{% url 'list_edad' %}">
-                    <span class="info-box-icon bg-red"><i class="fa fa-birthday-cake"></i></span>
+                <a href="{% url 'list_danios' %}">
+                    <span class="info-box-icon bg-yellow"><i class="fa fa-dollar"></i></span>
                     <div class="info-box-content">
-                      <span class="info-box-text" style="color: black;">Edad del<br>Conductor</span>
-                      <!-- <span class="info-box-number">90<small>%</small></span> -->
-                    </div><!-- /.info-box-content -->
-                </a>
-              </div><!-- /.info-box -->
-            </div><!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box">
-                <a href="{% url 'list_tiempo_uso' %}">
-                    <span class="info-box-icon bg-green"><i class="fa fa-clock-o"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text" style="color: black;">Tiempo de Uso<br>del Vehículo</span>
-                      <!-- <span class="info-box-number">90<small>%</small></span> -->
-                    </div><!-- /.info-box-content -->
-                </a>
-              </div><!-- /.info-box -->
-            </div><!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box">
-                <a href="{% url 'list_colision' %}">
-                    <span class="info-box-icon bg-yellow"><i class="fa fa-taxi"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text" style="color: black;">Colisión y<br>Vuelco</span>
-                      <!-- <span class="info-box-number">90<small>%</small></span> -->
-                    </div><!-- /.info-box-content -->
-                </a>
-              </div><!-- /.info-box -->
-            </div><!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box">
-                <a href="{% url 'list_importacion' %}">
-                    <span class="info-box-icon bg-aqua"><i class="fa fa-plane"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text" style="color: black;">Importación de<br>Piezas</span>
-                      <!-- <span class="info-box-number">90<small>%</small></span> -->
-                    </div><!-- /.info-box-content -->
-                </a>
-              </div><!-- /.info-box -->
-            </div><!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box">
-                <a href="{% url 'list_endoso' %}">
-                    <span class="info-box-icon bg-green"><i class="fa fa-usd"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text" style="color: black;">Endosos<br></span>
-                      <!-- <span class="info-box-number">90<small>%</small></span> -->
-                    </div><!-- /.info-box-content -->
-                </a>
-              </div><!-- /.info-box -->
-            </div><!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box">
-                <a href="{% url 'list_lesiones' %}">
-                    <span class="info-box-icon bg-aqua"><i class="fa fa-wheelchair"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text" style="color: black;">Lesiones<br>Corporales</span>
+                      <span class="info-box-text" style="color: black;">Mínimo Crédito</span>
                       <!-- <span class="info-box-number">90<small>%</small></span> -->
                     </div><!-- /.info-box-content -->
                 </a>
@@ -133,21 +57,21 @@
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="info-box">
                 <a href="{% url 'list_danios' %}">
+                    <span class="info-box-icon bg-red"><i class="fa fa-building"></i></span>
+                    <div class="info-box-content">
+                      <span class="info-box-text" style="color: black;">Días de pago<br> Crédito</span>
+                      <!-- <span class="info-box-number">90<small>%</small></span> -->
+                    </div><!-- /.info-box-content -->
+                </a>
+              </div><!-- /.info-box -->
+
+            </div><!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <a href="{% url 'list_danios' %}">
                     <span class="info-box-icon bg-yellow"><i class="fa fa-building"></i></span>
                     <div class="info-box-content">
-                      <span class="info-box-text" style="color: black;">Daños a<br>Propiedad Ajena</span>
-                      <!-- <span class="info-box-number">90<small>%</small></span> -->
-                    </div><!-- /.info-box-content -->
-                </a>
-              </div><!-- /.info-box -->
-            </div><!-- /.col -->
-
-            <div class="col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box">
-                <a href="{% url 'list_gastos' %}">
-                    <span class="info-box-icon bg-red"><i class="fa fa-ambulance"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text" style="color: black;">Gastos<br>Médicos</span>
+                      <span class="info-box-text" style="color: black;">Tasa Interés</span>
                       <!-- <span class="info-box-number">90<small>%</small></span> -->
                     </div><!-- /.info-box-content -->
                 </a>
@@ -155,10 +79,10 @@
             </div><!-- /.col -->
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="info-box">
-                <a href="{% url 'list_marca' %}">
-                    <span class="info-box-icon bg-aqua"><i class="fa fa-car"></i></span>
+                <a href="{% url 'list_danios' %}">
+                    <span class="info-box-icon bg-purple"><i class="fa fa-dollar"></i></span>
                     <div class="info-box-content">
-                      <span class="info-box-text" style="color: black;">Vehículos</span>
+                      <span class="info-box-text" style="color: black;">Salario</span>
                       <!-- <span class="info-box-number">90<small>%</small></span> -->
                     </div><!-- /.info-box-content -->
                 </a>

@@ -30,14 +30,13 @@ def user_registration(request):
         # We obtain the user group by the user logged.
         # Sellers will created by agents
         # Agents will created by admins
-        print request.user.groups.first().name
         if (request.user.groups.first().name == "corredor")\
-           or (request.user.groups.first().name == "super_admin"):
+           or (request.user.groups.first().name == "admin"):
             if request.method == 'POST':
                 if request.user.groups.first().name == "corredor":
                     form = UserCreateForm(request.POST)
                 else:
-                    form = CorredorCreateForm(request.POST)
+                    form = EjecutivoCreateForm(request.POST)
 
                 if form.is_valid():
                     my_user = form.save()
@@ -53,7 +52,7 @@ def user_registration(request):
                                               key_expires=key_expires)
                     new_profile.save()
 
-                    email_subject = 'Bienvenido(a) a Afiapp'
+                    email_subject = 'Bienvenido(a) a CEMBI Venezuela'
                     to = [email]
                     link = 'http://' + request.get_host() + '/accounts/confirm/' + activation_key + '/' + str(user.pk)
                     if user.first_name and user.last_name:
@@ -70,7 +69,7 @@ def user_registration(request):
                     msg.content_subtype = 'html'
                     msg.send()
                     # Add the user into the group: Seller or Agent.
-                    if request.user.groups.first().name == "super_admin":
+                    if request.user.groups.first().name == "admin":
                         group = Group.objects.get(name='corredor')
                         user.groups.add(group)
                     else:
@@ -82,18 +81,15 @@ def user_registration(request):
                         new_relat = CorredorVendedor(corredor=request.user,
                                                      vendedor=user)
                         new_relat.save()
-                    if request.user.groups.first().name == "super_admin":
-                        datos_corredor = DatosCorredor(user=user,
-                                                       nombre=request.POST['nombre'],
-                                                       direccion=request.POST['direccion'],
-                                                       tlf=form.cleaned_data['tlf'],
-                                                       persona_contacto=form.cleaned_data['persona_contacto'])
-                        datos_corredor.save()
+                    if request.user.groups.first().name == "admin":
+                        datos_ejecutivo = DatosEjecutivo(user=user,
+                                                        direccion=form.cleaned_data['direccion'],
+                                                        tlf=form.cleaned_data['tlf'])
+                        datos_ejecutivo.save()
                     return HttpResponseRedirect(
                         reverse_lazy('login'))
                 else:
-                    print form
-                    if request.user.groups.first().name == "super_admin":
+                    if request.user.groups.first().name == "admin":
                         context = {'form': form}
                         return render_to_response(
                             'reportes/registrar_banco.html', context,
@@ -104,8 +100,8 @@ def user_registration(request):
                             'register.html', context,
                             context_instance=RequestContext(request))
             else:
-                if request.user.groups.first().name == "super_admin":
-                    form = CorredorCreateForm()
+                if request.user.groups.first().name == "admin":
+                    form = EjecutivoCreateForm()
                     context = {'form': form}
                     return render_to_response(
                         'reportes/registrar_banco.html', context,
@@ -141,8 +137,18 @@ def authenticate_user(username=None, password=None):
 
 def login_request(request):
     if request.user.is_authenticated():
-        return HttpResponseRedirect(
-            reverse_lazy('vehiculo'))
+        user = User.objects.get(username=request.user)
+        if (len(user.groups.all()) != 0):
+            if (user.groups.first().name == 'admin'):
+                return HttpResponseRedirect(
+                    reverse_lazy('resumen'))
+            elif (user.groups.first().name == 'corredor'):
+                return HttpResponseRedirect(
+                    reverse_lazy('resumen'))
+        else:
+            return HttpResponseRedirect(
+                reverse_lazy('status-credito',kwargs={'pk': user.pk}))
+
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -150,13 +156,22 @@ def login_request(request):
             password = form.cleaned_data['password']
             user_auth = authenticate_user(username, password)
             if user_auth is not None:
+                usuario = User.objects.get(username=user_auth.username)
                 if user_auth.is_active:
                     user = authenticate(username=user_auth.username,
                                         password=password)
                     if user:
                         login(request, user)
-                        return HttpResponseRedirect(
-                            reverse_lazy('vehiculo'))
+                        if (len(user.groups.all()) != 0):
+                            if (user.groups.first().name == 'admin'):
+                                return HttpResponseRedirect(
+                                    reverse_lazy('resumen'))
+                            elif (user.groups.first().name == 'corredor'):
+                                return HttpResponseRedirect(
+                                    reverse_lazy('resumen'))
+                        else:
+                            return HttpResponseRedirect(
+                                reverse_lazy('status-credito',kwargs={'pk': user.pk}))
                     else:
                         form.add_error(
                             None, "Tu correo o contraseña no son correctos")
@@ -228,7 +243,7 @@ def generate_key(request, pk):
     new_profile = UserProfile(user=user, activation_key=activation_key,
                               key_expires=key_expires)
     new_profile.save()
-    email_subject = 'Bienvenido(a) a Afiapp'
+    email_subject = 'Bienvenido(a) a CEMBI Venezuela'
     to = [user.email]
     link = 'http://' + request.get_host() + '/accounts/confirm/' + activation_key + '/' + user.pk
     if user.first_name and user.last_name:
@@ -299,7 +314,7 @@ class EditUser(LoginRequiredMixin, GroupRequiredMixin, generic.UpdateView):
         """
         Returns the initial data to use for forms on this view.
         """
-        datos = DatosCorredor.objects.get(user=self.object)
+        datos = DatosEjecutivo.objects.get(user=self.object)
         initial = self.initial.copy()
         initial['ruc'] = datos.ruc
         initial['licencia'] = datos.licencia
@@ -312,7 +327,7 @@ class EditUser(LoginRequiredMixin, GroupRequiredMixin, generic.UpdateView):
         """
         self.object = form.save()
         user = User.objects.get(email=form.cleaned_data['email'])
-        corredor = DatosCorredor.objects.get(user=user)
+        corredor = DatosEjecutivo.objects.get(user=user)
         corredor.licencia = form.cleaned_data['licencia']
         corredor.ruc = form.cleaned_data['ruc']
         corredor.razon_social = form.cleaned_data['razon_social']
@@ -348,17 +363,17 @@ class ActivateAccount(generic.UpdateView):
     model = User
     form_class = UserPasswordEditForm
     context_object_name = "usuario"
-    success_url = 'vehiculo'
+    success_url = 'login'
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated():
-            return HttpResponseRedirect(reverse_lazy('vehiculo'))
+            return HttpResponseRedirect(reverse_lazy('login'))
         user_profile = get_object_or_404(
             UserProfile, activation_key=kwargs['activation_key'])
         user = user_profile.user
 
         if user.is_active:
-            return HttpResponseRedirect(reverse_lazy('vehiculo'))
+            return HttpResponseRedirect(reverse_lazy('login'))
 
         if user_profile.key_expires < timezone.now():
             return HttpResponseRedirect(reverse_lazy('generate_key',
@@ -377,4 +392,4 @@ class ActivateAccount(generic.UpdateView):
             reverse_lazy(self.success_url))
 
 class Index(generic.TemplateView):
-    template_name = "index.html"
+    template_name = "panacredit/index-no-animation.html"

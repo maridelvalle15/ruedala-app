@@ -7,6 +7,9 @@ urlpatterns = patterns(
     url(r'^cotizar-ahora/$',
         CotizarAhora.as_view(),
         name='cotiza_ahora'),
+    url(r'^after-signup/$',
+        AfterSignUp.as_view(),
+        name='after_signup'),
     #url(r'^comercios-registrados/$',
     #    CotizacionesListView.as_view(),
     #    name='vehiculo'),
@@ -28,4 +31,6 @@ urlpatterns = patterns(
          name='cargar-ahora'),
     url(r'^registrar-comercio/$', registrarComercio.as_view(), name='registrar-comercio'),
     url(r'get_location/$', getLocation.as_view(), name='get-location'),
+    url(r'load-signup/$', LoadSignup.as_view(), name='load-signup'),
+    url(r'signup/$', Signup.as_view(), name='signup'),
 )

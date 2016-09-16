@@ -1,0 +1,246 @@
+{% extends "administrador/base_admin.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}<title>Solicitar Crédito</title>{% endblock title %}
+{% block extracss %}
+<link href="{% static 'panacredit/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'panacredit/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'panacredit/css/idangerous.swiper.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'panacredit/css/devices.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'panacredit/css/animate.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'panacredit/css/bluecurve.css' %}" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="{% static 'panacredit/img/favicon.ico' %}" />
+<style type="text/css">
+
+    /*#slider-1 {
+        margin: 10px;
+        width:  500px;
+    }*/
+
+    #resultado {
+        background-color:   #3C6AB4;
+        color:              rgb(255,255,255);
+        vertical-align:     top;
+        text-align:         center;
+    }
+
+    </style>
+{% endblock extracss %}
+
+{% block content %}
+<h3> Solicite su crédito: </h3>
+<!-- BLOCK "TYPE 2" -->
+<div class="block type-2 scroll-to-block visible-barra" data-id="pidelo-ya">
+    <div class="container-fluid type-2-text">
+        <div class="row">
+            <!-- CODIGO PARA BARRAS -->
+            <div class="col-md-9 col-sm-9 col-md-push-2 col-sm-push-2 barras">
+                <table class="sliders-home visible-barra-normal visible-barra-cel" cellspacing="3" cellpadding="0" border="0">
+                <col style="width: 10%" />
+                <col style="width: 65%" />
+                <col style="width: 15%" />
+                <form id="form-credito" action="{% url 'crear-credito' request.user.pk %}" method="post" role="form" class="form-horizontal form-group" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <tr>
+                        <td><label style="font-size: 25px;" for="importe-slider">Monto:</label></td>
+                        <td><input style="width: 80px; height: 60px; font-size: 30px; margin-top: 30px;" class="input-barra" id="importe-input" maxlength="4" tabIndex="2" /></td>
+                    </tr>
+
+                    <tr>
+                        <td><label style="font-size: 25px;" for="plazo-slider">Tiempo:</label></td>
+
+                        <td><input style="width: 80px; height: 60px; font-size: 30px; margin-top: 30px;" class="input-barra" id="plazo-input" maxlength="3" tabIndex="4" /></td>
+                    </tr>
+                </table>
+
+
+                <div style="position: relative; display:none;">
+                    <div class="secuencia-barra" style="left: -3%;">0</div>
+                    <div class="secuencia-barra" style="left: 16%;">200</div>
+                    <div class="secuencia-barra" style="left: 35%;">400</div>
+                    <div class="secuencia-barra" style="left: 53.5%;">600</div>
+                    <div class="secuencia-barra" style="left: 72.5%;">800</div>
+                    <div class="secuencia-barra" style="left: 90%;">1000</div>
+
+                    <div class="slider" id="importe-slider" tabIndex="1">
+                        <input class="slider-input" id="importe-slider-input" />
+                    </div>
+                </div>
+                <div style="position: relative; display: none;">
+                    <div class="secuencia-barra" style="left: -3%;">5</div>
+                    <div class="secuencia-barra" style="left: 16%;">10</div>
+                    <div class="secuencia-barra" style="left: 35%;">15</div>
+                    <div class="secuencia-barra" style="left: 53.5%;">20</div>
+                    <div class="secuencia-barra" style="left: 72.5%;">25</div>
+                    <div class="secuencia-barra" style="left: 90%;">30</div>
+
+                    <div class="slider" id="plazo-slider" tabIndex="3">
+                        <input class="slider-input" id="plazo-slider-input" />
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Cuadro resultado -->
+            <div class="col-md-3 col-sm-3 col-md-pull-1 col-sm-pull-1 cuadro_resultado" id="resultado">
+                <label style="padding: 2px; font-weight: bold; font-size: 20px; margin-top: 10px;">
+                    FECHA DE DEVOLUCIÓN
+                </label>
+                <br>
+                <idfecha style="font-weight: bold; font-size: 21px;"></idfecha>
+                <br>
+                <p style="font-size: 20px; text-align: center;"> 
+                    Importe:
+                    <input style="font-size: 20px; width: 55px; height: 30px;" class="input-barra2" id="importe-input-cuadro" maxlength="4" tabIndex="2" name="monto" />$ 
+                </p>
+                <p style="font-size: 20px; text-align: center;"> 
+                    Plazo:
+                    <input style="font-size: 20px; width: 40px; height: 30px;" class="input-barra2" id="plazo-input-cuadro" maxlength="3" tabIndex="2" name="dias" />días 
+                </p>
+                <br>
+                <button style="align: center;" class="btn btn-md" type="submit" style="float:right">SOLICITAR</button> </form>
+            </div>
+        </div>
+        <!-- END CODIGO PARA BARRAS --> 
+    </div>
+</div>
+<!-- BLOCK "TYPE 2" -->
+
+{% endblock content %}
+{% block custom_script %}
+<script type="text/javascript" src="{% static 'panacredit/js/range.js' %}"></script>
+<script type="text/javascript" src="{% static 'panacredit/js/timer.js' %}"></script>
+<script type="text/javascript" src="{% static 'panacredit/js/slider.js' %}"></script>
+<script>
+    //Para calcular la fecha
+        // cuando carga la pagina
+    $(window).load(function () {
+        var d = new Date();
+        var numberOfDaysToAdd = parseInt($('#plazo-input').val());
+        d.setDate(d.getDate() + numberOfDaysToAdd);
+        var dd = d.getDate();
+        var mm = d.getMonth() + 1;
+        var y = d.getFullYear();
+        var someFormattedDate = dd + '/'+ mm + '/'+ y; 
+        $('#resultado idfecha').html(someFormattedDate);
+    });
+        // cuando mueven el slider
+    $('#plazo-slider').mouseover(function(){
+        var d = new Date();
+        var numberOfDaysToAdd = parseInt($('#plazo-input').val());
+        d.setDate(d.getDate() + numberOfDaysToAdd);
+        var dd = d.getDate();
+        var mm = d.getMonth() + 1;
+        var y = d.getFullYear();
+        var someFormattedDate = dd + '/'+ mm + '/'+ y; 
+        $('#resultado idfecha').html(someFormattedDate);
+    });
+
+        // cuando cambian en el input
+    $('#plazo-input').on('input', function() {
+        var d = new Date();
+        var numberOfDaysToAdd = parseInt($(this).val());
+        d.setDate(d.getDate() + numberOfDaysToAdd);
+        var dd = d.getDate();
+        var mm = d.getMonth() + 1;
+        var y = d.getFullYear();
+        var someFormattedDate = dd + '/'+ mm + '/'+ y; 
+        $('#resultado idfecha').html(someFormattedDate);
+    });
+
+    //<![CDATA[
+
+    function getQueryString( sProp ) {
+        var re = new RegExp( sProp + "=([^\\&]*)", "i" );
+        var a = re.exec( document.location.search );
+        if ( a == null )
+            return "";
+        return a[1];
+    };
+
+    var cssFile = getQueryString( "css" );
+    if ( cssFile == "" )
+        cssFile = "css/bluecurve.css";
+
+    document.write("<link type=\"text/css\" rel=\"StyleSheet\" href=\"{% static 'panacredit/" + cssFile + "' %}\" />" );
+
+    //]]>
+
+    // BARRAS
+    var importe = new Slider(document.getElementById("importe-slider"), document.getElementById("importe-slider-input"));
+    importe.setMaximum(1000);
+    var plazo = new Slider(document.getElementById("plazo-slider"), document.getElementById("plazo-slider-input"));
+    plazo.setMinimum(5);
+    plazo.setMaximum(30);
+
+
+    var importeI = document.getElementById("importe-input");
+    importeI.onchange = function () {
+        importe.setValue(parseInt(this.value));
+    };
+
+    var plazoI = document.getElementById("plazo-input");
+    plazoI.onchange = function () {
+        plazo.setValue(parseInt(this.value));
+    };
+
+
+    importe.onchange = plazo.onchange = function () {
+        var result_importe = document.getElementById("importe-input-cuadro");
+        var result_plazo = document.getElementById("plazo-input-cuadro");
+
+        importeI.value = importe.getValue();
+        plazoI.value = plazo.getValue();
+        result_importe.value = importe.getValue();
+        result_plazo.value = plazo.getValue();
+
+        if (typeof window.onchange == "function")
+            window.onchange();
+    };
+
+    importe.setValue(500);
+    plazo.setValue(15);
+
+    // end init
+
+    function setMonto(n_importe) {
+        importe.setValue(n_importe);
+    }
+
+    function setDias(n_plazo) {
+        plazo.setValue(n_plazo);
+    }
+
+    function getMonto() {
+        return {
+            importe: importe.getValue(),
+        };
+    }
+
+    function getDias() {
+        return {
+            plazo: plazo.getValue(),
+        };
+    }
+
+    function fixSize() {
+        importe.recalculate();
+        plazo.recalculate();
+    }
+
+    window.onresize = fixSize;
+
+    fixSize();
+
+</script>
+<script src="{% static 'panacredit/js/jquery-2.1.3.min.js' %}"></script>
+<script src="{% static 'panacredit/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'panacredit/js/idangerous.swiper.min.js' %}"></script>
+<script src="{% static 'panacredit/js/global.js' %}"></script>
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;language=en"></script>
+<script src="{% static 'panacredit/js/map.js' %}"></script>
+
+<script src="{% static 'panacredit/js/subscription.js' %}"></script>
+
+{% endblock custom_script %}

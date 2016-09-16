@@ -1,5 +1,6 @@
 from django.conf.urls import url, patterns
 from reportes.views import *
+from administrador.views import *
 from darientSessions.views import *
 
 urlpatterns = patterns(
@@ -17,9 +18,25 @@ urlpatterns = patterns(
         VendedorListView.as_view(),
         name='vendedor_list'),
     url(
-        r'^comercios-registrados/$',
-        CotizacionesListView.as_view(),
-        name='cotizaciones_list'),
+        r'^solicitantes/$',
+        SolicitantesListView.as_view(),
+        name='solicitantes_list'),
+    url(
+        r'^solicitudes/$',
+        SolicitudesPendientesView.as_view(),
+        name='solicitudes_list'),
+    url(
+        r'^solicitudes-aprobadas/$',
+        SolicitudesAprobadasView.as_view(),
+        name='solicitudes_aprobadas'),
+    url(
+        r'^solicitudes-rechazadas/$',
+        SolicitudesRechazadasView.as_view(),
+        name='solicitudes_rechazadas'),
+    url(
+        r'^detalle-credito/(?P<pk>\d+)/$',
+        CreditoDetailView.as_view(),
+        name='credito_details'),
     url(
         r'^solicitudes-pos/$',
         CotizacionesListPOSView.as_view(),
@@ -28,6 +45,34 @@ urlpatterns = patterns(
         r'^resumen/$',
         ResumenGerencialView.as_view(),
         name='resumen'),
+    url(
+        r'^perfil/(?P<pk>\w+)/$',
+        PerfilView.as_view(),
+        name='perfil'),
+    url(
+        r'^solicitar-credito/$',
+        SolicitarCreditoView.as_view(),
+        name='solicitar-credito'),
+    url(
+        r'^tipo-credito/$',
+        TipoCreditoView.as_view(),
+        name='tipo-credito'),
+    url(
+        r'^crear-credito/(?P<id>\w+)/$',
+        'reportes.views.crear_credito',
+        name='crear-credito'),
+    url(
+        r'^status-credito/(?P<pk>\w+)/$',
+        StatusCreditoView.as_view(),
+        name='status-credito'),
+    url(
+        r'^subir-documentacion/(?P<pk>\w+)/$',
+        SubirDocumentacionView.as_view(),
+        name='subir-documentacion'),
+    url(
+        r'^perfil-ejecutivo/(?P<pk>\w+)/$',
+        PerfilEjecutivoView.as_view(),
+        name='perfil-ejecutivo'),
      url(
         r'^registrar-banco/$',
         'darientSessions.views.user_registration',
@@ -72,6 +117,9 @@ urlpatterns = patterns(
     url(r'^cambiar-status/(?P<id>\d+)/(?P<status>\d+)/$',
         'reportes.views.changeStatus',
         name='cambiar-status'),
+    url(r'^cambiar-status-credito/(?P<id>\d+)/$',
+        'reportes.views.cambiarStatusCredito',
+        name='cambiar-status-credito'),
     url(r'^cotizacion/enviar/(?P<id>\d+)/$',
         'reportes.views.sendCotization',
         name='send'),

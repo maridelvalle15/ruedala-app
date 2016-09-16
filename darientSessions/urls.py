@@ -40,10 +40,10 @@ urlpatterns = patterns(
         },
         name='password_done'
     ),
-    url(r'^$',
+    url(r'index/$',
         Index.as_view(),
         name='index'),
-    url(r'^login$',
+    url(r'^$',
         'darientSessions.views.login_request',
         name='login'),
     url(

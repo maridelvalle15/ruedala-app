@@ -9,7 +9,7 @@ from django.views.defaults import page_not_found
 from reportes.forms import *
 from cotizar.forms import *
 import datetime
-from datetime import *
+#from datetime import *
 from time import *
 from dateutil.relativedelta import relativedelta
 from django.http import HttpResponseRedirect
@@ -23,7 +23,7 @@ from django.core.files.base import ContentFile
 
 class CorredorVendedorListView(LoginRequiredMixin,
                                GroupRequiredMixin, ListView):
-    model = DatosCorredor
+    model = DatosEjecutivo
     template_name = 'reportes/corredor_vendedor_list.html'
 
     def get_context_data(self, **kwargs):
@@ -49,7 +49,7 @@ class CorredorVendedorDetailView(LoginRequiredMixin,
         context = self.get_context_data(**kwargs)
         context['usuario'] = user
         if user.groups.first().name == 'corredor':
-            context['corredor'] = DatosCorredor.objects.get(user=user)
+            context['corredor'] = DatosEjecutivo.objects.get(user=user)
         cotizaciones = Cotizacion.objects.filter(corredor=user, is_active=True)
         num_cot = len(cotizaciones)
         context['cotizaciones'] = cotizaciones
@@ -71,42 +71,78 @@ class VendedorListView(LoginRequiredMixin, CorredorRequiredMixin, ListView):
         return self.render_to_response(context)
 
 
-class CotizacionesListView(LoginRequiredMixin, ListView):
-    template_name = 'reportes/cotizaciones_list.html'
-    model = Cotizacion
+class SolicitantesListView(LoginRequiredMixin, ListView):
+    template_name = 'reportes/solicitantes_list.html'
+    model = DatosSolicitante
 
     def get(self, request, *args, **kwargs):
         self.object_list = []
         context = super(
-            CotizacionesListView, self).get_context_data(**kwargs)
-        #corredor = User.objects.get(pk=request.user.pk)
-        cotizaciones_pos = []
-        cotizaciones = Comercio.objects.all()
-        try:
-            corredor = DatosCorredor.objects.get(user=request.user)
-            es_corredor = True
-        except:
-            es_corredor = False
-        if es_corredor:
-            banco = DatosCorredor.objects.get(user=request.user)
-            cotizaciones_total = Comercio.objects.all()
-            cotizaciones = []
-            for elem in cotizaciones_total:
-                print str(elem.programa_beneficios)
-                print str(banco.nombre)
-                if str(elem.programa_beneficios)==str(banco.nombre):
-                    cotizaciones.append(elem)
-                    if elem.desea_pos != None:
-                        if elem.desea_pos == 'Si':
-                            cotizaciones_pos.append(elem)
-        else:
-            for elem in cotizaciones:
-                if elem.desea_pos != None:
-                    if elem.desea_pos == 'Si':
-                        cotizaciones_pos.append(elem)
+            SolicitantesListView, self).get_context_data(**kwargs)
+        solicitudes = DatosSolicitante.objects.all()
+        lista_creditos = []
+        for elem in solicitudes:
+            try:
+                usuario = User.objects.get(pk=elem.user.pk)
+                solicitante = DatosSolicitante.objects.get(user=usuario)
+                creditos = Credito.objects.filter(solicitante=solicitante)
+            except:
+                creditos = []
+            lista_creditos.append([elem.pk,len(creditos)])
+        context['solicitudes'] = solicitudes
+        context['lista_creditos'] = lista_creditos
+        return self.render_to_response(context)
 
-        context['cotizaciones'] = cotizaciones
-        context['cotizaciones_pos'] = cotizaciones_pos
+class SolicitudesPendientesView(LoginRequiredMixin, ListView):
+    template_name = 'reportes/solicitudes_pendientes.html'
+    model = Credito
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = []
+        context = super(
+            SolicitudesPendientesView, self).get_context_data(**kwargs)
+        solicitudes = Credito.objects.order_by('fecha_solicitud','dias')
+        solicitudes_pendientes = []
+        for solicitud in solicitudes:
+            if ( (solicitud.status != 'Aprobado') and (solicitud.status != 'Rechazado')):
+                solicitudes_pendientes.append(solicitud)
+        context['solicitudes'] = solicitudes_pendientes
+        return self.render_to_response(context)
+
+
+class SolicitudesAprobadasView(LoginRequiredMixin, ListView):
+    template_name = 'reportes/solicitudes_listas.html'
+    model = Credito
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = []
+        context = super(
+            SolicitudesAprobadasView, self).get_context_data(**kwargs)
+        solicitudes = Credito.objects.order_by('fecha_solicitud','dias')
+        solicitudes_aprobadas = []
+        for solicitud in solicitudes:
+            if (solicitud.status == 'Aprobado'):
+                solicitudes_aprobadas.append(solicitud)
+        context['solicitudes'] = solicitudes_aprobadas
+        context['status'] = 'Aprobadas'
+        return self.render_to_response(context)
+
+
+class SolicitudesRechazadasView(LoginRequiredMixin, ListView):
+    template_name = 'reportes/solicitudes_listas.html'
+    model = Credito
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = []
+        context = super(
+            SolicitudesRechazadasView, self).get_context_data(**kwargs)
+        solicitudes = Credito.objects.order_by('fecha_solicitud','dias')
+        solicitudes_rechazadas = []
+        for solicitud in solicitudes:
+            if (solicitud.status == 'Rechazado'):
+                solicitudes_rechazadas.append(solicitud)
+        context['solicitudes'] = solicitudes_rechazadas
+        context['status'] = 'Rechazadas'
         return self.render_to_response(context)
 
 class CotizacionesListPOSView(LoginRequiredMixin, ListView):
@@ -121,12 +157,12 @@ class CotizacionesListPOSView(LoginRequiredMixin, ListView):
         cotizaciones_pos = []
         cotizaciones = Comercio.objects.all()
         try:
-            corredor = DatosCorredor.objects.get(user=request.user)
+            corredor = DatosEjecutivo.objects.get(user=request.user)
             es_corredor = True
         except:
             es_corredor = False
         if es_corredor:
-            banco = DatosCorredor.objects.get(user=request.user)
+            banco = DatosEjecutivo.objects.get(user=request.user)
             cotizaciones_total = Comercio.objects.all()
             cotizaciones = []
             for elem in cotizaciones_total:
@@ -155,8 +191,6 @@ class CotizacionesDetailView(LoginRequiredMixin, TemplateView):
     def get(self, request, *args, **kwargs):
         context = super(
             CotizacionesDetailView, self).get_context_data(**kwargs)
-        cotizacion = Comercio.objects.get(pk=kwargs['pk'])
-        user = User.objects.get(pk=request.user.pk)
         '''all_admins = [
             'super_admin',
             'admin'
@@ -166,27 +200,33 @@ class CotizacionesDetailView(LoginRequiredMixin, TemplateView):
         if not groups:
             #if cotizacion.corredor.pk != user.pk:
             return page_not_found(request)'''
-        duracion = 0
-        try:
-            if cotizacion.disc_long == '3 meses':
-                duracion = 3
-            elif cotizacion.disc_long == '6 meses':
-                duracion = 6
-            exp = cotizacion.creacion + relativedelta(months=duracion)
-            start = datetime.strptime(str(date.today()), '%Y-%m-%d')
-            print start
-            end = datetime.strptime(str(exp.date()), '%Y-%m-%d')
-            dias_restantes = end - start
-            if int(dias_restantes.days) >= 0:
-                cotizacion.deadline = int(dias_restantes.days)
-            else:
-                cotizacion.deadline = 0
-            context['exp_date'] = exp.date()
-        except:
-            cotizacion.deadline = 0
-        cotizacion.save()
-        context['cotizacion'] = cotizacion
-        context['active_user'] = user
+        solicitante = DatosSolicitante.objects.get(pk=kwargs['pk'])
+        creditos = Credito.objects.filter(solicitante=solicitante)
+        context['solicitante'] = solicitante
+        context['creditos'] = creditos
+        return self.render_to_response(context)
+
+
+class CreditoDetailView(LoginRequiredMixin, TemplateView):
+    template_name = 'reportes/credito_details.html'
+    model = Cotizacion
+
+    def get(self, request, *args, **kwargs):
+        context = super(
+            CreditoDetailView, self).get_context_data(**kwargs)
+        '''all_admins = [
+            'super_admin',
+            'admin'
+        ]
+        groups = user.groups.filter(name__in=all_admins)
+
+        if not groups:
+            #if cotizacion.corredor.pk != user.pk:
+            return page_not_found(request)'''
+        credito = Credito.objects.get(pk=kwargs['pk'])
+        solicitante = credito.solicitante
+        context['solicitante'] = solicitante
+        context['credito'] = credito
         return self.render_to_response(context)
 
 
@@ -228,7 +268,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
             context['vendedores'] = vendedorCot
         # Admin view
         elif request.user.groups.first().name == 'super_admin':
-            corredores = DatosCorredor.objects.all()
+            corredores = DatosEjecutivo.objects.all()
             for corredor in corredores:
                 cotizaciones = Cotizacion.objects.filter(
                     corredor=corredor.user, is_active=True)
@@ -251,7 +291,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         #Session User.
         context['usuario'] = user
         if user.groups.first().name == 'corredor':
-            context['corredor'] = DatosCorredor.objects.get(user=user)
+            context['corredor'] = DatosEjecutivo.objects.get(user=user)
         cotizaciones = Cotizacion.objects.filter(corredor=user, is_active=True)
         enviadas = Cotizacion.objects.filter(corredor=user, is_active=True, status='Enviada')
         guardadas = Cotizacion.objects.filter(corredor=user, is_active=True, status='Guardada')
@@ -321,7 +361,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
             context['vendedores'] = vendedorCot
         # Admin view
         elif request.user.groups.first().name == 'super_admin':
-            corredores = DatosCorredor.objects.all()
+            corredores = DatosEjecutivo.objects.all()
             for corredor in corredores:
                 cotizaciones = Cotizacion.objects.filter(
                     corredor=corredor.user, is_active=True, created_at__lte=end,
@@ -345,7 +385,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         #Session User.
         context['usuario'] = user
         if user.groups.first().name == 'corredor':
-            context['corredor'] = DatosCorredor.objects.get(user=user)
+            context['corredor'] = DatosEjecutivo.objects.get(user=user)
         cotizaciones = Cotizacion.objects.filter(corredor=user, is_active=True,created_at__lte=end,
                     created_at__gte=start)
         enviadas = Cotizacion.objects.filter(corredor=user, is_active=True, status='Enviada', created_at__lte=end,
@@ -484,7 +524,7 @@ class CotizacionesGeneralDetailView(LoginRequiredMixin, TemplateView):
             start = datetime.strptime(kwargs['start'], '%Y-%m-%d')
             end = datetime.strptime(kwargs['end'], '%Y-%m-%d')
         if request.user.groups.first().name == 'super_admin':
-            corredores = DatosCorredor.objects.all()
+            corredores = DatosEjecutivo.objects.all()
             for corredor in corredores:
                 if status == 'all':
                     cotizaciones += Cotizacion.objects.filter(
@@ -546,7 +586,7 @@ class CotizacionesGeneralDetailView(LoginRequiredMixin, TemplateView):
             start = date.today() - timedelta(days=30)
             end = date.today() + timedelta(days=1)
         if request.user.groups.first().name == 'super_admin':
-            corredores = DatosCorredor.objects.all()
+            corredores = DatosEjecutivo.objects.all()
             for corredor in corredores:
                 if status == 'all':
                     cotizaciones += Cotizacion.objects.filter(
@@ -594,53 +634,76 @@ class CotizacionesGeneralDetailView(LoginRequiredMixin, TemplateView):
 
 
 def changeStatus(request, id, status):
-    comercio = Comercio.objects.get(pk=id)
+    credito = Credito.objects.get(pk=id)
     if int(status) == 0:
-        comercio.status = "Recibido"
-        comercio.fecha_recibido = datetime.now().date()
-        ctx = {}
-        message = get_template('reportes/solicitud_recibida.html').render(Context(ctx))
-        msg = EmailMessage('Status de su solicitud', message, to=[comercio.email,comercio.email_rl], from_email='noreply@afiapp.com')
-        msg.content_subtype = 'html'
-        msg.send()
+        credito.status = "Recibido"
+        #comercio.fecha_recibido = datetime.now().date()
+        # ctx = {}
+        # message = get_template('reportes/solicitud_recibida.html').render(Context(ctx))
+        # msg = EmailMessage('Status de su solicitud', message, to=[comercio.email,comercio.email_rl], from_email='noreply@afiapp.com')
+        # msg.content_subtype = 'html'
+        # msg.send()
     elif int(status) == 1:
-        comercio.status = "Preaprobado"
-        comercio.fecha_preaprobado = datetime.now().date()
+        credito.status = "Pendiente"
+        #comercio.fecha_preaprobado = datetime.now().date()
     elif int(status) == 2:
-        comercio.status = "Rechazado"
-        comercio.fecha_rechazado = datetime.now().date()
-        ctx = {}
-        message = get_template('reportes/solicitud_rechazada.html').render(Context(ctx))
-        msg = EmailMessage('Status de su solicitud', message, to=[comercio.email,comercio.email_rl], from_email='noreply@afiapp.com')
-        msg.content_subtype = 'html'
-        msg.send()
+        credito.status = "Aprobado"
+        #comercio.fecha_rechazado = datetime.now().date()
+        # ctx = {}
+        # message = get_template('reportes/solicitud_rechazada.html').render(Context(ctx))
+        # msg = EmailMessage('Status de su solicitud', message, to=[comercio.email,comercio.email_rl], from_email='noreply@afiapp.com')
+        # msg.content_subtype = 'html'
+        # msg.send()
     elif int(status) == 3:
-        comercio.status = "En visita"
-        comercio.fecha_visita = datetime.now().date()
-        ctx = {}
-        message = get_template('reportes/solicitud_envisita.html').render(Context(ctx))
-        msg = EmailMessage('Status de su solicitud', message, to=[comercio.email,comercio.email_rl], from_email='noreply@afiapp.com')
-        msg.content_subtype = 'html'
-        msg.send()
-    elif int(status) == 4: 
-        comercio.status = "Documentos por enviar"
-        comercio.fecha_docs = datetime.now().date()
-        ctx = {}
-        message = get_template('reportes/solicitud_docsporenviar.html').render(Context(ctx))
-        msg = EmailMessage('Status de su solicitud', message, to=[comercio.email,comercio.email_rl], from_email='noreply@afiapp.com')
-        msg.content_subtype = 'html'
-        msg.send()
-    elif int(status) == 5:
-        comercio.status = "Aprobado"
-        comercio.fecha_aprobado = datetime.now().date()
-        ctx = {}
-        message = get_template('reportes/solicitud_aceptada.html').render(Context(ctx))
-        msg = EmailMessage('Status de su solicitud', message, to=[comercio.email,comercio.email_rl], from_email='noreply@afiapp.com')
-        msg.content_subtype = 'html'
-        msg.send()
-    comercio.save()
-    return HttpResponseRedirect(reverse_lazy('cotizaciones_list'))
+        credito.status = "Rechazado"
+        #comercio.fecha_visita = datetime.now().date()
+        # ctx = {}
+        # message = get_template('reportes/solicitud_envisita.html').render(Context(ctx))
+        # msg = EmailMessage('Status de su solicitud', message, to=[comercio.email,comercio.email_rl], from_email='noreply@afiapp.com')
+        # msg.content_subtype = 'html'
+        # msg.send()
+    credito.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+def cambiarStatusCredito(request,id):
+    credito = Credito.objects.get(pk=id)
+    if request.POST['option'] == '0':
+        credito.status = "Recibido"
+        credito.save()
+        message = """  <div style="background:#ED673B;"><img src="http://crediexpress.herokuapp.com/static/panacredit/img/express/Logo-Header.png"></div>
+                            <h2>Status de solicitud</h2><p>Su solicitud de préstamo a cambiado al status: Recibido.</p>
+                                <p> """+ str(request.POST['comment_'+str(id)]) +""".</p>"""
+        msg = EmailMessage('Status de su solicitud', message, to=[credito.solicitante.user.email], from_email='noreply@panacreditexpress.com')
+        msg.content_subtype = 'html'
+        msg.send()
+    elif request.POST['option'] == '1':
+        credito.status = "Pendiente"
+        credito.save()
+        message = """  <div style="background:#ED673B;"><img src="http://crediexpress.herokuapp.com/static/panacredit/img/express/Logo-Header.png"></div>
+                            <h2>Status de solicitud</h2><p>Su solicitud de préstamo a cambiado al status: Pendiente.</p>
+                                <p> """+ str(request.POST['comment_'+str(id)]) +""".</p>"""
+        msg = EmailMessage('Status de su solicitud', message, to=[credito.solicitante.user.email], from_email='noreply@panacreditexpress.com')
+        msg.content_subtype = 'html'
+        msg.send()
+    elif request.POST['option'] == '2':
+        credito.status = "Aprobado"
+        credito.save()
+        message = """  <div style="background:#ED673B;"><img src="http://crediexpress.herokuapp.com/static/panacredit/img/express/Logo-Header.png"></div>
+                            <h2>Status de solicitud</h2><p>Su solicitud de préstamo a cambiado al status: Aprobado.</p>
+                                <p> """+ str(request.POST['comment_'+str(id)]) +""".</p>"""
+        msg = EmailMessage('Status de su solicitud', message, to=[credito.solicitante.user.email], from_email='noreply@panacreditexpress.com')
+        msg.content_subtype = 'html'
+        msg.send()
+    elif request.POST['option'] == '3':
+        credito.status = "Rechazado"
+        credito.save()
+        message = """  <div style="background:#ED673B;"><img src="http://crediexpress.herokuapp.com/static/panacredit/img/express/Logo-Header.png"></div>
+                            <h2>Status de solicitud</h2><p>Su solicitud de préstamo a cambiado al status: Rechazado.</p>
+                                <p> """+ str(request.POST['comment_'+str(id)]) +""".</p>"""
+        msg = EmailMessage('Status de su solicitud', message, to=[credito.solicitante.user.email], from_email='noreply@panacreditexpress.com')
+        msg.content_subtype = 'html'
+        msg.send()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def sendCotization(request, id):
     cotizacion = Cotizacion.objects.get(pk=id)
@@ -690,72 +753,33 @@ def sendCotization(request, id):
 
 class ResumenGerencialView(TemplateView):
     template_name = 'reportes/resumen.html'
-    model = Comercio
+    model = DatosSolicitante
 
     def get(self, request, *args, **kwargs):
-        print (str(request.user)=="admin")
         context = super(
             ResumenGerencialView, self).get_context_data(**kwargs)
-        comercio = Comercio.objects.all()
-        pos_si = 0
-        pos_no = 0
-        ultimos_15 = []
-        # Obtener deadlines
-        for elem in comercio:
-            duracion = 0
-            try:
-                if elem.disc_long == '3 meses':
-                    duracion = 3
-                elif elem.disc_long == '6 meses':
-                    duracion = 6
-                exp = elem.creacion + relativedelta(months=duracion)
-                start = datetime.strptime(str(date.today()), '%Y-%m-%d')
-                end = datetime.strptime(str(exp.date()), '%Y-%m-%d')
-                dias_restantes = end - start
-                if int(dias_restantes.days) >= 0:
-                    elem.deadline = int(dias_restantes.days)
-                else:
-                    elem.deadline = 0
-            except:
-                elem.deadline = 0
-            elem.save()
-        try:
-            corredor = DatosCorredor.objects.get(user=request.user)
-            es_corredor = True
-        except:
-            es_corredor = False
-        if es_corredor:
-            banco = DatosCorredor.objects.get(user=request.user)
-            comercios_banco = 0
-            for elem in comercio:
-                print banco
-                if str(elem.programa_beneficios)==str(banco.nombre):
-                    if elem.desea_pos != None:
-                        if elem.desea_pos == 'Si':
-                            pos_si += 1
-                        else:
-                            pos_no += 1
-                    if elem.deadline <= 15:
-                        ultimos_15.append(elem)
-                    comercios_banco+=1
-            context['num_cotizaciones'] = comercios_banco
-            context['ultimos_15'] = ultimos_15
-            context['num_ultimos_15'] = len(ultimos_15)
-        else:
-            for elem in comercio:
-                if elem.desea_pos != None:
-                    if elem.desea_pos == 'Si':
-                        pos_si += 1
-                    else:
-                        pos_no += 1
-                if elem.deadline <= 15:
-                    ultimos_15.append(elem)
-            context['num_cotizaciones'] = len(comercio)
-            context['ultimos_15'] = ultimos_15
-            context['num_ultimos_15'] = len(ultimos_15)
-
-        context['pos_si'] = pos_si
-        context['pos_no'] = pos_no
+        solicitantes = DatosSolicitante.objects.all()
+        creditos = Credito.objects.all()
+        recibidas = 0
+        pendientes = 0
+        aprobadas = 0
+        rechazadas = 0
+        for elem in creditos:
+            if (elem.status == 'Recibido'):
+                recibidas += 1
+            elif (elem.status == 'Pendiente'):
+                pendientes += 1
+            elif (elem.status == 'Aprobado'):
+                aprobadas += 1
+            elif (elem.status == 'Rechazado'):
+                rechazadas += 1
+        context['solicitantes'] = solicitantes
+        context['num_solicitantes'] = len(solicitantes)
+        context['num_creditos'] = len(creditos)
+        context['recibidas'] = recibidas
+        context['pendientes'] = pendientes
+        context['aprobadas'] = aprobadas
+        context['rechazadas'] = rechazadas
         return self.render_to_response(context)
 
 class RegistrarBancoView(CreateView):
@@ -864,7 +888,7 @@ class ComerciosActivosView(TemplateView):
                     comercios_banco.append(elem)
             context['comercios'] = comercios_banco
         else:
-            banco = DatosCorredor.objects.get(user=request.user)
+            banco = DatosEjecutivo.objects.get(user=request.user)
             comercios_banco = []
             for elem in ordenados:
                 if str(elem.programa_beneficios)==str(banco.nombre):
@@ -913,6 +937,159 @@ class DocumentosPorEnviarView(UpdateView):
         return HttpResponseRedirect(reverse_lazy('documentos',kwargs={'pk':comercio.pk}))
 
 def eliminarDocumento(request, id):
-    documento = DocumentosComercio.objects.get(pk=id)
-    documento.delete()
-    return HttpResponseRedirect(reverse_lazy('documentos',kwargs={'pk':documento.comercio.pk}))
+    try:
+        documento = ReferenciasPersonales.objects.get(pk=id)
+        documento.delete()
+
+    except:
+        pass
+
+    try:
+        documento = ReferenciasBancarias.objects.get(pk=id)
+        documento.delete()
+
+    except:
+        pass
+
+    try:
+        documento = DocumentosPersonales.objects.get(pk=id)
+        documento.delete()
+
+    except:
+        pass
+
+    return HttpResponseRedirect(reverse_lazy('subir-documentacion',kwargs={'pk':documento.solicitante.user.pk}))
+
+class PerfilView(TemplateView):
+    template_name = 'reportes/perfil.html'
+    model = DatosSolicitante
+
+    def get(self, request, *args, **kwargs):
+        context = super(
+            PerfilView, self).get_context_data(**kwargs)
+        usuario = User.objects.get(pk=kwargs['pk'])
+        solicitante = DatosSolicitante.objects.get(user=usuario)
+        print solicitante
+        context['user2'] = solicitante
+        context['user1'] = usuario
+        return self.render_to_response(context)
+
+
+class PerfilEjecutivoView(TemplateView):
+    template_name = 'reportes/perfil_ejecutivo.html'
+    model = DatosEjecutivo
+
+    def get(self, request, *args, **kwargs):
+        context = super(
+            PerfilEjecutivoView, self).get_context_data(**kwargs)
+        usuario = User.objects.get(pk=kwargs['pk'])
+        solicitante = DatosEjecutivo.objects.get(user=usuario)
+        context['user2'] = solicitante
+        context['user1'] = usuario
+        return self.render_to_response(context)
+
+
+class TipoCreditoView(TemplateView):
+    template_name = 'reportes/tipo_credito.html'
+
+
+class SolicitarCreditoView(TemplateView):
+    template_name = 'reportes/solicitar_credito.html'
+
+
+def crear_credito(request,id):
+    usuario = User.objects.get(pk=id)
+    solicitante = DatosSolicitante.objects.get(user=usuario)
+    credito = Credito(solicitante=solicitante,monto=request.POST['monto'],dias=request.POST['dias'],status='Recibido')
+    tope = credito.fecha_solicitud + datetime.timedelta(days=int(credito.dias))
+    credito.fecha_tope = tope
+    credito.save()
+    return HttpResponseRedirect(reverse_lazy('solicitar-credito'))
+
+
+class StatusCreditoView(TemplateView):
+    template_name = 'reportes/status_credito.html'
+    model = DatosSolicitante
+
+    def get(self, request, *args, **kwargs):
+        context = super(
+            StatusCreditoView, self).get_context_data(**kwargs)
+        usuario = User.objects.get(pk=kwargs['pk'])
+        solicitante = DatosSolicitante.objects.get(user=usuario)
+        creditos = Credito.objects.filter(solicitante=solicitante)
+        context['solicitante'] = solicitante
+        context['creditos'] = creditos
+        return self.render_to_response(context)
+
+class SubirDocumentacionView(UpdateView):
+    template_name = 'reportes/subir_documentacion.html'
+    model = User
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        usuario = User.objects.get(pk=kwargs['pk'])
+        solicitante = DatosSolicitante.objects.get(user=usuario)
+        
+        try:
+            referencias_personales = ReferenciasPersonales.objects.filter(solicitante = solicitante)
+        
+        except:
+            referencias_personales = []
+
+        try:
+            referencias_bancarias = ReferenciasBancarias.objects.filter(solicitante = solicitante)
+        
+        except:
+            referencias_bancarias = []
+
+        try:
+            documentos_personales = DocumentosPersonales.objects.filter(solicitante = solicitante)
+        
+        except:
+            documentos_personales = []
+        
+        context['referencias_personales'] = referencias_personales
+        context['referencias_bancarias'] = referencias_bancarias
+        context['documentos_personales'] = documentos_personales
+        context['solicitante'] = solicitante
+        return self.render_to_response(context)
+
+    def post(self, request, *args, **kwargs):
+        usuario = User.objects.get(pk=kwargs['pk'])
+        solicitante = DatosSolicitante.objects.get(user=usuario)
+        
+        if ('referencias_personales' in request.FILES):
+            rp = request.FILES['referencias_personales']
+            product_path_rp = "Documentos/ReferenciasPersonales/" + str(solicitante.pk) + rp.name
+            default_storage.save(product_path_rp, ContentFile(rp.read()))
+            referencias_personales = ReferenciasPersonales(
+                                            doc='media/Documentos/ReferenciasPersonales/'+ str(solicitante.pk) + rp.name,
+                                            solicitante=solicitante,
+                                            nombre=rp.name
+                                            )
+            referencias_personales.save()
+
+        if ('referencias_bancarias' in request.FILES):
+            rb = request.FILES['referencias_bancarias']
+            product_path_rb = "Documentos/ReferenciasBancarias/" + str(solicitante.pk) + rb.name
+            default_storage.save(product_path_rb, ContentFile(rb.read()))
+            referencias_bancarias = ReferenciasBancarias(
+                                            doc='media/Documentos/ReferenciasBancarias/'+ str(solicitante.pk) + rb.name,
+                                            solicitante=solicitante,
+                                            nombre=rb.name
+                                            )
+            referencias_bancarias.save()
+
+        if ('documentos_personales' in request.FILES):
+            dp = request.FILES['documentos_personales']
+            product_path_dp = "Documentos/DocumentosPersonales/" + str(solicitante.pk) + dp.name
+            default_storage.save(product_path_dp, ContentFile(dp.read()))
+            documentos_personales = DocumentosPersonales(
+                                            doc='media/Documentos/DocumentosPersonales/'+ str(solicitante.pk) + dp.name,
+                                            solicitante=solicitante,
+                                            nombre=dp.name
+                                            )
+            documentos_personales.save()
+
+        return HttpResponseRedirect(reverse_lazy('subir-documentacion',kwargs={'pk':solicitante.user.pk}))

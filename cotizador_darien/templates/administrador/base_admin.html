@@ -45,11 +45,11 @@
       <header class="main-header">
 
         <!-- Logo -->
-        <a href="{% url 'cotizaciones_list' %}" class="logo">
+        <a href="#" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>AS</b></span>
+          <span class="logo-mini"><b>PE</b></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Admin</b> Afiapp</span>
+          <span class="logo-lg"><b>Dashboard</b> CEMBI Venezuela</span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->
@@ -255,7 +255,7 @@
               </li>
               <li class="dropdown notifications-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span class="hidden-xs">{{ user.get_full_name|default:user.username }}</span>
+                  <span class="hidden-xs">{{ request.user.get_full_name|default:request.user.username }}</span>
                   <i class="fa fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu">
@@ -299,83 +299,81 @@
           <!-- /.search form -->
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
-            <li class="header">NAVEGACIÓN PRINCIPAL</li>
-            <!--
-              <li class="treeview">
-                <a href="{% url 'dashboard' %}">
-                  <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                </a>
-              </li> -->
-            {% if user.is_authenticated and user.groups.all.0.name == 'super_admin' %}
-              <!--
-              <li class="treeview">
-                <a href="{% url 'factores' %}">
-                  <i class="fa fa-cog"></i> <span>Factores</span>
-                </a>
-              </li> -->
+            <li class="header">Mis Opciones</li>
+            {% if user.is_authenticated %}
+
+                  {% if user.groups.all.0.name == 'admin' %}
+                    <li class="treeview">
+                      <a href="{% url 'resumen' %}">
+                        <i class="fa fa-file-text-o"></i> <span>Resumen Gerencial</span>
+                      </a>
+                    </li>
+                    <li class="treeview">
+                      <a href="{% url 'registrar-banco' %}">
+                        <i class="fa fa-user-plus"></i> <span>Registrar Analista</span>
+                      </a>
+                    </li>
+                    <li class="treeview">
+                      <a href="{% url 'solicitantes_list' %}">
+                        <i class="fa fa-list-alt"></i> <span>Solicitantes</span>
+                      </a>
+                    </li>
+                    <li class="treeview">
+                      <a href="{% url 'solicitudes_list' %}">
+                        <i class="fa fa-list-alt"></i> <span>Solicitudes por atender</span>
+                      </a>
+                    </li>
+                    <li class="treeview">
+                      <a href="{% url 'factores' %}">
+                        <i class="fa fa-eye"></i> <span>Factores</span>
+                      </a>
+                    </li>
+
+                  {% elif user.groups.all.0.name == 'corredor' %}
+                    <li class="treeview">
+                      <a href="{% url 'resumen' %}">
+                        <i class="fa fa-file-text-o"></i> <span>Resumen Gerencial</span>
+                      </a>
+                    </li>
+                    <li class="treeview">
+                      <a href="{% url 'solicitantes_list' %}">
+                        <i class="fa fa-list-alt"></i> <span>Solicitantes</span>
+                      </a>
+                    </li>
+                    <li class="treeview">
+                      <a href="{% url 'solicitudes_list' %}">
+                        <i class="fa fa-list-alt"></i> <span>Solicitudes por atender</span>
+                      </a>
+                    </li>
+                    <li class="treeview">
+                      <a href="#">
+                        <i class="fa fa-cloud-upload"></i> <span>Carga masiva</span>
+                      </a>
+                    </li>
+                  {% else %}
+                    <li class="treeview">
+                      <a href="{% url 'perfil' user.pk %}">
+                        <i class="fa fa-user"></i> <span>Mi Perfil</span>
+                      </a>
+                    </li>
+                    <li class="treeview">
+                      <a href="{% url 'tipo-credito' %}">
+                        <i class="fa fa-usd"></i> <span>Solicitar Crédito</span>
+                      </a>
+                    </li>
+                    <li class="treeview">
+                      <a href="{% url 'status-credito' user.pk %}">
+                        <i class="fa fa-credit-card"></i> <span>Ver Status de Crédito</span>
+                      </a>
+                    </li>
+                    <li class="treeview">
+                      <a href="{% url 'subir-documentacion' user.pk %}">
+                        <i class="fa fa-file-o"></i> <span>Subir Documentación</span>
+                      </a>
+                    </li>
+                  {% endif %}
+
             {% endif %}
-            {% if user.is_authenticated and user.groups.all.0.name == 'super_admin' %}
-              <!--
-              <li class="treeview">
-                <a href="{% url 'corredor-vendedor-list' %}">
-                  <i class="fa fa-users"></i> <span>Bancos y Ejecutivos</span>
-                </a>
-              </li>
-              <li class="treeview">
-                <a href="{% url 'register' %}">
-                  <i class="fa fa-user-plus"></i> <span>Registrar Banco</span>
-                </a>
-              </li> -->
-            {% endif %}
-            {% if user.is_authenticated and user.groups.all.0.name == 'super_admin' %}
-              
-              <li class="treeview">
-                <a href="{% url 'registrar-banco' %}">
-                  <i class="fa fa-user-plus"></i> <span>Registrar Banco</span>
-                </a>
-              </li>
-              <!--
-              <li class="treeview">
-                <a href="{% url 'corredor-vendedor-list' %}">
-                  <i class="fa fa-users"></i> <span>Bancos y Ejecutivos</span>
-                </a>
-              </li>
-              -->
-            {% endif %}
-            {% if user.is_authenticated and user.groups.all.0.name == 'corredor' %}
-              <!--
-              <li class="treeview">
-                <a href="{% url 'register' %}">
-                  <i class="fa fa-user-plus"></i> <span>Registrar Ejecutivo</span>
-                </a>
-              </li>
-            {% endif %}
-            -->
-            <li class="treeview">
-              <a href="{% url 'resumen' %}">
-                <i class="fa fa-file-text-o"></i> <span>Resumen Gerencial</span>
-              </a>
-            </li>
-            <li class="treeview">
-              <a href="{% url 'cotizaciones_list' %}">
-                <i class="fa fa-comment-o"></i> <span>Solicitudes Comercios</span>
-              </a>
-            </li>
-            <li class="treeview">
-              <a href="{% url 'comercios_list_pos' %}">
-                <i class="fa fa-comment-o"></i> <span>Solicitudes POS</span>
-              </a>
-            </li>
-            <li class="treeview">
-              <a href="{% url 'comercios-activos' %}">
-                <i class="fa fa-check-square"></i> <span>Comercios Activos</span>
-              </a>
-            </li>
-            <li class="treeview">
-              <a href="">
-                <i class="fa fa-star"></i> <span>Reviews</span>
-              </a>
-            </li>
           </ul>
         </section>
         <!-- /.sidebar -->
@@ -397,7 +395,7 @@
       </div><!-- /.content-wrapper -->
 
       <footer class="main-footer text-center">
-        <a id="link-footer" href="#">Términos y condiciones</a> - Afiapp - Panamá - Todos los derechos reservados
+        <a id="link-footer" href="#">Términos y condiciones</a> - CEMBI Venezuela - Panamá - Todos los derechos reservados
       </footer>
 
       <!-- Control Sidebar -->
