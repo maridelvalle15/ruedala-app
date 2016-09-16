@@ -304,73 +304,15 @@
 
                   {% if user.groups.all.0.name == 'admin' %}
                     <li class="treeview">
-                      <a href="{% url 'resumen' %}">
-                        <i class="fa fa-file-text-o"></i> <span>Resumen Gerencial</span>
-                      </a>
-                    </li>
-                    <li class="treeview">
-                      <a href="{% url 'registrar-banco' %}">
-                        <i class="fa fa-user-plus"></i> <span>Registrar Analista</span>
-                      </a>
-                    </li>
-                    <li class="treeview">
-                      <a href="{% url 'solicitantes_list' %}">
-                        <i class="fa fa-list-alt"></i> <span>Solicitantes</span>
-                      </a>
-                    </li>
-                    <li class="treeview">
-                      <a href="{% url 'solicitudes_list' %}">
-                        <i class="fa fa-list-alt"></i> <span>Solicitudes por atender</span>
-                      </a>
-                    </li>
-                    <li class="treeview">
-                      <a href="{% url 'factores' %}">
-                        <i class="fa fa-eye"></i> <span>Factores</span>
+                      <a href="{% url 'prestamos' %}">
+                        <i class="fa fa-bicycle"></i> <span>Préstamos</span>
                       </a>
                     </li>
 
                   {% elif user.groups.all.0.name == 'corredor' %}
-                    <li class="treeview">
-                      <a href="{% url 'resumen' %}">
-                        <i class="fa fa-file-text-o"></i> <span>Resumen Gerencial</span>
-                      </a>
-                    </li>
-                    <li class="treeview">
-                      <a href="{% url 'solicitantes_list' %}">
-                        <i class="fa fa-list-alt"></i> <span>Solicitantes</span>
-                      </a>
-                    </li>
-                    <li class="treeview">
-                      <a href="{% url 'solicitudes_list' %}">
-                        <i class="fa fa-list-alt"></i> <span>Solicitudes por atender</span>
-                      </a>
-                    </li>
-                    <li class="treeview">
-                      <a href="#">
-                        <i class="fa fa-cloud-upload"></i> <span>Carga masiva</span>
-                      </a>
-                    </li>
+
                   {% else %}
-                    <li class="treeview">
-                      <a href="{% url 'perfil' user.pk %}">
-                        <i class="fa fa-user"></i> <span>Mi Perfil</span>
-                      </a>
-                    </li>
-                    <li class="treeview">
-                      <a href="{% url 'tipo-credito' %}">
-                        <i class="fa fa-usd"></i> <span>Solicitar Crédito</span>
-                      </a>
-                    </li>
-                    <li class="treeview">
-                      <a href="{% url 'status-credito' user.pk %}">
-                        <i class="fa fa-credit-card"></i> <span>Ver Status de Crédito</span>
-                      </a>
-                    </li>
-                    <li class="treeview">
-                      <a href="{% url 'subir-documentacion' user.pk %}">
-                        <i class="fa fa-file-o"></i> <span>Subir Documentación</span>
-                      </a>
-                    </li>
+
                   {% endif %}
 
             {% endif %}

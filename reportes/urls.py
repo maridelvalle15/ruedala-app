@@ -42,9 +42,9 @@ urlpatterns = patterns(
         CotizacionesListPOSView.as_view(),
         name='comercios_list_pos'),
     url(
-        r'^resumen/$',
-        ResumenGerencialView.as_view(),
-        name='resumen'),
+        r'^prestamos/$',
+        PrestamosView.as_view(),
+        name='prestamos'),
     url(
         r'^perfil/(?P<pk>\w+)/$',
         PerfilView.as_view(),

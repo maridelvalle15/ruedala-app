@@ -751,35 +751,13 @@ def sendCotization(request, id):
 
     return HttpResponseRedirect(reverse_lazy('cotizaciones_list'))
 
-class ResumenGerencialView(TemplateView):
-    template_name = 'reportes/resumen.html'
+class PrestamosView(TemplateView):
+    template_name = 'reportes/prestamos.html'
     model = DatosSolicitante
 
     def get(self, request, *args, **kwargs):
         context = super(
-            ResumenGerencialView, self).get_context_data(**kwargs)
-        solicitantes = DatosSolicitante.objects.all()
-        creditos = Credito.objects.all()
-        recibidas = 0
-        pendientes = 0
-        aprobadas = 0
-        rechazadas = 0
-        for elem in creditos:
-            if (elem.status == 'Recibido'):
-                recibidas += 1
-            elif (elem.status == 'Pendiente'):
-                pendientes += 1
-            elif (elem.status == 'Aprobado'):
-                aprobadas += 1
-            elif (elem.status == 'Rechazado'):
-                rechazadas += 1
-        context['solicitantes'] = solicitantes
-        context['num_solicitantes'] = len(solicitantes)
-        context['num_creditos'] = len(creditos)
-        context['recibidas'] = recibidas
-        context['pendientes'] = pendientes
-        context['aprobadas'] = aprobadas
-        context['rechazadas'] = rechazadas
+            PrestamosView, self).get_context_data(**kwargs)
         return self.render_to_response(context)
 
 class RegistrarBancoView(CreateView):
