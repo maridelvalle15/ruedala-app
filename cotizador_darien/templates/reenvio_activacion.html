@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Error en Activación de cuenta{% endblock %}
+
+{% block extracss %}
+
+{% endblock extracss %}
+<style type="text/css">
+    #titulo-login {
+        font-family: Arial;
+        font-size: 29px;
+        color: #B5B6B8;
+    }
+    @media only screen and (max-width: 435px) {
+        #titulo-login {
+            font-family: Arial;
+            font-size: 15px;
+            color: #B5B6B8;
+        }
+    }
+    #link-acerta {
+        color: #abbdd1;
+    }
+    input:focus {
+        border-color: #abbdd1 !important;
+        color: #abbdd1 !important;
+    }
+    input:focus::-webkit-input-placeholder {
+        color: #abbdd1 !important;
+    }
+    input:focus::-moz-placeholder {
+        color: #abbdd1 !important;
+    }
+    input:focus:-moz-placeholder {
+        color: #abbdd1 !important;
+    }
+    input:focus:-ms-input-placeholder {
+        color: #abbdd1 !important;
+    }
+    .login-box-body {
+        margin-left: 20%;
+        margin-right: 20%
+    }
+    .calculate {
+        color: #FFFFFF;
+        background-color: #727270;
+        text-align: center;
+    }
+    .calculate {
+      transition: all 0.8s ease;
+    }
+    .calculate:hover {
+      background: #abbdd1;
+      color: #FFFFFF;
+    }
+    .first {
+        padding-top: 10%;
+    }
+    @media only screen and (max-width: 435px) {
+        .first {
+          padding-top: 20%;
+        }
+    }
+</style>
+{% block content %}
+
+<div class="row">
+    <div class="col-xs-12 first">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 text-center">
+                    <h1 id="titulo-login" class="text-center"><strong>ACTIVACIÓN DE CUENTA</strong></h1>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <div class="col-xs-1 col-sm-2 col-md-4"></div>
+            <div class="col-xs-10 col-sm-8 col-md-4">
+                <div class="login-box-body">
+                    <p>Tu cuenta NO pudo ser activada, puede que este link este vencido y ten hemos enviado otro.</p>
+                    <a href="{% url 'login' %}" class="btn btn-primary btn-block text-center">Iniciar Sesión</a>
+                </div><!-- /.login-box-body -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+

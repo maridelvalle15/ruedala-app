@@ -1,0 +1,517 @@
+{% load humanize %}
+<style type="text/css">
+        div,p,a,li,td{
+            -webkit-text-size-adjust:none;
+        }
+        .ReadMsgBody{
+            width:100%;
+            background-color:#ffffff;
+        }
+    @font-face {font-family: 'proxima_novalight';src: url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-light-webfont.eot');src: url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-light-webfont.eot?#iefix') format('embedded-opentype'),url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-light-webfont.woff') format('woff'),url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-light-webfont.ttf') format('truetype');font-weight: normal;font-style: normal;}
+    @font-face {font-family: 'proxima_nova_rgregular'; src: url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-regular-webfont.eot');src: url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-regular-webfont.eot?#iefix') format('embedded-opentype'),url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-regular-webfont.woff') format('woff'),url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-regular-webfont.ttf') format('truetype');font-weight: normal;font-style: normal;}
+    @font-face {font-family: 'proxima_novasemibold';src: url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-semibold-webfont.eot');src: url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-semibold-webfont.eot?#iefix') format('embedded-opentype'),url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-semibold-webfont.woff') format('woff'),url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-semibold-webfont.ttf') format('truetype');font-weight: normal;font-style: normal;}
+    @font-face {font-family: 'proxima_nova_rgbold';src: url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-bold-webfont.eot');src: url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-bold-webfont.eot?#iefix') format('embedded-opentype'),url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-bold-webfont.woff') format('woff'),url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-bold-webfont.ttf') format('truetype');font-weight: normal;font-style: normal;}
+    @font-face {font-family: 'proxima_novablack';src: url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-black-webfont.eot');src: url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-black-webfont.eot?#iefix') format('embedded-opentype'),url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-black-webfont.woff') format('woff'),url('http://rocketway.net/themebuilder/template/templates/titan/font/proximanova-black-webfont.ttf') format('truetype');font-weight: normal;font-style: normal;}
+    @font-face {font-family: 'proxima_novathin';src: url('http://rocketway.net/themebuilder/template/templates/mason/font/proximanova-thin-webfont.eot');src: url('http://rocketway.net/themebuilder/template/templates/mason/font/proximanova-thin-webfont.eot?#iefix') format('embedded-opentype'),url('http://rocketway.net/themebuilder/template/templates/mason/font/proximanova-thin-webfont.woff') format('woff'),url('http://rocketway.net/themebuilder/template/templates/mason/font/proximanova-thin-webfont.ttf') format('truetype');font-weight: normal;font-style: normal;}
+        .ExternalClass{
+            width:100%;
+            background-color:#ffffff;
+        }
+        body{
+            width:100%;
+            height:100%;
+            background-color:#ffffff;
+            margin:0;
+            padding:0;
+            -webkit-font-smoothing:antialiased;
+        }
+        html{
+            width:100%;
+        }
+        p{
+            padding:0!important;
+            margin-top:0!important;
+            margin-right:0!important;
+            margin-bottom:0!important;
+            margin-left:0!important;
+        }
+        .hover:hover{
+            opacity:0.85;
+            filter:alpha(opacity=85);
+        }
+        .image77 img{
+            width:77px;
+            height:auto;
+        }
+        .avatar125 img{
+            width:125px;
+            height:auto;
+        }
+        .icon61 img{
+            width:61px;
+            height:auto;
+        }
+        .image75 img{
+            width:200px;
+            height:auto;
+        }
+        .icon18 img{
+            width:18px;
+            height:auto;
+        }
+    @media only screen and (max-width: 640px){
+        body{
+            width:auto!important;
+        }
+
+}   @media only screen and (max-width: 640px){
+        table[class=full2]{
+            width:100%!important;
+            clear:both;
+        }
+
+}   @media only screen and (max-width: 640px){
+        table[class=mobile2]{
+            width:100%!important;
+            padding-left:20px;
+            padding-right:20px;
+            clear:both;
+        }
+
+}   @media only screen and (max-width: 640px){
+        table[class=fullCenter2]{
+            width:100%!important;
+            text-align:center!important;
+            clear:both;
+        }
+
+}   @media only screen and (max-width: 640px){
+        td[class=fullCenter2]{
+            width:100%!important;
+            text-align:center!important;
+            clear:both;
+        }
+
+}   @media only screen and (max-width: 640px){
+        td[class=pad15]{
+            width:100%!important;
+            padding-left:15px;
+            padding-right:15px;
+            clear:both;
+        }
+
+}   @media only screen and (max-width: 479px){
+        body{
+            width:auto!important;
+        }
+
+}   @media only screen and (max-width: 479px){
+        table[class=full2]{
+            width:100%!important;
+            clear:both;
+        }
+
+}   @media only screen and (max-width: 479px){
+        table[class=mobile2]{
+            width:100%!important;
+            padding-left:20px;
+            padding-right:20px;
+            clear:both;
+        }
+
+}   @media only screen and (max-width: 479px){
+        table[class=fullCenter2]{
+            width:100%!important;
+            text-align:center!important;
+            clear:both;
+        }
+
+}   @media only screen and (max-width: 479px){
+        td[class=fullCenter2]{
+            width:100%!important;
+            text-align:center!important;
+            clear:both;
+        }
+
+}   @media only screen and (max-width: 479px){
+        table[class=full]{
+            width:100%!important;
+            clear:both;
+        }
+
+}   @media only screen and (max-width: 479px){
+        table[class=mobile]{
+            width:100%!important;
+            padding-left:20px;
+            padding-right:20px;
+            clear:both;
+        }
+
+}   @media only screen and (max-width: 479px){
+        table[class=fullCenter]{
+            width:100%!important;
+            text-align:center!important;
+            clear:both;
+        }
+
+}   @media only screen and (max-width: 479px){
+        td[class=fullCenter]{
+            width:100%!important;
+            text-align:center!important;
+            clear:both;
+        }
+
+}   @media only screen and (max-width: 479px){
+        td[class=pad15]{
+            width:100%!important;
+            padding-left:15px;
+            padding-right:15px;
+            clear:both;
+        }
+
+}   @media only screen and (max-width: 479px){
+        .erase{
+            display:none;
+        }
+
+}       body{
+            background:none !important;
+        }
+</style><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+<title>Notify</title>
+
+
+
+<!-- @media only screen and (max-width: 640px)
+           {*/
+           -->
+
+<!--
+
+@media only screen and (max-width: 479px)
+           {
+           -->
+
+
+
+
+<!-- Notification 6 -->
+<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="full2" bgcolor="#303030" style="background-color: rgb(48, 48, 48);">
+    <tbody><tr mc:repeatable>
+        <td style="background-image: url(https://gallery.mailchimp.com/02db3dff80fbae40a84d8f0d6/images/14f653dc-e651-4b80-a16b-e7e2d0031db1.jpg); -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; background-position: center center; background-repeat: no-repeat;" id="not6">
+        <div mc:hideable>
+
+            <!-- Mobile Wrapper -->
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="mobile2">
+                <tbody><tr>
+                    <td width="100%">
+
+                        <div class="sortable_inner ui-sortable">
+                        <!-- Space -->
+                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="full" object="drag-module-small">
+                            <tbody><tr>
+                                <td width="100%" height="50"></td>
+                            </tr>
+                        </tbody></table><!-- End Space -->
+
+                        <!-- Space -->
+                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="full" object="drag-module-small">
+                            <tbody><tr>
+                                <td width="100%" height="50"></td>
+                            </tr>
+                        </tbody></table><!-- End Space -->
+
+                        <!-- Start Top -->
+                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="mobile2" bgcolor="#4edeb5" style="border-top-left-radius: 5px; border-top-right-radius: 5px; background-color: #EEEEEE;" object="drag-module-small">
+                            <tbody><tr>
+                                <td width="100%" valign="middle" class="image75">
+
+                                    <!-- Header Text -->
+                                    <table width="540" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align: center; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="fullCenter2">
+                                        <tbody><tr>
+                                            <td width="100%" height="30"></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%"><span><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/danielsepe-1/images/1201159/Logo-Darien_11.png" width="200px" alt="" border="0" mc:edit="39"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" height="30"></td>
+                                        </tr>
+                                    </tbody></table>
+                                </td>
+                            </tr>
+                        </tbody></table>
+
+                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="mobile2" bgcolor="#ffffff" object="drag-module-small" style="background-color: rgb(255, 255, 255);">
+                            <tbody><tr>
+                                <td width="100%" valign="middle">
+
+                                    <table width="540" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align: center; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="fullCenter2">
+                                        <tbody><tr>
+                                            <td width="100%" height="30"></td>
+                                        </tr>
+                                    </tbody></table>
+                                </td>
+                            </tr>
+                        </tbody></table>
+
+                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="mobile2" bgcolor="#ffffff" object="drag-module-small" style="background-color: rgb(255, 255, 255);">
+                            <tbody><tr>
+                                <td width="100%" valign="middle">
+
+                                    <table width="540" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align: center; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="fullCenter2">
+                                        <tbody><tr>
+                                            <td valign="middle" width="100%" style="text-align: left; font-family: Helvetica, Arial, sans-serif; font-size: 23px; color: rgb(63, 67, 69); line-height: 30px; font-weight: 100;" mc:edit="40">
+                                                <!--[if !mso]><!--><span style="font-family: 'proxima_novathin', Helvetica; font-weight: normal;"><!--<![endif]-->Estimado(a) {{cotizacion.corredor.first_name}}, <!--[if !mso]><!--></span><!--<![endif]-->
+                                            </td>
+                                        </tr>
+                                    </tbody></table>
+                                </td>
+                            </tr>
+                        </tbody></table>
+
+                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="mobile2" bgcolor="#ffffff" object="drag-module-small" style="background-color: rgb(255, 255, 255);">
+                            <tbody><tr>
+                                <td width="100%" valign="middle">
+
+                                    <table width="540" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align: center; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="fullCenter2">
+                                        <tbody><tr>
+                                            <td width="100%" height="30"></td>
+                                        </tr>
+                                    </tbody></table>
+                                </td>
+                            </tr>
+                        </tbody></table>
+
+                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="mobile2" bgcolor="#ffffff" object="drag-module-small" style="background-color: rgb(255, 255, 255);">
+                            <tbody><tr>
+                                <td width="100%" valign="middle">
+
+                                    <table width="540" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align: center; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="fullCenter2">
+                                        <tbody><tr>
+                                            <td valign="middle" width="100%" style="text-align: left; font-family: Helvetica, Arial, sans-serif; font-size: 14px; color: rgb(63, 67, 69); line-height: 24px;" mc:edit="41">
+                                                <!--[if !mso]><!--><span style="font-family: 'proxima_nova_rgregular', Helvetica; font-weight: normal;"><!--<![endif]-->A continuación le presentamos la siguiente cotización realizada para el cliente {{cotizacion.conductor.nombre}} {{ cotizacion.conductor.apellido }} para el vehiculo {{cotizacion.conductor.marca.nombre}} {{cotizacion.conductor.modelo.nombre}} {{cotizacion.conductor.anio}}, valorado en B/. {{valor_vehiculo}} <!--[if !mso]><!--></span><!--<![endif]-->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td valign="middle" width="100%" style="text-align: left; font-family: Helvetica, Arial, sans-serif; font-size: 14px; color: rgb(63, 67, 69); line-height: 24px;" mc:edit="41">
+                                                <!--[if !mso]><!--><span style="font-family: 'proxima_nova_rgregular', Helvetica; font-weight: normal;">
+                                                Correo del cliente: {{ cotizacion.conductor.correo }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td valign="middle" width="100%" style="text-align: left; font-family: Helvetica, Arial, sans-serif; font-size: 14px; color: rgb(63, 67, 69); line-height: 24px;" mc:edit="41">
+                                                <!--[if !mso]><!--><span style="font-family: 'proxima_nova_rgregular', Helvetica; font-weight: normal;">
+                                                Teléfono celular: {{ cotizacion.conductor.telefono1 }}
+                                            </td>
+                                        </tr>
+                                    </tbody></table>
+                                </td>
+                            </tr>
+                        </tbody></table>
+
+
+                        <!-- - Button Center
+                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="mobile2" bgcolor="#ffffff" object="drag-module-small" style="background-color: rgb(255, 255, 255);">
+                            <tbody><tr>
+                                <td width="100%" valign="middle">
+
+                                    <table width="540" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align: center; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="fullCenter2">
+                                        <tbody><tr>
+                                            <td>
+                                                <table border="0" cellpadding="0" cellspacing="0" align="left">
+                                                    <tbody><tr>
+                                                        <td align="center" height="45" bgcolor="#4edeb5" style="border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; padding-left: 30px; padding-right: 30px; font-weight: bold; font-family: Helvetica, Arial, sans-serif; color: rgb(255, 255, 255); background-color: rgb(78, 222, 181);" mc:edit="42">
+                                                            <span style="font-family: 'proxima_nova_rgbold', Helvetica; font-weight: normal;">
+                                                                <a href="#" style="color: rgb(255, 255, 255); font-size: 15px; text-decoration: none; line-height: 34px; width: 100%;">Reset Password</a>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody></table>
+                                            </td>
+                                        </tr>
+                                    </tbody></table>
+                                </td>
+                            </tr>
+                        </tbody></table><!- End Button Center -->
+
+                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="mobile2" bgcolor="#ffffff" object="drag-module-small" style="background-color: rgb(255, 255, 255);">
+                            <tbody><tr>
+                                <td width="100%" valign="middle">
+
+                                    <table width="540" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align: center; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="fullCenter2">
+                                        <tbody><tr>
+                                            <td width="100%" height="35"></td>
+                                        </tr>
+                                    </tbody></table>
+                                </td>
+                            </tr>
+                        </tbody></table>
+
+                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="mobile2" bgcolor="#ffffff" object="drag-module-small" style="background-color: rgb(255, 255, 255);">
+                            <tbody><tr>
+                                <td width="100%" valign="middle">
+
+                                    <table width="540" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align: center; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="fullCenter2">
+                                        <tbody><tr>
+                                            <td valign="middle" width="100%" style="text-align: left; font-family: Helvetica, Arial, sans-serif; font-size: 14px; color: rgb(63, 67, 69); line-height: 24px;" mc:edit="43">
+                                                <!--[if !mso]><!--><span style="font-family: 'proxima_nova_rgregular', Helvetica; font-weight: normal;"><!--<![endif]-->
+                                                <table style="width:100%">
+                                                  <tr>
+                                                    <th>Descp. de Cobertura</th>
+                                                    <th>Suma Asegurada<br>Por persona/Por accidente</th>
+                                                    <th>Deducible</th>
+                                                    <th>Prima</th>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Lesiones Corporales</td>
+                                                    <td>{{ cotizacion.lesiones_corporales }}</td>
+                                                    <td></td>
+                                                    <td>{{ prima_lesiones|floatformat:2 }}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Daños a la Propiedad Ajena</td>
+                                                    <td>{{ cotizacion.danios_propiedad }}</td>
+                                                    <td></td>
+                                                    <td>{{ prima_daniosProp|floatformat:2 }}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Gastos Médicos por Accidente</td>
+                                                    <td>{{ cotizacion.gastos_medicos }}</td>
+                                                    <td></td>
+                                                    <td>{{ prima_gastosMedicos|floatformat:2 }}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Colisión y Vuelco</td>
+                                                    <td>{{ valor_vehiculo|floatformat:2 }}</td>
+                                                    <td>{{ colision_vuelco|floatformat:2 }}</td>
+                                                    <td>{{ prima_colisionVuelco|floatformat:2 }}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Otros Daños</td>
+                                                    <td>{{ valor_vehiculo|floatformat:2 }}</td>
+                                                    <td>{{ otros_danios|floatformat:2 }}</td>
+                                                    <td>{{ prima_otrosDanios|floatformat:2 }}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Incendio y Rayo</td>
+                                                    <td>{{ valor_vehiculo|floatformat:2 }}</td>
+                                                    <td>{{ incendio_rayo|floatformat:2 }}</td>
+                                                    <td>-</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Robo y Hurto</td>
+                                                    <td>{{ valor_vehiculo|floatformat:2 }}</td>
+                                                    <td>{{ robo_hurto|floatformat:2 }}</td>
+                                                    <td>-</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Muerte Accidental</td>
+                                                    <td>{{ cotizacion.muerte_accidental }}</td>
+                                                    <td></td>
+                                                    <td>-</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Asistencia Legal</td>
+                                                    <td>Incluido</td>
+                                                    <td></td>
+                                                    <td>-</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Importación de Piezas</td>
+                                                    {% if cotizacion.importacion_piezas%}
+                                                      <td>Incluido</td>
+                                                      <td></td>
+                                                      <td>{{ prima_importacion|floatformat:2 }}</td>
+                                                    {% else %}
+                                                      <td>No Incluido</td>
+                                                      <td></td>
+                                                      <td>-</td>
+                                                    {% endif %}
+                                                  </tr>
+                                                  <tr>
+                                                    <td>{{ cotizacion.endoso }}</td>
+                                                    <td>Incluido</td>
+                                                    <td></td>
+                                                    <td>{{ cotizacion.prima_endoso|floatformat:2 }}</td>
+                                                  </tr>
+                                                </table>
+                                                <div class="text-right">
+                                                  <h5>A pagar en {{ cotizacion.cuota }} Cuota(s)</h5>
+                                                  <h5>Subtotal: B/. {{ subtotal }}</h5>
+                                                  <h5>Impuestos: B/. {{ impuestos }}</h5>
+                                                  <h5>Total a Pagar: B/. {{ total }}</h5>
+                                                  <h5>Prima Mensual: B/. {{ cotizacion.prima_mensual|floatformat:2 }}</h5>
+                                                  <h5>Prima Pago de Contado: B/. {{ cotizacion.prima_pagoContado|floatformat:2 }}</h5>
+                                                  <h5>Prima Pago ACH/Visa: B/. {{ cotizacion.prima_pagoVisa|floatformat:2 }}</h5>
+                                                </div>
+                                                <br><br>
+                                                Saludos Cordiales,
+                                                <br>
+                                                Afiapp
+
+                                                <!--[if !mso]><!--></span><!--<![endif]-->
+                                            </td>
+                                        </tr>
+                                    </tbody></table>
+                                </td>
+                            </tr>
+                        </tbody></table>
+
+                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="mobile2" bgcolor="#ffffff" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; background-color: rgb(255, 255, 255);" object="drag-module-small">
+                            <tbody><tr>
+                                <td width="100%" valign="middle">
+
+                                    <table width="540" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align: center; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="fullCenter2">
+                                        <tbody><tr>
+                                            <td width="100%" height="50"></td>
+                                        </tr>
+                                    </tbody></table>
+
+                                </td>
+                            </tr>
+                        </tbody></table>
+
+                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="full2" object="drag-module-small">
+                            <tbody><tr>
+                                <td width="100%" height="30"></td>
+                            </tr>
+                        </tbody></table>
+
+                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="mobile2" object="drag-module-small">
+                            <tbody><tr>
+                                <td valign="middle" width="100%" style="text-align: left; font-family: Helvetica, Arial, sans-serif; font-size: 13px; color: rgb(255, 255, 255); line-height: 24px; font-style: italic;" mc:edit="44">
+                                    <!--[if !mso]><!--><span style="font-family: 'proxima_nova_rgregular', Helvetica; font-weight: normal;"><!--<![endif]-->Copyright Darien® Technology 2016 <!--<![endif]--></span><!--[if !mso]><!-->
+                                </td>
+                            </tr>
+                        </tbody></table>
+
+
+                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="mobile2" object="drag-module-small">
+                            <tbody><tr>
+                                <td width="100%" height="30"></td>
+                            </tr>
+                        </tbody></table>
+
+                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="mobile2" object="drag-module-small">
+                            <tbody><tr>
+                                <td width="100%" height="29"></td>
+                            </tr>
+                            <tr>
+                                <td width="100%" height="1"></td>
+                            </tr>
+                        </tbody></table>
+                        </div>
+
+                    </td>
+                </tr>
+            </tbody></table>
+
+        </div>
+        </td>
+    </tr>
+</tbody></table><!-- End Notification 6 -->

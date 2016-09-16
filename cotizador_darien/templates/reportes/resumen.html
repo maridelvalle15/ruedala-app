@@ -1,0 +1,113 @@
+{% extends "administrador/base_admin.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}<title>Resumen Gerencial</title>{% endblock title %}
+{% block extracss %}
+<link href="{% static 'plugins/datatables/dataTables.bootstrap.css' %}" rel="stylesheet">
+<style type="text/css">
+	.box {
+        border-top: 3px solid #F3F3F3 !important;
+        border-left: 2px solid #F3F3F3 !important;
+        border-right: 2px solid #F3F3F3 !important;
+        border-bottom: 2px solid #F3F3F3 !important;
+        min-width: 130px;
+    }
+    .box.box-danger {
+    border-top-color: #82C539 !important;
+	}
+	@media screen and (max-width: 768px) {
+	    h4{
+	        font-size:16px;
+	    }
+	    h3{
+	    	font-size: 18px;
+	    }
+	}
+</style>
+{% endblock extracss %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-xs-12" style="padding-right: 2%;">
+		<div class="box box-default color-palette-box">
+			<div class="box-body" style="overflow-x:auto;">
+			<div class="col-xs-6 col-xs-push-3 ">
+			  <div class="box box-danger">
+                <div class="box-header with-border">
+                	<div class="col-xs-12" style="text-align: center;position: relative;">
+					  	<h3>Resumen Gerencial</h3>
+					  	<h4>Registros</h4>
+					  	<p>Número total de registros: <span>{{num_cotizaciones}}</span></p>
+					  	<p>Registros aceptados: <span>0</span></p>
+					  	<p>Registros rechazados: <span>0</span></p>
+					  	<br>
+					  	<h4>POS</h4>
+					  	<p>Desean POS: <span>{{pos_si}}</span></p>
+					  	<p>No desean POS: <span>{{pos_no}}</span></p>
+					  	<br>
+					  	<h4>Comercios a vencerse en los próximos 15 días: </h4><span>{{num_ultimos_15}}</span>
+					  	<p><a class="ver">&nbsp;Ver</a></p>
+					  </div>
+			  	</div>
+			  </div>
+			  </div>
+
+			  <div class="col-xs-12 ultimos_15" style="display: none;">
+				  <div class="box-body" style="overflow-x:auto;">
+				  <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+				    <thead>
+					    <tr>
+					    	<th>Nombre Comercial</th>
+					    	<th>Razón Social</th>
+				            <th>Teléfono Principal</th>
+				            <th>Correo Electrónico</th>
+				            <th>Representante Legal</th>
+					    </tr>
+				    </thead>
+				    <tbody>
+				    {% for cotizacion in ultimos_15 %}
+				    	<tr role="row">
+					      <td> {{ cotizacion.nombre }}</td>
+					      <td> {{ cotizacion.razon }}</td>
+					      <td> {{ cotizacion.telefono1 }}</td>
+					      <td> {{ cotizacion.email }}</td>
+					      <td> {{ cotizacion.nombre_rl }} {{ cotizacion.apellido_rl }}</td>
+				            
+					      <td><a href="{% url 'cotizaciones_details' cotizacion.pk %}">Ver</a></td>
+					      <td>
+							<div class="btn-group">
+			                  	  <button type="button" class="btn btn-default">Extender</button>
+			                  	  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+				                    <span class="caret"></span>
+				                    <span class="sr-only">Toggle Dropdown</span>
+				                  </button>
+				                  <ul class="dropdown-menu" role="menu">
+				                    <li><a href="{% url 'extender-periodo' cotizacion.pk 0 %}"><i class="fa fa-check-circle">  3 meses </i></a></li>
+				                    <li><a href="{% url 'extender-periodo' cotizacion.pk 1 %}"><i class="fa fa-check-circle">  6 meses </i></a></li>
+				                  </ul>
+			                </div>
+					      </td>
+					    </tr>
+				    {% endfor %}
+				    </tbody>
+				    <tfoot>
+				    </tfoot>
+				  </table>
+				</div>
+			</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}
+{% block custom_script %}
+<script>
+	$('.ver').click(function(){
+		$('.ultimos_15').css('display','block');
+	});
+</script>
+
+{% endblock custom_script %}

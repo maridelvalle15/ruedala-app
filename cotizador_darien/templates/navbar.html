@@ -1,0 +1,226 @@
+{% load static %}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<link rel="stylesheet" type="text/css" href="{% static 'css/sidemenu.css' %}" media="screen" charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/hamburger.css' %}" media="screen" charset="utf-8" />
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/tapclick.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/SideMenu.js' %}"></script>
+<script type="text/javascript">
+
+
+
+        // Creating the master menu (SideMenu)
+        sideMenu = new SideMenu([
+          new SMButtonItem("Cerrar", function (e) {
+              sideMenu.close();
+          })
+        ]);
+
+        {% if user.is_authenticated %}
+
+          var group = "{{ user.groups.all.0.name }}";
+
+          if (group == "super_admin") {
+              sideMenu = new SideMenu([
+                //new SMLinkItem("Registrar Banco", "{% url 'register'%}"),
+                //new SMLinkItem("Bancos y Ejecutivos", "{% url 'corredor-vendedor-list'%}"),
+                //new SMLinkItem("Administrar Parámetros", "{% url 'dashboard'%}"),
+                new SMLinkItem("Comercios Registrados", "{% url 'cotizaciones_list'%}"),
+                new SMLinkItem("Cerrar Sesión", "{% url 'logout'%}"),
+                new SMButtonItem("Cerrar", function (e) {
+                    sideMenu.close();
+                })
+              ]);
+          }
+
+          else if (group == "admin") {
+
+              sideMenu = new SideMenu([
+                //new SMLinkItem("Registrar Banco", "{% url 'register'%}"),
+                //new SMLinkItem("Bancos y Ejecutivos", "{% url 'corredor-vendedor-list'%}"),
+                new SMLinkItem("Comercios Registrados", "{% url 'cotizaciones_list'%}"),
+                new SMLinkItem("Cerrar Sesión", "{% url 'logout'%}"),
+                new SMButtonItem("Cerrar", function (e) {
+                    sideMenu.close();
+                })
+              ]);
+          }
+
+          else if (group == "corredor") {
+
+              sideMenu = new SideMenu([
+                new SMLinkItem("Registrar Ejecutivos", "{% url 'register'%}"),
+                new SMLinkItem("Dashboard", "{% url 'dashboard'%}"),
+                new SMLinkItem("Ejecutivos", "{% url 'vendedor_list'%}"),
+                new SMLinkItem("Comercios Registrados", "{% url 'cotizaciones_list'%}"),
+                new SMLinkItem("Cerrar Sesión", "{% url 'logout'%}"),
+                new SMButtonItem("Cerrar", function (e) {
+                    sideMenu.close();
+                })
+              ]);
+          }
+
+          else if (group == "vendedor") {
+
+              sideMenu = new SideMenu([
+                new SMLinkItem("Dashboard", "{% url 'dashboard'%}"),
+                new SMLinkItem("Comercios Registrados", "{% url 'cotizaciones_list'%}"),
+                new SMLinkItem("Cerrar Sesión", "{% url 'logout'%}"),
+                new SMButtonItem("Cerrar", function (e) {
+                    sideMenu.close();
+                })
+              ]);
+          } else {
+              sideMenu = new SideMenu([
+                new SMButtonItem("Cerrar", function (e) {
+                    sideMenu.close();
+                })
+              ]);
+          }
+
+        // CUSTOM ITEM
+        // This is a custom item example
+        // all created custom items extend from SMItem Class.
+
+        SMUserAccountItem = (function (name, src) {
+          SMItem.call(this); // Call SMItem constructor
+          // this._el is jQuery item object that works how wrapper
+          $(this.el).addClass('sm-item-useraccount')
+            .append(
+            this.photo = $('<img/>')
+              .addClass('sm-useraccount-photo')
+              .attr({ src: src }).get(0)
+            )
+            .append(
+              this.name = $('<div/>')
+                .addClass('sm-useraccount-name')
+                .text(name).get(0)
+            );
+        });
+
+        // Extend prototype from SMItem
+        SMUserAccountItem.prototype = Object.create(SMItem.prototype);
+        SMUserAccountItem.prototype.constructor = SMUserAccountItem;
+
+          // Adding custom item
+          sideMenu.addItem(new SMUserAccountItem(
+            "{{ user.get_full_name|default:user.username }}",
+            "https://tracker.moodle.org/secure/attachment/30912/f3.png"
+          ), 0 /* index cero, first element */ );
+        {% endif %}
+
+
+        // Finally add SideMenu object to DOM tree target.
+        $(function(){
+            sideMenu.appendTo(document.getElementById('menu'));
+        });
+
+        $(function(){
+            $("#open-demo").click(function () {
+                 sideMenu.open();
+             });
+
+            $(".row").click(function () {
+                 sideMenu.close();
+             });
+
+            $(".sm-item-button").click(function(){
+              sideMenu.close();
+            });
+
+            $("#close-demo").click(function () {
+                 sideMenu.close();
+             });
+        });
+
+        $( document ).on('click', '#actions', function(e) {
+            e.preventDefault();
+            $(".dropdown-menu").toggle("show");
+        });
+</script>
+<div id="navbar">
+    <ul class="nav navbar-nav menu hidden-xs">
+        <li>
+            <a href="{% url 'index' %}" style="border-bottom:none"><span><img src="{% static 'img/logo_afi1.png' %}" style="width:50%;"> &nbsp;</span></a>
+        </li>
+        {% if user.is_authenticated %}
+        <li style="float: right;">
+          <a href="{% url 'logout' %}">Cerrar Sesión</a>
+        </li>
+          <li style="float: right;">
+              <a id="actions" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acciones &nbsp;<span class="caret"></span></a>
+              <ul class="dropdown-menu pull-right" style="position: absolute;">
+                {% if user.is_authenticated and user.groups.all.0.name == 'super_admin' %}
+                  <!--
+                  <li style="float: right;">
+                    <a href="{% url 'register'%}">Registrar Banco</a>
+                  </li>
+                  <li style="float: right;">
+                    <a href="{% url 'dashboard' %}">Administrador</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'corredor-vendedor-list' %}">Bancos y Ejecutivos</a>
+                  </li> -->
+                {% endif %}
+                {% if user.is_authenticated and user.groups.all.0.name == 'admin' %}
+                <!--
+                  <li style="float: right;">
+                    <a href="{% url 'register'%}">Registrar Banco</a>
+                  </li>
+                  <li style="float: right;">
+                    <a href="{% url 'corredor-vendedor-list' %}">Bancos y Ejecutivos</a>
+                  </li>
+                {% endif %}
+                {% if user.is_authenticated and user.groups.all.0.name == 'corredor'  %}
+                  <li style="float: right;">
+                      <a href="{% url 'register'%}">Registrar Ejecutivo</a>
+                  </li>
+                  <li style="float: right;">
+                    <a href="{% url 'dashboard' %}">Dashboard</a>
+                  </li>
+                  <li style="float: right;">
+                      <a href="{% url 'vendedor_list' %}">Ejecutivos</a>
+                  </li>
+                {% endif %}
+                {% if user.is_authenticated and user.groups.all.0.name == 'vendedor'  %}
+                  <li style="float: right;">
+                    <a href="{% url 'dashboard' %}">Dashboard</a>
+                  </li>
+                {% endif %}
+                -->
+                  <li style="float: right;">
+                      <a href="{% url 'cotizaciones_list' %}">Comercios Registrados</a>
+                  </li>
+                  <li style="float: right;">
+                      <a href="{% url 'edit-profile' user.pk %}">Editar Perfil</a>
+                  </li>
+              </ul>
+          </li>
+        <li style="float: right;">
+            <a href="#">{{ user.get_full_name|default:user.username }}</a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+<header class="navbar-fixed-top hidden-md hidden-lg">
+  <nav id="menu2">
+    <ul>
+    </ul>
+  </nav>
+  <div id="on-hidden-menu">
+  <div class="toggle">
+      {% if user.is_authenticated %}
+        <a id="open-demo"><img src="{% static 'img/66x66-icono-menu.png' %}" class="menu-img"></a>
+      {% endif %}
+</div>
+</div>
+</header>
+<div id="menu" class="sm-main"></div>
+<style type="text/css">
+  .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+      background-color: #eee;
+      border-color: #abbdd1;
+  }
+</style>

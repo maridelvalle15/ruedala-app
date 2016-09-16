@@ -1,0 +1,99 @@
+{% extends "administrador/base_admin.html" %}
+{% load static %}
+{% block title %}<title>Documentos por enviar</title>{% endblock title %}
+
+{# Load the tag library #}
+{% load bootstrap3 %}
+{% load humanize %}
+{% load i18n %}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block extracss %}
+<link href="{% static 'plugins/iCheck/square/grey.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<style type="text/css">
+  .calculate {
+    color: #FFFFFF;
+    background-color: #727270;
+    text-align: center;
+    margin-bottom: 2px;
+    transition: all 0.8s ease;
+    float: right !important;
+  }
+    .calculate:hover {
+      background: #82C539;
+      color: #FFFFFF;
+    }
+</style>
+{% endblock extracss %}
+
+{% block titulo %}
+    <h1 class="col-md-12">
+        Documentos por enviar
+    </h1>
+{% endblock titulo %}
+
+{% block content %}
+
+  <div class="box-body">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <div class="col-xs-12">
+                                <br>
+                                <h4>A continuación se muestran los documentos adjuntados:</h4>
+                                <br>
+                                <div class="col-xs-4">
+                                {% for doc in documentos %}
+                                <p><a href="{{MEDIA_URL}}/media/porEnviar/{{comercio_pk}}{{doc.nombre}}">{{doc.nombre}}</a>
+                                </p>
+                                {% endfor %}
+                                </div>
+                                <div class="col-xs-3">
+                                {% for doc in documentos %}
+                                <p><a href="{% url 'eliminar-documento' doc.pk %}"><i class="fa fa-times-circle" style="color: red;">  Eliminar</i></a>
+                                </p>
+                                {% endfor %}
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <br>
+                                <h4>Seleccione el documento a adjuntar:</h4>
+                                <br>
+                                <div class="col-xs-4">
+                                    <form action="{% url 'documentos' comercio.pk %}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                        <label for="exampleInputFile"></label>
+                                        <input type="file" name="file" id="file">
+                                        <p class="help-block">Suba los documentos correspondientes.</p>
+                                      </div>
+                                      <button class="btn btn-default submit-doc" id="submit-btn">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div><!-- /.box-body -->
+
+{% endblock content %}
+
+{% block custom_script %}
+<script type="text/javascript">
+$( document ).ready(function() {
+    $('.submit-doc').attr('disabled',true);
+    $('.content').mouseover(function(){
+        if ($('#file').val() == ''){
+            $('.submit-doc').attr('disabled',true);
+        }
+        else{
+            $('.submit-doc').attr('disabled',false);
+        }
+    })
+});
+</script>
+{% endblock custom_script %}

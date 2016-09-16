@@ -1,0 +1,101 @@
+{% extends "administrador/base_admin.html" %}
+{% load static %}
+{% block title %}<title>Detalle de Cotización</title>{% endblock title %}
+
+{# Load the tag library #}
+{% load bootstrap3 %}
+{% load humanize %}
+{% load i18n %}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block extracss %}
+<link href="{% static 'plugins/iCheck/square/grey.css' %}" rel="stylesheet">
+<style type="text/css">
+  .calculate {
+    color: #FFFFFF;
+    background-color: #727270;
+    text-align: center;
+    margin-bottom: 2px;
+    transition: all 0.8s ease;
+    float: right !important;
+  }
+    .calculate:hover {
+      background: #82C539;
+      color: #FFFFFF;
+    }
+</style>
+{% endblock extracss %}
+
+{% block titulo %}
+    <h1 class="col-md-2">
+        COMERCIO
+    </h1>
+    <h5 class="col-md-6 pull-left">
+      Última modificación: {{ cotizacion.modified_at|date:'D, d N Y' }}
+    </h5>
+{% endblock titulo %}
+
+{% block content %}
+
+  <div class="box-body">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <div class="hidden">
+                                {% bootstrap_form_errors form %}
+                            </div>
+                            <form action="" method="post" role="form" class="form-horizontal" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <h2 id="titulo-login" class="text-center"><strong>Información de la Empresa</strong></h2>
+                                {% bootstrap_field form.nombre layout='horizontal' %}
+                                {% bootstrap_field form.telefono1 layout='horizontal' %}
+                                {% bootstrap_field form.telefono2 layout='horizontal' %}
+                                {% bootstrap_field form.direccion layout='horizontal' %}
+                                {% bootstrap_field form.email layout='horizontal' %}
+                                {% bootstrap_field form.nombre_rl layout='horizontal' %}
+                                {% bootstrap_field form.apellido_rl layout='horizontal' %}
+                                {% bootstrap_field form.cedula_rl layout='horizontal' %}
+                                {% bootstrap_field form.telefono_rl layout='horizontal' %}
+                                {% bootstrap_field form.email_rl layout='horizontal' %}
+                                {% bootstrap_field form.nombre_extra layout='horizontal' %}
+                                {% bootstrap_field form.telefono_extra layout='horizontal' %}
+                                {% bootstrap_field form.correo_extra layout='horizontal' %}
+                                {% bootstrap_field form.programa_beneficios layout='horizontal' %}
+                                {% bootstrap_field form.beneficios layout='horizontal' %}
+                                {% bootstrap_field form.disclaimer layout='horizontal' %}
+                                {% bootstrap_field form.disc_long layout='horizontal' %}
+                                {% bootstrap_field form.img_front layout='horizontal' %}
+                                {% bootstrap_field form.img_inside layout='horizontal' %}
+                                {% bootstrap_field form.desea_pos layout='horizontal' %}
+                                {% buttons %}
+                                    <div class="col-md-3"></div>
+                                    <div class="col-sm-4 col-md-6 text-center">
+                                        <button id="id_submit" type="submit" class="btn btn-lg calculate">
+                                            Modificar
+                                        </button>
+                                        
+                                        <br>
+                                        <br>
+                                    </div>
+                                    <div class="col-md-2"><button class="btn btn-lg calculate">
+                                            <a href="{{request.META.HTTP_REFERER}}">Volver</a>
+                                        </button></div>
+                                {% endbuttons %}
+                            </form>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div><!-- /.box-body -->
+
+{% endblock content %}
+
+{% block custom_script %}
+<script type="text/javascript">
+$( document ).ready(function() {
+    
+});
+</script>
+{% endblock custom_script %}

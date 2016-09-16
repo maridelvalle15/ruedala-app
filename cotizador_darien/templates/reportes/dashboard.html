@@ -1,0 +1,264 @@
+{% extends "administrador/base_admin.html" %}
+{% load static %}
+{% load bootstrap3 %}
+
+{% load l10n %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+{% block title %}<title>Dashboard</title>{% endblock title %}
+{% block extrahead %}
+  {{form.media}}
+{% endblock extrahead %}
+{% block extracss %}
+<link href="{% static 'plugins/datatables/dataTables.bootstrap.css' %}" rel="stylesheet">
+<style type="text/css">
+	.box {
+        border-top: 3px solid #F3F3F3 !important;
+        border-left: 2px solid #F3F3F3 !important;
+        border-right: 2px solid #F3F3F3 !important;
+        border-bottom: 2px solid #F3F3F3 !important;
+    }
+</style>
+{% endblock extracss %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12" style="padding-left: 2%;">
+	  <div class="box box-default collapsed-box">
+	    <div class="box-header with-border">
+	      <h3 class="box-title">Filtra el resumen</h3>
+
+	      <div class="box-tools pull-right">
+	        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+	        </button>
+	      </div>
+	      <!-- /.box-tools -->
+	    </div>
+	    <div class="col-xs-12 col-sm-12 col-md-4">
+	    	{% bootstrap_form_errors form %}
+	    </div>
+	    <!-- /.box-header -->
+	    <div class="box-body" style="display: none;">
+
+		<form method="post" role="form">
+		          {% csrf_token %}
+		            <div id="div_start_date"
+		                 class="form-group">
+		                <label for="id_start_date">Fecha inicial:</label>
+
+		        <div class="input-group date col-md-3" id="id_start_date_picker">
+		            <input class="form-control" id="id_start_date" name="start_date" type="text"/>
+		            <span class="input-group-addon">
+		                <span class="glyphicon glyphicon-calendar"></span>
+		            </span>
+		        </div>
+		        <div class="col-md-9"></div>
+		                <div class="text-muted pull-right">
+		                    <small></small>
+		                </div>
+		                <div class="help-block">
+
+		                </div>
+		            </div>
+
+		            <div id="div_end_date"
+		                 class="form-group">
+		                <label for="id_end_date">Fecha final:</label>
+
+		        <div class="input-group date col-md-3" id="id_end_date_picker">
+		            <input class="form-control" id="id_end_date" name="end_date" type="text"/>
+		            <span class="input-group-addon">
+		                <span class="glyphicon glyphicon-calendar"></span>
+		            </span>
+		        </div>
+		        <div class="col-md-9"></div>
+		                <div class="text-muted pull-right">
+		                    <small></small>
+		                </div>
+		                <div class="help-block">
+
+		                </div>
+		            </div>
+
+		            <div class="form-group">
+		                <input type="submit" value="Filtrar" class="btn btn-primary" />
+		            </div>
+		        </form>
+	    </div>
+	    <!-- /.box-body -->
+	  </div>
+	  <!-- /.box -->
+	</div>
+  </div>
+<div class="row">
+	<div class="col-md-12" style="padding-left: 2%;">
+	<!-- Widget: user widget style 1 -->
+		<div class="box box-widget widget-user-2">
+		<!-- Add the bg color to the header using any of the bg-* classes -->
+			<div class="widget-user-header bg-blue">
+			<!-- /.widget-user-image -->
+					<h3 class="widget-user-username">Resumen Gerencial</h3>
+				{% if usuario.groups.first.name == 'corredor' %}
+					<h5 class="widget-user-desc"> {{ usuario.get_full_name|default:usuario.username }} - corredor</h5>
+				{% elif usuario.groups.first.name == 'super_admin' %}
+					<h5 class="widget-user-desc">Admin Afiapp - Administrador Afiapp</h5>
+				{% else %}
+					<h5 class="widget-user-desc">{{ usuario.get_full_name|default:usuario.username }} - Vendedor</h5>
+				{% endif %}
+			</div>
+			<div class="box-footer no-padding">
+				<ul class="nav nav-stacked">
+					{% if usuario.groups.first.name == 'corredor' %}
+						<li><a href="#">Licencia <span class="pull-right badge bg-blue">{{corredor.licencia}}</spana></a></li>
+					{% endif %}
+					<li><a href="{% url 'cotizaciones-general' 4 usuario.pk start end date %}">Cotizaciones <span class="pull-right badge bg-black">{{ num_cot }}</span></a></li>
+					<li><a href="{% url 'cotizaciones-general' 0 usuario.pk start end date %}">Cotizaciones Enviadas<span class="pull-right badge bg-orange">{{ num_cot_env }}</span></a></li>
+					<li><a href="{% url 'cotizaciones-general' 1 usuario.pk start end date %}">Cotizaciones Guardadas<span class="pull-right badge bg-blue">{{ num_cot_guard }}</span></a></li>
+					<li><a href="{% url 'cotizaciones-general' 2 usuario.pk start end date %}">Cotizaciones Aceptadas<span class="pull-right badge bg-green">{{ num_cot_apr }}</span></a></li>
+					<li><a href="{% url 'cotizaciones-general' 3 usuario.pk start end date %}">Cotizaciones Rechazadas<span class="pull-right badge bg-red">{{ num_cot_rch }}</span></a></li>
+				</ul>
+			</div>
+		</div>
+	<!-- /.widget-user -->
+	</div>
+</div>
+<div class="box">
+    <div class="box-header">
+      <h3 class="box-title">Cotizaciones Propias</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body table-responsive no-padding">
+        <table class="table table-hover" style="width:100%">
+          <tr>
+            <th align="center">Cotizaciones</th>
+            <th align="center">Cotizaciones Enviadas</th>
+            <th align="center">Cotizaciones Guardadas</th>
+            <th align="center">Cotizaciones Aprobadas</th>
+            <th align="center">Cotizaciones Rechazadas</th>
+          </tr>
+          <tr style="text-align: center;">
+            <td align="center"><a href="{% url 'cotizaciones_list' %}"><span class="badge bg-black center">{{cot}}</span></a></td>
+            <td align="center"><a href="{% url 'cotizaciones-specific' 0 usuario.pk start end date %}"><span class="badge bg-orange">{{ cot_env }}</span></td>
+            <td align="center"><a href="{% url 'cotizaciones-specific' 1 usuario.pk start end date %}"><span class="badge bg-blue">{{ cot_guard }}</span></a></td>
+            <td align="center"><a href="{% url 'cotizaciones-specific' 2 usuario.pk start end date %}"><span class="badge bg-green">{{ cot_apr }}</span></a></td>
+            <td align="center"><a href="{% url 'cotizaciones-specific' 3 usuario.pk start end date %}"><span class="badge bg-red">{{ cot_rch }}</span></a></td>
+          </tr>
+        </table>
+    </div>
+</div>
+<br>
+{% if usuario.groups.first.name == 'super_admin' %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="box box-default color-palette-box">
+			<div class="box-header">
+				<h3 class="box-title"> Cotizaciones de corredors</h3>
+			</div>
+			<div class="box-body">
+			  <table id="example2" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+			    <thead>
+			    <tr role="row">
+				    <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Nombre: activate to sort column descending" style="width: 181px;">Nombre</th>
+				    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Apellido: activate to sort column ascending" style="width: 224px;">Apellido</th>
+				    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Cotizaciones: activate to sort column ascending" style="width: 112px;">Cotizaciones</th>
+				    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Cotizaciones: activate to sort column ascending" style="width: 112px;">Cotizaciones Enviadas</th>
+				    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Cotizaciones: activate to sort column ascending" style="width: 112px;">Cotizaciones Guardadas</th>
+				    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Cotizaciones: activate to sort column ascending" style="width: 112px;">Cotizaciones Aceptadas</th>
+				    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Cotizaciones: activate to sort column ascending" style="width: 112px;">Cotizaciones Rechazadas</th>
+			    </tr>
+			    </thead>
+			    <tbody>
+			    {% for user in corredors %}
+			    	<tr role="row">
+				      <td class="sorting_1"> {{ user.0.user.first_name }}</td>
+				      <td>{{ user.0.user.last_name }}</td>
+				      <td><a href="{% url 'cotizaciones-specific' 4 user.0.user.pk start end date %}"><span class="pull-right badge bg-black">{{ user.1 }}</span></a></td>
+				      <td><a href="{% url 'cotizaciones-specific' 0 user.0.user.pk start end date %}"><span class="pull-right badge bg-orange">{{ user.2 }}</span></a></td>
+				      <td><a href="{% url 'cotizaciones-specific' 1 user.0.user.pk start end date %}"><span class="pull-right badge bg-blue">{{ user.3 }}</span></a></td>
+				      <td><a href="{% url 'cotizaciones-specific' 2 user.0.user.pk start end date %}"><span class="pull-right badge bg-green">{{ user.4 }}</span></a></td>
+				      <td><a href="{% url 'cotizaciones-specific' 3 user.0.user.pk start end date %}"><span class="pull-right badge bg-red">{{ user.5 }}</span></a></td>
+				    </tr>
+			    {% endfor %}</tbody>
+			    <tfoot>
+			    <tr><th rowspan="1" colspan="1">Nombre</th><th rowspan="1" colspan="1">Apellido</th><th rowspan="1" colspan="1">Cotizaciones</th><th rowspan="1" colspan="1">Cotizaciones Enviadas</th><th rowspan="1" colspan="1">Cotizaciones Guardadas</th><th rowspan="1" colspan="1">Cotizaciones Aceptadas</th><th rowspan="1" colspan="1">Cotizaciones Rechazadas</th></tr>
+			    </tfoot>
+			  </table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+{% if usuario.groups.first.name == 'corredor' %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="box box-default color-palette-box">
+			<div class="box-header">
+				<h3 class="box-title"> Cotizaciones de vendedores Asociados</h3>
+			</div>
+			<div class="box-body">
+			  <table id="example3" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+			    <thead>
+			    <tr role="row">
+				    <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Nombre: activate to sort column descending" style="width: 181px;">Nombre</th>
+				    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Apellido: activate to sort column ascending" style="width: 224px;">Apellido</th>
+				    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Detalles: activate to sort column ascending" style="width: 112px;">corredor Asociado</th>
+				    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Cotizaciones: activate to sort column ascending" style="width: 112px;">Cotizaciones</th>
+				    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Cotizaciones: activate to sort column ascending" style="width: 112px;">Cotizaciones Enviadas</th>
+				    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Cotizaciones: activate to sort column ascending" style="width: 112px;">Cotizaciones Guardadas</th>
+				    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Cotizaciones: activate to sort column ascending" style="width: 112px;">Cotizaciones Aceptadas</th>
+				    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Cotizaciones: activate to sort column ascending" style="width: 112px;">Cotizaciones Rechazadas</th>
+			    </tr>
+			    </thead>
+			    <tbody>
+			    {% for user in vendedores %}
+			    	{% if user.corredor.pk == usuario.pk %}
+				    	<tr role="row">
+					      <td class="sorting_1"> {{ user.0.vendedor.first_name }}</td>
+					      <td>{{ user.0.vendedor.last_name }}</td>
+					      <td>{{ user.0.corredor.first_name }} {{ user.corredor.last_name }}</td>
+					      <td><a href="{% url 'cotizaciones-specific' 4 user.0.vendedor.pk start end date %}"><span class="pull-right badge bg-black">{{ user.1 }}</span></a></td>
+					      <td><a href="{% url 'cotizaciones-specific' 0 user.0.vendedor.pk start end date %}"><span class="pull-right badge bg-orange">{{ user.2 }}</span></a></td>
+					      <td><a href="{% url 'cotizaciones-specific' 1 user.0.vendedor.pk start end date %}"><span class="pull-right badge bg-blue">{{ user.3 }}</span></a></td>
+					      <td><a href="{% url 'cotizaciones-specific' 2 user.0.vendedor.pk start end date %}"><span class="pull-right badge bg-green">{{ user.4 }}</span></a></td>
+					      <td><a href="{% url 'cotizaciones-specific' 3 user.0.vendedor.pk start end date %}"><span class="pull-right badge bg-red">{{ user.5 }}</span></a></td>
+					    </tr>
+			    	{% endif %}
+			    {% endfor %}</tbody>
+			    <tfoot>
+			    <tr><th rowspan="1" colspan="1">Nombre</th><th rowspan="1" colspan="1">Apellido</th><th rowspan="1" colspan="1">corredor Asociado</th><th rowspan="1" colspan="1">Cotizaciones</th><th rowspan="1" colspan="1">Cotizaciones Enviadas</th><th rowspan="1" colspan="1">Cotizaciones Guardadas</th><th rowspan="1" colspan="1">Cotizaciones Aceptadas</th><th rowspan="1" colspan="1">Cotizaciones Rechazadas</th>
+			    </tr>
+			    </tfoot>
+			  </table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+{% endblock content %}
+
+{% block custom_script %}
+<script>
+    $(function() {
+        $("#id_start_date_picker").datetimepicker({"pickTime": false, "language": "en-us", "format": "YYYY-MM-DD"});
+    });
+</script>
+<script>
+    $(function() {
+        $("#id_end_date_picker").datetimepicker({"pickTime": false, "language": "en-us", "format": "YYYY-MM-DD"});
+    });
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(function () {
+			$("#example1").DataTable();
+			$("#example2").DataTable();
+			$("#example3").DataTable();
+		});
+	});
+</script>
+{% endblock custom_script %}
+

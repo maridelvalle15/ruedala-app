@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{% load l10n %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% load static %}
+{% block extracss %}
+<link href="{% static 'plugins/iCheck/square/grey.css' %}" rel="stylesheet">
+
+<style type="text/css">
+    #titulo-login {
+        font-family: Arial;
+        font-size: 25px;
+        color: #B5B6B8;
+    }
+    @media only screen and (max-width: 435px) {
+        #titulo-login {
+            font-family: Arial;
+            font-size: 15px;
+            color: #B5B6B8;
+        }
+    }
+    #link-acerta {
+        color: #abbdd1;
+    }
+    input:focus {
+        border-color: #abbdd1 !important;
+        color: #abbdd1 !important;
+    }
+    input:focus::-webkit-input-placeholder {
+        color: #abbdd1 !important;
+    }
+    input:focus::-moz-placeholder {
+        color: #abbdd1 !important;
+    }
+    input:focus:-moz-placeholder {
+        color: #abbdd1 !important;
+    }
+    input:focus:-ms-input-placeholder {
+        color: #abbdd1 !important;
+    }
+    .login-box-body {
+        margin-left: 20%;
+        margin-right: 20%
+    }
+    .form-field {
+        margin:0px 0px 0px 20px;
+    }
+    .form-field-value {
+        margin:0px 0px 0px 20px;
+        display:none;
+    }
+    .km-field {
+        margin:0px 0px 0px 20px;
+        display: none;
+    }
+    #subtitulo {
+        font-family: Arial;
+        font-size: 13px;
+        color: #828489;
+    }
+    #subtitulo2 {
+        font-family: Arial;
+        font-size: 18px;
+        color: #B5B6B8;
+    }
+    .calculate {
+        color: #FFFFFF;
+        background-color: #727270;
+        float: right;
+        width: 65%;
+        text-align: center;
+    }
+    .calculate {
+      transition: all 0.8s ease;
+    }
+    .calculate:hover {
+      background: #abbdd1;
+      color: #FFFFFF;
+    }
+    .first {
+        padding-top: 10%;
+    }
+    #id_endoso{
+        z-index: 0;
+    }
+    .button-endoso{
+        z-index: 0;
+    }
+    @media only screen and (max-width: 435px) {
+        .first {
+          padding-top: 20%;
+        }
+    }
+    table th {
+        background-color: #abbdd1;
+        color: white;
+        text-align: center;
+    }
+    .caption {
+        text-align: center;
+        font-weight: bold;
+        background-color: #abbdd1;
+        color: white;
+    }
+</style>
+{% endblock extracss %}
+
+
+{% block content %}
+
+
+{% endblock content %}

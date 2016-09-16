@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block extracss %}
+
+{% endblock extracss %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-xs-12" style="padding-top: 100px;">
+        <div class="row">
+            <div class="col-xs-1 col-sm-2 col-md-4"></div>
+            <div class="col-xs-10 col-sm-8 col-md-4 panel panel-default" style="border-width: 4px; border-color: 8CA5F0;">
+                <div class="panel-body">
+                    <div style="margin: 7% auto;">
+                        <div class="login-logo">
+                            <a href="#"><b> Cotizador Afiapp</b></a>
+                        </div><!-- /.login-logo -->
+                        <div class="login-box-body">
+                            <a class="btn btn-success btn-lg" href="{% url 'conductor' %}">Cotiza Ahora</a>
+                            <div class="text-left">
+                            </div>
+                        </div><!-- /.login-box-body -->
+                    </div><!-- /.login-box -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

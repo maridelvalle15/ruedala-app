@@ -1,0 +1,36 @@
+#footer {
+    position: fixed;
+    bottom: 0%;
+    width: 100%;
+    padding: 10px;
+    font-size: small;
+    color: #FFFFFF;
+    background: #006838;
+    z-index: 2;
+}
+
+@media only screen and (max-width: 435px) {
+    #footer {
+        position: fixed;
+        bottom: 0%;
+        width: 100%;
+        padding: 10px;
+        font-size: small;
+        color: transparent;
+        background: transparent;
+        z-index: 2;
+    }
+}
+
+.icono{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#link-footer {
+    color: #FFFFFF;
+}
+#link-footer2 {
+    color: #FFFFFF;
+    margin-left:0.2em;
+}
