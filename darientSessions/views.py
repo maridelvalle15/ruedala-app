@@ -141,7 +141,7 @@ def login_request(request):
         if (len(user.groups.all()) != 0):
             if (user.groups.first().name == 'admin'):
                 return HttpResponseRedirect(
-                    reverse_lazy('resumen'))
+                    reverse_lazy('prestamos'))
             elif (user.groups.first().name == 'corredor'):
                 return HttpResponseRedirect(
                     reverse_lazy('resumen'))
@@ -165,7 +165,7 @@ def login_request(request):
                         if (len(user.groups.all()) != 0):
                             if (user.groups.first().name == 'admin'):
                                 return HttpResponseRedirect(
-                                    reverse_lazy('resumen'))
+                                    reverse_lazy('prestamos'))
                             elif (user.groups.first().name == 'corredor'):
                                 return HttpResponseRedirect(
                                     reverse_lazy('resumen'))
