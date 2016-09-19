@@ -786,6 +786,18 @@ class VerPrestamosView(ListView):
         return context
 
 
+class DetallePrestamoView(TemplateView):
+    template_name = 'reportes/detalle_prestamo.html'
+    model = Prestamos
+
+    def get(self, request, *args, **kwargs):
+        context = super(
+            DetallePrestamoView, self).get_context_data(**kwargs)
+        prestamo = Prestamos.objects.get(pk=kwargs['pk'])
+        context['prestamo'] = prestamo
+        return self.render_to_response(context)
+
+
 class RegistrarBancoView(CreateView):
     form_class = BancoForm
     template_name = 'reportes/registrar_banco.html'

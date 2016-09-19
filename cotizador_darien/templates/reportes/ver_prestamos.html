@@ -27,25 +27,23 @@
 			    <thead>
 				    <tr>
 				    	<th>Nombre</th>
-				    	<th>Apellido</th>
 			            <th>Cédula/Carnet</th>
 			            <th>Hora Salida</th>
 			            <th>Hora Llegada</th>
-			            <th>Pago</th>
-			            <th>fecha Préstamo</th>
+			            <th>Fecha Préstamo</th>
+			            <th>Bicicleta</th>
 				    </tr>
 			    </thead>
 			    <tbody>
 			    {% for prestamo in prestamos %}
 			    	<tr role="row">
-				      <td> {{ prestamo.nombre }}</td>
-				      <td> {{ prestamo.apellido }}</td>
+				      <td> {{ prestamo.nombre }} {{ prestamo.apellido }}</td>
 				      <td> {{ prestamo.identificacion }}</td>
 				      <td> {{ prestamo.hora_salida }}</td>
 				      <td> {{ prestamo.hora_llegada }}</td>
-				      <td> {{ prestamo.pagado }}</td>
 				      <td> {{ prestamo.fecha }}</td>
-				      <td><a href="#">Ver</a></td>
+				      <td> {{ prestamo.bicicleta }}</td>
+				      <td><a href="{% url 'detalle_prestamo' prestamo.pk %}">Ver</a></td>
 				      
 				    </tr>
 			    {% endfor %}

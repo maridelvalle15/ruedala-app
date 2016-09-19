@@ -54,6 +54,10 @@ urlpatterns = patterns(
         VerPrestamosView.as_view(),
         name='ver_prestamos'),
     url(
+        r'^detalle-prestamo/(?P<pk>\w+)/$',
+        DetallePrestamoView.as_view(),
+        name='detalle_prestamo'),
+    url(
         r'^perfil/(?P<pk>\w+)/$',
         PerfilView.as_view(),
         name='perfil'),
