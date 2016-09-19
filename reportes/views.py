@@ -752,8 +752,10 @@ def sendCotization(request, id):
 
     return HttpResponseRedirect(reverse_lazy('cotizaciones_list'))
 
+
 class PrestamosView(TemplateView):
     template_name = 'reportes/prestamos.html'
+
 
 class AgregarPrestamoView(CreateView):
     form_class = PrestamosForm
@@ -764,10 +766,25 @@ class AgregarPrestamoView(CreateView):
         POST variables and then checked for validity.
         """
         form = PrestamosForm(request.POST)
+        prestamo = form.save()
+        print prestamo
         if form.is_valid():
             return render(request, 'reportes/banco_registrado.html')
         else:
             return render(request, 'reportes/banco_registrado_fail.html')
+
+
+class VerPrestamosView(ListView):
+    template_name = 'reportes/ver_prestamos.html'
+    model = Prestamos
+    def get_context_data(self, **kwargs):
+        context = super(
+            VerPrestamosView, self).get_context_data(**kwargs)
+        prestamos = Prestamos.objects.all()
+        print prestamos
+        context['prestamos'] = prestamos
+        return context
+
 
 class RegistrarBancoView(CreateView):
     form_class = BancoForm
