@@ -107,7 +107,7 @@
                             <div class="hidden">
                                 {% bootstrap_form_errors form %}
                             </div>
-                            <form id="form-banco" action="{% url 'registrar-banco' %}" method="post" role="form" class="form-horizontal form-group" enctype="multipart/form-data">
+                            <form id="form-banco" action="{% url 'agregar-prestamo' %}" method="post" role="form" class="form-horizontal form-group" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <h2 id="titulo-login" class="text-center"><strong></strong></h2>
                             {% bootstrap_form form layout='horizontal' %}

@@ -36,7 +36,10 @@ class PrestamosForm(forms.ModelForm):
         model = Prestamos 
         fields = '__all__'
         widgets = {
-            'fecha' : widgets.AdminDateWidget()
+            'hora_salida' : forms.DateInput(attrs={'type':'time'}),
+            'hora_estimada' : forms.DateInput(attrs={'type':'time'}),
+            'hora_llegada' : forms.DateInput(attrs={'type':'time'}),
+            'fecha' : forms.DateInput(attrs={'type':'date'}),
         }
         labels = {
 
