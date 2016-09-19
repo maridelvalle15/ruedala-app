@@ -28,10 +28,15 @@
 				    <tr>
 				    	<th>Nombre</th>
 			            <th>Cédula/Carnet</th>
+			            <th>Teléfono</th>
+			            <th>¿Sabe manejar?</th>
 			            <th>Hora Salida</th>
+			            <th>Hora Estimada</th>
 			            <th>Hora Llegada</th>
-			            <th>Fecha Préstamo</th>
 			            <th>Bicicleta</th>
+			            <th>Tiempo de Uso</th>
+			            <th>¿Pagó?</th>
+			            <th>Fecha</th>
 				    </tr>
 			    </thead>
 			    <tbody>
@@ -39,11 +44,15 @@
 			    	<tr role="row">
 				      <td> {{ prestamo.nombre }} {{ prestamo.apellido }}</td>
 				      <td> {{ prestamo.identificacion }}</td>
+				      <td> {{ prestamo.telefono }}</td>
+				      <td> {{ prestamo.sabe_manejar }}</td>
 				      <td> {{ prestamo.hora_salida }}</td>
+				      <td> {{ prestamo.hora_estimada }}</td>
 				      <td> {{ prestamo.hora_llegada }}</td>
-				      <td> {{ prestamo.fecha }}</td>
 				      <td> {{ prestamo.bicicleta }}</td>
-				      <td><a href="{% url 'detalle_prestamo' prestamo.pk %}">Ver</a></td>
+				      <td> {{ prestamo.tiempo_uso }}</td>
+				      <td> {{ prestamo.pagado }}</td>
+				      <td> {{ prestamo.fecha }}</td>
 				      
 				    </tr>
 			    {% endfor %}
