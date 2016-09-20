@@ -58,6 +58,10 @@ urlpatterns = patterns(
         BiciescuelaView.as_view(),
         name='biciescuela'),
     url(
+        r'^agregar-biciescuela/$',
+        AgregarBiciescuelaView.as_view(),
+        name='agregar-biciescuela'),
+    url(
         r'^perfil/(?P<pk>\w+)/$',
         PerfilView.as_view(),
         name='perfil'),

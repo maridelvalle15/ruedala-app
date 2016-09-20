@@ -773,9 +773,9 @@ class AgregarPrestamoView(CreateView):
         prestamo = form.save()
         print prestamo
         if form.is_valid():
-            return render(request, 'reportes/banco_registrado.html')
+            return render(request, 'reportes/registro_exitoso.html')
         else:
-            return render(request, 'reportes/banco_registrado_fail.html')
+            return render(request, 'reportes/registro_fallido.html')
 
 
 class VerPrestamosView(ListView):
@@ -788,6 +788,21 @@ class VerPrestamosView(ListView):
         print prestamos
         context['prestamos'] = prestamos
         return context
+
+
+class AgregarBiciescuelaView(CreateView):
+    form_class = BiciescuelasForm
+    template_name = 'reportes/agregar_biciescuela.html'
+    def post(self, request, *args, **kwargs):
+        """
+        Handles POST requests, instantiating a form instance with the passed
+        POST variables and then checked for validity.
+        """
+        form = BiciescuelasForm(request.POST)
+        if form.is_valid():
+            return render(request, 'reportes/registro_exitoso.html')
+        else:
+            return render(request, 'reportes/registro_fallido.html')
 
 
 class RegistrarBancoView(CreateView):
