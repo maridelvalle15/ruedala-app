@@ -56,3 +56,26 @@ class PrestamosForm(forms.ModelForm):
         'fecha' : 'Fecha del préstamo'
 
         }
+
+class BiciescuelasForm(forms.ModelForm):
+
+    class Meta:
+        model = Biciescuelas
+        fields = '__all__'
+        widgets = {
+            'fecha' : forms.DateInput(attrs={'type':'date'}),
+        }
+        labels = {
+
+        'nombre' : 'Nombre',
+        'apellido' : 'Apellido',
+        'identificacion' : 'Cédula o Carnet',
+        'telefono' : 'Teléfono',
+        'correo' : 'Correo',
+        'sabe_manejar' : '¿Sabe manejar?',
+        'fecha' : 'Fecha',
+        'aprobado' : '¿Aprobado?',
+        'pago_carnet' : '¿Pagó carnet?',
+        'instructor' : 'Instructor'
+
+        }

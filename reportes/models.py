@@ -32,3 +32,28 @@ class Prestamos(models.Model):
 
 	def __str__(self):
 		return self.nombre+' '+self.apellido
+
+
+class Biciescuelas(models.Model):
+	nombre = models.CharField(max_length=100, blank=False)
+	apellido = models.CharField(max_length=100, blank=False)
+	identificacion = models.CharField(max_length=100, blank=False)
+	telefono = models.CharField(max_length=100, blank=False)
+	correo = models.EmailField()
+	sabe_manejar = models.CharField(max_length=2, blank=False,
+                            choices=[('Si', 'Si'),
+                                     ('No', 'No'),
+                                     ])
+	fecha = models.DateTimeField()
+	aprobado = models.CharField(max_length=2, blank=False,
+                            choices=[('Si', 'Si'),
+                                     ('No', 'No'),
+                                     ])
+	pago_carnet = models.CharField(max_length=2, blank=False,
+                            choices=[('Si', 'Si'),
+                                     ('No', 'No'),
+                                     ])
+	instructor = models.CharField(max_length=100, blank=False)
+
+	def __str__(self):
+		return self.nombre+' '+self.apellido

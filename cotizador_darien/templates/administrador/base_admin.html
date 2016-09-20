@@ -308,7 +308,11 @@
                         <i class="fa fa-bicycle"></i> <span>Préstamos</span>
                       </a>
                     </li>
-
+                    <li class="treeview">
+                      <a href="{% url 'biciescuela' %}">
+                        <i class="fa fa-child"></i> <span>Biciescuela</span>
+                      </a>
+                    </li>
                   {% elif user.groups.all.0.name == 'corredor' %}
 
                   {% else %}

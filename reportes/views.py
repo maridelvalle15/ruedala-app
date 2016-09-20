@@ -757,6 +757,10 @@ class PrestamosView(TemplateView):
     template_name = 'reportes/prestamos.html'
 
 
+class BiciescuelaView(TemplateView):
+    template_name = 'reportes/biciescuela.html'
+
+
 class AgregarPrestamoView(CreateView):
     form_class = PrestamosForm
     template_name = 'reportes/agregar_prestamo.html'
