@@ -5,11 +5,18 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from datetime import date
 
-class Prestamos(models.Model):
+class Usuario(models.Model):
 	nombre = models.CharField(max_length=100, blank=False)
 	apellido = models.CharField(max_length=100, blank=False)
 	identificacion = models.CharField(max_length=100, blank=False)
 	telefono = models.CharField(max_length=100, blank=False)
+	correo = models.EmailField()
+
+	def __str__(self):
+		return self.nombre+' '+self.apellido
+
+class Prestamos(models.Model):
+	usuario = models.ForeignKey(Usuario,default=None)
 	sabe_manejar = models.CharField(max_length=2, blank=False,
                             choices=[('Si', 'Si'),
                                      ('No', 'No'),
@@ -31,15 +38,11 @@ class Prestamos(models.Model):
 	fecha = models.DateTimeField()
 
 	def __str__(self):
-		return self.nombre+' '+self.apellido
+		return self.usuario.nombre+' '+self.usuario.apellido
 
 
 class Biciescuelas(models.Model):
-	nombre = models.CharField(max_length=100, blank=False)
-	apellido = models.CharField(max_length=100, blank=False)
-	identificacion = models.CharField(max_length=100, blank=False)
-	telefono = models.CharField(max_length=100, blank=False)
-	correo = models.EmailField()
+	usuario = models.ForeignKey(Usuario,default=None)
 	sabe_manejar = models.CharField(max_length=2, blank=False,
                             choices=[('Si', 'Si'),
                                      ('No', 'No'),
@@ -56,4 +59,4 @@ class Biciescuelas(models.Model):
 	instructor = models.CharField(max_length=100, blank=False)
 
 	def __str__(self):
-		return self.nombre+' '+self.apellido
+		return self.usuario.nombre+' '+self.usuario.apellido
