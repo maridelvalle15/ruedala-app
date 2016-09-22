@@ -770,8 +770,11 @@ class AgregarPrestamoView(CreateView):
         POST variables and then checked for validity.
         """
         form = PrestamosForm(request.POST)
-        prestamo = form.save()
-        print prestamo
+        usuario = Usuario.objects.get(identificacion=request.POST['identificacion'])
+        prestamo = Prestamos(usuario=usuario,sabe_manejar=request.POST['sabe_manejar'],hora_salida=request.POST['hora_salida'],
+                            hora_estimada=request.POST['hora_estimada'],hora_llegada=request.POST['hora_llegada'],bicicleta=request.POST['bicicleta'],
+                            tiempo_uso=request.POST['tiempo_uso'],pagado=request.POST['pagado'],fecha=request.POST['fecha'])
+        prestamo.save()
         if form.is_valid():
             return render(request, 'reportes/registro_exitoso.html')
         else:
@@ -793,6 +796,7 @@ class VerPrestamosView(ListView):
 class AgregarBiciescuelaView(CreateView):
     form_class = BiciescuelasForm
     template_name = 'reportes/agregar_biciescuela.html'
+
     def post(self, request, *args, **kwargs):
         """
         Handles POST requests, instantiating a form instance with the passed
@@ -800,14 +804,36 @@ class AgregarBiciescuelaView(CreateView):
         """
         form = BiciescuelasForm(request.POST)
         if form.is_valid():
-            return render(request, 'reportes/registro_exitoso.html')
+            usuario = Usuario(
+                nombre=request.POST['nombre'],
+                apellido=request.POST['apellido'],
+                identificacion=request.POST['identificacion'],
+                telefono=request.POST['telefono'],
+                correo=request.POST['correo']
+            )
+            usuario.save()
+            biciescuela = Biciescuelas(
+                usuario=usuario,
+                sabe_manejar=request.POST['sabe_manejar'],
+                fecha=request.POST['fecha'],
+                aprobado=request.POST['aprobado'],
+                pago_carnet=request.POST['pago_carnet'],
+                instructor=request.POST['instructor']
+            )
+            biciescuela.save()
+            return HttpResponseRedirect(reverse_lazy('registro_exitoso'))
         else:
-            return render(request, 'reportes/registro_fallido.html')
+            return render(request, self.template_name, {'form': form})
+
+
+class RegistroExitoso(TemplateView):
+    template_name = 'reportes/registro_exitoso.html'
 
 
 class RegistrarBancoView(CreateView):
     form_class = BancoForm
     template_name = 'reportes/registrar_banco.html'
+
     def post(self, request, *args, **kwargs):
         """
         Handles POST requests, instantiating a form instance with the passed

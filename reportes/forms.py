@@ -32,9 +32,11 @@ class BancoForm(forms.ModelForm):
 
 class PrestamosForm(forms.ModelForm):
 
+    identificacion = forms.CharField(label="Cédula/Carnet")
+
     class Meta:
         model = Prestamos 
-        fields = '__all__'
+        exclude = ['usuario']
         widgets = {
             'hora_salida' : forms.DateInput(attrs={'type':'time'}),
             'hora_estimada' : forms.DateInput(attrs={'type':'time'}),
@@ -43,39 +45,42 @@ class PrestamosForm(forms.ModelForm):
         }
         labels = {
 
-        'nombre' : 'Nombre',
-        'apellido' : 'Apellido',
-        'identificacion' : 'Cédula o Carnet',
-        'telefono' : 'Número de Teléfono',
-        'sabe_manejar' : '¿Sabe manejar bicicleta?',
-        'hora_salida' : 'Hora de salida',
-        'hora_estimada' : 'Hora estimada de llegada',
-        'hora_llegada' : 'Hora de llegada',
-        'tiempo_uso' : 'Tiempo de uso de la bicicleta',
-        'pagado': '¿Pagó?',
-        'fecha' : 'Fecha del préstamo'
+            'sabe_manejar': '¿Sabe manejar bicicleta?',
+            'hora_salida': 'Hora de salida',
+            'hora_estimada': 'Hora estimada de llegada',
+            'hora_llegada': 'Hora de llegada',
+            'tiempo_uso': 'Tiempo de uso de la bicicleta',
+            'pagado': '¿Pagó?',
+            'fecha': 'Fecha del préstamo'
 
         }
+
 
 class BiciescuelasForm(forms.ModelForm):
 
+    nombre = forms.CharField(label="Nombre")
+    apellido = forms.CharField(label="Apellido")
+    identificacion = forms.CharField(label="Cédula/Carnet")
+    correo = forms.EmailField(label="Correo")
+    telefono = forms.CharField(label="Teléfono")
+
     class Meta:
         model = Biciescuelas
-        fields = '__all__'
+        exclude = ['usuario']
         widgets = {
-            'fecha' : forms.DateInput(attrs={'type':'date'}),
+            'fecha': forms.DateInput(attrs={'type': 'date'}),
         }
         labels = {
-
-        'nombre' : 'Nombre',
-        'apellido' : 'Apellido',
-        'identificacion' : 'Cédula o Carnet',
-        'telefono' : 'Teléfono',
-        'correo' : 'Correo',
-        'sabe_manejar' : '¿Sabe manejar?',
-        'fecha' : 'Fecha',
-        'aprobado' : '¿Aprobado?',
-        'pago_carnet' : '¿Pagó carnet?',
-        'instructor' : 'Instructor'
-
+            'sabe_manejar': '¿Sabe manejar?',
+            'fecha': 'Fecha',
+            'aprobado': '¿Aprobado?',
+            'pago_carnet': '¿Pagó carnet?',
+            'instructor': 'Instructor'
         }
+
+    def clean_identificacion(self):
+        identificacion = self.cleaned_data.get('identificacion')
+
+        if Usuario.objects.filter(identificacion=identificacion).count() != 0:
+            raise forms.ValidationError(u'Este carnet/cédula ya realizó la biciescuela.')
+        return identificacion
