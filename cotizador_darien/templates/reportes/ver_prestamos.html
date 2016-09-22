@@ -29,7 +29,6 @@
 				    	<th>Nombre</th>
 			            <th>Cédula/Carnet</th>
 			            <th>Teléfono</th>
-			            <th>¿Sabe manejar?</th>
 			            <th>Hora Salida</th>
 			            <th>Hora Estimada</th>
 			            <th>Hora Llegada</th>
@@ -42,10 +41,9 @@
 			    <tbody>
 			    {% for prestamo in prestamos %}
 			    	<tr role="row">
-				      <td> {{ prestamo.nombre }} {{ prestamo.apellido }}</td>
-				      <td> {{ prestamo.identificacion }}</td>
-				      <td> {{ prestamo.telefono }}</td>
-				      <td> {{ prestamo.sabe_manejar }}</td>
+				      <td> {{ prestamo.usuario.nombre }} {{ prestamo.usuario.apellido }}</td>
+				      <td> {{ prestamo.usuario.identificacion }}</td>
+				      <td> {{ prestamo.usuario.telefono }}</td>
 				      <td> {{ prestamo.hora_salida }}</td>
 				      <td> {{ prestamo.hora_estimada }}</td>
 				      <td> {{ prestamo.hora_llegada }}</td>
