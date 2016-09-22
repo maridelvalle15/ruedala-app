@@ -21,7 +21,12 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{% static 'css/skins/_all-skins.css' %}">
+    <style type="text/css">
+      .skin-blue .main-header .navbar, .skin-blue .main-header .logo, .main-footer {
+        background-color: #5f2871;
+      }
 
+    </style>
     {% endblock css %}
     <script src="{% static 'plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
@@ -49,7 +54,7 @@
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>PE</b></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Dashboard</b> CEMBI Venezuela</span>
+          <span class="logo-lg">CEMBI Venezuela</span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->
@@ -341,7 +346,7 @@
       </div><!-- /.content-wrapper -->
 
       <footer class="main-footer text-center">
-        <a id="link-footer" href="#">Términos y condiciones</a> - CEMBI Venezuela - Panamá - Todos los derechos reservados
+        <a id="link-footer" href="#">CEMBI Venezuela - Todos los derechos reservados
       </footer>
 
       <!-- Control Sidebar -->
