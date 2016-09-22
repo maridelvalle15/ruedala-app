@@ -147,7 +147,7 @@ def login_request(request):
                     reverse_lazy('resumen'))
         else:
             return HttpResponseRedirect(
-                reverse_lazy('status-credito',kwargs={'pk': user.pk}))
+                reverse_lazy('status-credito', kwargs={'pk': user.pk}))
 
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -171,7 +171,8 @@ def login_request(request):
                                     reverse_lazy('resumen'))
                         else:
                             return HttpResponseRedirect(
-                                reverse_lazy('status-credito',kwargs={'pk': user.pk}))
+                                reverse_lazy('status-credito', 
+                                    kwargs={'pk': user.pk}))
                     else:
                         form.add_error(
                             None, "Tu correo o contraseña no son correctos")
@@ -391,5 +392,6 @@ class ActivateAccount(generic.UpdateView):
         return HttpResponseRedirect(
             reverse_lazy(self.success_url))
 
+
 class Index(generic.TemplateView):
-    template_name = "panacredit/index-no-animation.html"
+    template_name = "login.html"
