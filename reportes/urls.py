@@ -89,7 +89,7 @@ urlpatterns = patterns(
         r'^perfil-ejecutivo/(?P<pk>\w+)/$',
         PerfilEjecutivoView.as_view(),
         name='perfil-ejecutivo'),
-     url(
+    url(
         r'^registrar-banco/$',
         'darientSessions.views.user_registration',
         name='registrar-banco'),
@@ -136,7 +136,14 @@ urlpatterns = patterns(
     url(r'^cambiar-status-credito/(?P<id>\d+)/$',
         'reportes.views.cambiarStatusCredito',
         name='cambiar-status-credito'),
-    url(r'^cotizacion/enviar/(?P<id>\d+)/$',
+    url(
+        r'^cotizacion/enviar/(?P<id>\d+)/$',
         'reportes.views.sendCotization',
-        name='send'),
+        name='send'
+    ),
+    url(
+        r'^registro-exitoso/$',
+        RegistroExitoso.as_view(),
+        name='registro_exitoso'
+    )
 )
