@@ -97,8 +97,8 @@ WSGI_APPLICATION = 'ruedala_app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-# DATABASES = {}
-# DATABASES['default'] = dj_database_url.config()
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config()
 
 # DATABASES = {
 #       'default': {
@@ -112,16 +112,16 @@ WSGI_APPLICATION = 'ruedala_app.wsgi.application'
 #       }
 #   }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ruedala',
-        'USER': 'ruedala',
-        'PASSWORD': 'ruedala123',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'ruedala',
+#         'USER': 'ruedala',
+#         'PASSWORD': 'ruedala123',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
 
 
 # Password validation
