@@ -6,42 +6,6 @@ from darientSessions.views import *
 urlpatterns = patterns(
     '',
     url(
-        r'^corredores/$',
-        CorredorVendedorListView.as_view(),
-        name='corredor-vendedor-list'),
-    url(
-        r'^corredores/detail/(?P<pk>\d+)/$',
-        CorredorVendedorDetailView.as_view(),
-        name='corredor_vendedor_detail'),
-    url(
-        r'^vendedores/$',
-        VendedorListView.as_view(),
-        name='vendedor_list'),
-    url(
-        r'^solicitantes/$',
-        SolicitantesListView.as_view(),
-        name='solicitantes_list'),
-    url(
-        r'^solicitudes/$',
-        SolicitudesPendientesView.as_view(),
-        name='solicitudes_list'),
-    url(
-        r'^solicitudes-aprobadas/$',
-        SolicitudesAprobadasView.as_view(),
-        name='solicitudes_aprobadas'),
-    url(
-        r'^solicitudes-rechazadas/$',
-        SolicitudesRechazadasView.as_view(),
-        name='solicitudes_rechazadas'),
-    url(
-        r'^detalle-credito/(?P<pk>\d+)/$',
-        CreditoDetailView.as_view(),
-        name='credito_details'),
-    url(
-        r'^solicitudes-pos/$',
-        CotizacionesListPOSView.as_view(),
-        name='comercios_list_pos'),
-    url(
         r'^prestamos/$',
         PrestamosView.as_view(),
         name='prestamos'),
@@ -54,6 +18,18 @@ urlpatterns = patterns(
         VerPrestamosView.as_view(),
         name='ver_prestamos'),
     url(
+        r'^buscar-prestamo/$',
+        BuscarPrestamoView.as_view(),
+        name='buscar_prestamo'),
+    url(
+        r'^buscar-usuario/$',
+        BuscarUsuarioView.as_view(),
+        name='buscar_usuario'),
+    url(
+        r'^editar-biciescuela/(?P<id>\d+)/$',
+        'reportes.views.editar_biciescuela',
+        name='editar_biciescuela'),
+    url(
         r'^biciescuela/$',
         BiciescuelaView.as_view(),
         name='biciescuela'),
@@ -61,86 +37,6 @@ urlpatterns = patterns(
         r'^agregar-biciescuela/$',
         AgregarBiciescuelaView.as_view(),
         name='agregar-biciescuela'),
-    url(
-        r'^perfil/(?P<pk>\w+)/$',
-        PerfilView.as_view(),
-        name='perfil'),
-    url(
-        r'^solicitar-credito/$',
-        SolicitarCreditoView.as_view(),
-        name='solicitar-credito'),
-    url(
-        r'^tipo-credito/$',
-        TipoCreditoView.as_view(),
-        name='tipo-credito'),
-    url(
-        r'^crear-credito/(?P<id>\w+)/$',
-        'reportes.views.crear_credito',
-        name='crear-credito'),
-    url(
-        r'^status-credito/(?P<pk>\w+)/$',
-        StatusCreditoView.as_view(),
-        name='status-credito'),
-    url(
-        r'^subir-documentacion/(?P<pk>\w+)/$',
-        SubirDocumentacionView.as_view(),
-        name='subir-documentacion'),
-    url(
-        r'^perfil-ejecutivo/(?P<pk>\w+)/$',
-        PerfilEjecutivoView.as_view(),
-        name='perfil-ejecutivo'),
-    url(
-        r'^registrar-banco/$',
-        'darientSessions.views.user_registration',
-        name='registrar-banco'),
-    url(
-        r'^editar-comercio/(?P<pk>\d+)/$',
-        EditarComercioView.as_view(),
-        name='editar-comercio'),
-    url(
-        r'^comercios-activos/$',
-        ComerciosActivosView.as_view(),
-        name='comercios-activos'),
-    url(
-        r'^extender-periodo/(?P<id>\d+)/(?P<periodo>\d+)/$',
-        'reportes.views.extenderPeriodo',
-        name='extender-periodo'),
-    url(
-        r'^documentos/(?P<pk>\d+)/$',
-        DocumentosPorEnviarView.as_view(),
-        name='documentos'),
-    url(
-        r'^eliminar-documento/(?P<id>\d+)/$',
-        'reportes.views.eliminarDocumento',
-        name='eliminar-documento'),
-
-    url(
-        r'^cotizaciones/detalle/(?P<pk>\d+)/$',
-        CotizacionesDetailView.as_view(),
-        name='cotizaciones_details'),
-    url(
-        r'^dashboard/$',
-        DashboardView.as_view(),
-        name='dashboard'),
-    url(
-        r'^cotizaciones/(?P<status>\d+)/(?P<pk>\d+)/(?P<start>\d{4}-\d{2}-\d{2})/(?P<end>\d{4}-\d{2}-\d{2})/(?P<date>\d+)/$',
-        CotizacionesSpecificDetailView.as_view(),
-        name='cotizaciones-specific'),
-    url(
-        r'^cotizaciones/general/(?P<status>\d+)/(?P<pk>\d+)/(?P<start>\d{4}-\d{2}-\d{2})/(?P<end>\d{4}-\d{2}-\d{2})/(?P<date>\d+)/$',
-        CotizacionesGeneralDetailView.as_view(),
-        name='cotizaciones-general'),
-    url(r'^cambiar-status/(?P<id>\d+)/(?P<status>\d+)/$',
-        'reportes.views.changeStatus',
-        name='cambiar-status'),
-    url(r'^cambiar-status-credito/(?P<id>\d+)/$',
-        'reportes.views.cambiarStatusCredito',
-        name='cambiar-status-credito'),
-    url(
-        r'^cotizacion/enviar/(?P<id>\d+)/$',
-        'reportes.views.sendCotization',
-        name='send'
-    ),
     url(
         r'^registro-exitoso/$',
         RegistroExitoso.as_view(),
