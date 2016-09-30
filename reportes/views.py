@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, render_to_response, get_object_or_404
 from django.views.generic import *
-from cotizador_darien.views_mixins import *
-from darientSessions.models import *
-from cotizar.models import *
+from ruedala_app.views_mixins import *
+from ruedalaSessions.models import *
 from django.contrib.auth.models import User
 from django.views.defaults import page_not_found
 from reportes.forms import *
 from reportes.models import *
-from cotizar.forms import *
 import datetime
 #from datetime import *
 from time import *

@@ -1,0 +1,73 @@
+{% extends "administrador/base_admin.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}<title>Buscar Usuario</title>{% endblock title %}
+{% block extracss %}
+<link href="{% static 'plugins/datatables/dataTables.bootstrap.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style type="text/css">
+    .box {
+        border-top: 3px solid #F3F3F3 !important;
+        border-left: 2px solid #F3F3F3 !important;
+        border-right: 2px solid #F3F3F3 !important;
+        border-bottom: 2px solid #F3F3F3 !important;
+        min-width: 130px;
+    }
+    .box.box-danger {
+    border-top-color: #82C539 !important;
+    }
+    @media screen and (max-width: 768px) {
+        h4{
+            font-size:16px;
+        }
+        h3{
+            font-size: 18px;
+        }
+    }
+    td{
+        text-align: center;
+    }
+    a, a:hover, a:active, a:link{
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+</style>
+{% endblock extracss %}
+
+{% block content %}
+  <div>
+  <h2>Buscar Usuario</h2>
+  <br>
+  <br>
+  <br>
+  <div class="row">
+  <div class="col-lg-6">
+    <div class="col-xs-12 input-group">
+      <form method="POST" action="{% url 'buscar_usuario' %}">
+      <div class="col-xs-2">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">Buscar</button>
+        </span>
+      </div>
+      <div class="col-xs-8">
+        {% csrf_token %}
+        <input type="text" class="form-control" placeholder="Buscar por carnet/cédula" name="identificacion">
+      </div>
+      </form>
+    </div><!-- /input-group -->
+  </div><!-- /.row -->
+  </div>
+  {{info}}
+
+{% endblock content %}
+{% block custom_script %}
+<script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+  </script>
+
+{% endblock custom_script %}

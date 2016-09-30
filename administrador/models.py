@@ -3,7 +3,6 @@
 from django.db import models
 from django.core.files.storage import FileSystemStorage
 
-fs = FileSystemStorage(location='/cotizador_darien/static/pdf')
 
 
 class Sexo(models.Model):
@@ -110,17 +109,6 @@ class Colision(models.Model):
 class Importacion(models.Model):
 
     factor = models.FloatField(blank=False, default=0.0)
-
-
-class Endoso(models.Model):
-
-    endoso = models.CharField(max_length=30, blank=False, unique=True,
-                              default='Basico')
-    precio = models.FloatField(blank=False, default=0.0)
-    archivo = models.FileField(upload_to='cotizador_darien/static/pdf')
-
-    def __str__(self):
-        return self.endoso
 
 
 class LesionesCorporales(models.Model):

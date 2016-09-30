@@ -1,0 +1,84 @@
+{% extends "administrador/base_admin.html" %}
+
+{% block titulo %}
+    <h1>
+        Editar Factor: <strong>Importación de Piezas</strong>
+    </h1>
+{% endblock titulo %}
+{% load static %}
+{% block extracss %}
+<link href="{% static 'plugins/datatables/dataTables.bootstrap.css' %}" rel="stylesheet">
+<style type="text/css">
+  .box {
+        border-top: 3px solid #F3F3F3 !important;
+        border-left: 2px solid #F3F3F3 !important;
+        border-right: 2px solid #F3F3F3 !important;
+        border-bottom: 2px solid #F3F3F3 !important;
+    }
+</style>
+{% endblock extracss %}
+{% block content %}
+<div class="row">
+  <div class="col-md-2 col-sm-hidden col-xs-hidden"></div>
+  <div class="col-xs-12 col-sm-12 col-md-8">
+    <div class="box box-default color-palette-box">
+      <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+          <thead>
+            <tr>
+              <th>Factor de Importación</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for importacion in importaciones %}
+                <tr>
+                    <td><a href="{% url 'admin_importacion' importacion.pk %}">{{ importacion.factor|floatformat:4 }}</a></td>
+                </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Factor de Importación</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="text-center">
+      <a href="{% url 'factores' %}" class="btn btn-primary">Atrás</a>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-hidden col-xs-hidden"></div>
+</div>
+
+{% endblock content %}
+{% block custom_script %}
+<script>
+  $(document).ready(function(){
+    $(function () {
+        $("#example1").DataTable({
+          "order": [[ 0, "asc" ]],
+          "language": {
+            "infoEmpty": "No existen entradas para mostrar",
+            "info": "Mostrando _START_ hasta _END_ de _TOTAL_ entradas",
+            "lengthMenu": 'Mostrar <select name="example1_length" aria-controls="example1" class="form-control input-sm">'+
+                          '<option value="10">10</option>'+
+                          '<option value="25">25</option>'+
+                          '<option value="50">50</option>'+
+                          '<option value="100">100</option>'+
+                          '<option value="-1">Todo</option>'+
+                          '</select> entradas',
+            "search": "Buscar: _INPUT_",
+            "paginate": {
+              "first": "Primera Página",
+              "last": "Última Página",
+              "next": "Siguiente",
+              "previous": "Anterior",
+            }
+          }
+        });
+      });
+  });
+</script>
+
+{% endblock custom_script %}

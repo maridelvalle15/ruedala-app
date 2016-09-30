@@ -1,0 +1,77 @@
+{% extends "administrador/base_admin.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}<title>Préstamos</title>{% endblock title %}
+{% block extracss %}
+<link href="{% static 'plugins/datatables/dataTables.bootstrap.css' %}" rel="stylesheet">
+<style type="text/css">
+	.box {
+        border-top: 3px solid #F3F3F3 !important;
+        border-left: 2px solid #F3F3F3 !important;
+        border-right: 2px solid #F3F3F3 !important;
+        border-bottom: 2px solid #F3F3F3 !important;
+    }
+</style>
+{% endblock extracss %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-xs-12" style="padding-right: 2%;">
+		<div class="box box-default color-palette-box">
+			<div class="box-header">
+				<h3 class="box-title">Préstamos</h3>
+			</div>
+			<div class="box-body" style="overflow-x:auto;">
+			  <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+			    <thead>
+				    <tr>
+				    	<th>Nombre</th>
+			            <th>Cédula/Carnet</th>
+			            <th>Teléfono</th>
+			            <th>Hora Salida</th>
+			            <th>Hora Estimada</th>
+			            <th>Hora Llegada</th>
+			            <th>Bicicleta</th>
+			            <th>Tiempo de Uso</th>
+			            <th>¿Pagó?</th>
+			            <th>Fecha</th>
+				    </tr>
+			    </thead>
+			    <tbody>
+			    {% for prestamo in prestamos %}
+			    	<tr role="row">
+				      <td> {{ prestamo.usuario.nombre }} {{ prestamo.usuario.apellido }}</td>
+				      <td> {{ prestamo.usuario.identificacion }}</td>
+				      <td> {{ prestamo.usuario.telefono }}</td>
+				      <td> {{ prestamo.hora_salida }}</td>
+				      <td> {{ prestamo.hora_estimada }}</td>
+				      <td> {{ prestamo.hora_llegada }}</td>
+				      <td> {{ prestamo.bicicleta }}</td>
+				      <td> {{ prestamo.tiempo_uso }}</td>
+				      <td> {{ prestamo.pagado }}</td>
+				      <td> {{ prestamo.fecha }}</td>
+				      
+				    </tr>
+			    {% endfor %}
+			    </tbody>
+			    <tfoot>
+			    </tfoot>
+			  </table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
+
+{% block custom_script %}
+<script>
+	$(document).ready(function(){
+		$(function () {
+	    	$("#example1").DataTable();
+	    });
+	});
+</script>
+
+{% endblock custom_script %}
+

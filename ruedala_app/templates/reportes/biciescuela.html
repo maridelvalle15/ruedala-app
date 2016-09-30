@@ -1,0 +1,92 @@
+{% extends "administrador/base_admin.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}<title>Biciescuela</title>{% endblock title %}
+{% block extracss %}
+<link href="{% static 'plugins/datatables/dataTables.bootstrap.css' %}" rel="stylesheet">
+<style type="text/css">
+	.box {
+        border-top: 3px solid #F3F3F3 !important;
+        border-left: 2px solid #F3F3F3 !important;
+        border-right: 2px solid #F3F3F3 !important;
+        border-bottom: 2px solid #F3F3F3 !important;
+        min-width: 130px;
+    }
+    .box.box-danger {
+    border-top-color: #82C539 !important;
+	}
+	@media screen and (max-width: 768px) {
+	    h4{
+	        font-size:16px;
+	    }
+	    h3{
+	    	font-size: 18px;
+	    }
+	}
+	td{
+		text-align: center;
+	}
+	a, a:hover, a:active, a:link{
+		text-decoration: none;
+		color: #FFFFFF;
+	}
+</style>
+{% endblock extracss %}
+
+{% block content %}
+			<br>
+			<br>
+			<br>
+            <!-- Info boxes -->
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <a href="{% url 'agregar-biciescuela' %}">
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-plus"></i></i></span>
+                    <div class="info-box-content">	
+                    	<br>
+                      <span class="info-box-text" style="color: black; font-size: 22px; text-align: center;">Agregar Biciescuela</span>
+                      <!-- <span class="info-box-number">90<small>%</small></span> -->
+                    </div><!-- /.info-box-content -->
+                </a>
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+
+            <!-- fix for small devices only -->
+            <div class="clearfix visible-sm-block"></div>
+
+
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <a href="#">
+                    <span class="info-box-icon bg-yellow"><i class="fa fa-bars"></i></span>
+                    <div class="info-box-content">
+                    	<br>
+                      <span class="info-box-text" style="color: black; font-size: 22px; text-align: center;">Registro de Biciescuelas</span>
+                      <!-- <span class="info-box-number">90<small>%</small></span> -->
+                    </div><!-- /.info-box-content -->
+                </a>
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <a href="#">
+                    <span class="info-box-icon bg-green"><i class="fa fa-search"></i></span>
+                    <div class="info-box-content">
+                      <br>
+                      <span class="info-box-text" style="color: black; font-size: 22px; text-align: center;">Buscar Biciescuela</span>
+                      <!-- <span class="info-box-number">90<small>%</small></span> -->
+                    </div><!-- /.info-box-content -->
+                </a>
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+
+          </div><!-- /.row -->
+
+{% endblock content %}
+{% block custom_script %}
+<script>
+</script>
+
+{% endblock custom_script %}

@@ -1,0 +1,53 @@
+{% extends "administrador/base_admin.html" %}
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% load static %}
+{% block extracss %}
+
+{% endblock extracss %}
+
+{% block titulo %}
+    <h1>
+        Editar Marca
+    </h1>
+{% endblock titulo %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3 col-sm-hidden col-xs-hidden"></div>
+    <div class="col-md-6 col-xs-12 col-sm-12">
+        <!-- general form elements -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Marca: <strong>{{ marca.nombre }}</strong></h3>
+            </div><!-- /.box-header -->
+            {% bootstrap_form_errors form %}
+            <!-- form start -->
+            <form action="" method="POST" role="form" class="form-horizontal">
+
+              <div class="box-body">
+                {% csrf_token %}
+                {% bootstrap_form form layout='horizontal' %}
+              </div><!-- /.box-body -->
+
+              <div class="box-footer text-center">
+                <div class="form-group">
+                  <a href="{% url 'list_marca' %}" class="btn btn-danger" type="reset">Cancelar</a>
+                  <button class="btn btn-primary" type="submit">Actualizar</button>
+                </div>
+              </div>
+            </form>
+          </div><!-- /.box -->
+    </div>
+    <div class="col-md-3 col-sm-hidden col-xs-hidden"></div>
+</div>
+
+{% endblock content %}

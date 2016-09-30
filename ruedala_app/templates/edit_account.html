@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% block body_class %}Edit Account{% endblock body_class %}
+
+{% block body %}
+
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title text-center">Edit Account</h3>
+              </div>
+              <div class="panel-body">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <label class="control-label"> Username</label>
+                    <input type="text" class="form-control" value="{{ request.user.username }}" disabled>
+                    {{ form.email | bootstrap }}
+                    <p> 
+                        <input class="btn btn-primary btn-block" type='submit' value='Edit'>
+                    </p>
+                </form>
+              </div>
+              <div class="panel-footer">
+                  <p></p>
+              </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}
+
+{% block js %}
+    <script>
+        $(document).ready(function() {
+            document.getElementById('p_header_text').style.display = 'block';
+            document.getElementById('ul_header_text').style.display = 'none';
+        });
+    </script>
+{% endblock %}

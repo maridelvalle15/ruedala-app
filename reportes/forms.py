@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from datetime import *
-from cotizar.models import *
 from reportes.models import *
 from bootstrap3_datetime.widgets import DateTimePicker
 from django.contrib.admin import widgets

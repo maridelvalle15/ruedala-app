@@ -1,7 +1,7 @@
 from django.conf.urls import url, patterns
 from reportes.views import *
 from administrador.views import *
-from darientSessions.views import *
+from ruedalaSessions.views import *
 
 urlpatterns = patterns(
     '',

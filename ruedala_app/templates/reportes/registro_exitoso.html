@@ -1,0 +1,119 @@
+{% extends "administrador/base_admin.html" %}
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+{% load static %}
+{% load humanize %}
+{% block title %}<title>Registro Exitoso</title>{% endblock title %}
+{% block extracss %}
+<link href="{% static 'plugins/datatables/dataTables.bootstrap.css' %}" rel="stylesheet">
+<style type="text/css">
+	.box {
+        border-top: 3px solid #F3F3F3 !important;
+        border-left: 2px solid #F3F3F3 !important;
+        border-right: 2px solid #F3F3F3 !important;
+        border-bottom: 2px solid #F3F3F3 !important;
+        min-width: 130px;
+    }
+    .box.box-danger {
+    border-top-color: #3c6ab4 !important;
+	}
+	@media screen and (max-width: 768px) {
+	    h4{
+	        font-size:16px;
+	    }
+	    h3{
+	    	font-size: 18px;
+	    }
+	}
+
+	    #titulo-login {
+        font-family: Arial;
+        font-size: 29px;
+        color: #B5B6B8;
+    }
+    @media only screen and (max-width: 435px) {
+        #titulo-login {
+            font-family: Arial;
+            font-size: 15px;
+            color: #B5B6B8;
+        }
+    }
+    #link-acerta {
+        color: #ED673B;
+    }
+    input:focus {
+        border-color: #ED673B !important;
+        color: #ED673B !important;
+    }
+    input:focus::-webkit-input-placeholder {
+        color: #ED673B !important;
+    }
+    input:focus::-moz-placeholder {
+        color: #ED673B !important;
+    }
+    input:focus:-moz-placeholder {
+        color: #ED673B !important;
+    }
+    input:focus:-ms-input-placeholder {
+        color: #ED673B !important;
+    }
+    .calculate {
+        color: #FFFFFF;
+        background-color: #727270;
+        text-align: center;
+    }
+    .calculate {
+      transition: all 0.8s ease;
+    }
+    .calculate:hover {
+      background: #82C539;
+      color: #FFFFFF;
+  	}
+    .first {
+        padding-top: 10%;
+    }
+    @media only screen and (max-width: 435px) {
+        .first {
+          padding-top: 20%;
+        }
+    }
+    .form-group.has-error label {
+    	color: #D16153;
+	}
+	.form-group.has-error .form-control {
+    	border-color: #D16153;
+	}
+
+</style>
+{% endblock extracss %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-xs-12" style="padding-right: 2%;">
+		<div class="box box-default color-palette-box">
+			<div class="box-body" style="overflow-x:auto;">
+			<div class="col-xs-10 col-xs-push-1 ">
+			  <div class="box box-danger">
+                <div class="box-header with-border">
+                	<div class="col-xs-12" style="text-align: center;position: relative;">
+                        <div class="col-md-12">
+                        	El registro se ha completado exitosamente
+                        </div>
+					</div>
+			  	</div>
+			  </div>
+			  </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}
