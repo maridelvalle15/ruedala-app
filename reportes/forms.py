@@ -18,24 +18,13 @@ class DateCotizationForm(forms.Form):
         widget=DateTimePicker(options={"format": "YYYY-MM-DD",
                                        "pickTime": False}))
 
-class BancoForm(forms.ModelForm):
-    class Meta:
-        model = Banco
-        fields = '__all__'
-        labels = {
-        'nombre': 'Nombre o Entidad',
-        'direccion': 'Dirección',
-        'tlf': 'Teléfono de Contacto',
-        'persona_contacto':'Persona Contacto',
-        'email_contacto':'Email de Contacto'
-        }
 
 class PrestamosForm(forms.ModelForm):
 
     identificacion = forms.CharField(label="Cédula/Carnet")
 
     class Meta:
-        model = Prestamos 
+        model = Prestamos
         exclude = ['usuario']
         widgets = {
             'hora_salida' : forms.DateInput(attrs={'type':'time'}),

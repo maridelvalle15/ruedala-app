@@ -1,0 +1,69 @@
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<div class="ver row" style="margin-top: 20px; margin-left: 30px;">
+    <div class="col-xs-12">
+        <h4>Nombre: {{usuario.nombre}}</h4>
+        <h4>Apellido: {{usuario.apellido}}</h4>
+        <h4>Identificacion: {{usuario.identificacion}}</h4>
+        <h4>Teléfono: {{usuario.telefono}}</h4>
+        <h4>Correo: {{usuario.correo}}</h4>
+    </div>
+    <br>
+    <div class="col-xs-12">
+        <h3>Biciescuelas: </h3>
+        <h4>Número de biciescuelas realizadas: {{num_biciescuelas}}</h4>
+        {% for elem in biciescuelas %}
+                <p>Fecha: {{elem.fecha}}</p>
+            <p>¿Sabe manejar?: {{elem.sabe_manejar}}</p>
+            <p>¿Aprobó?: {{elem.aprobado}}</p>
+            <p>¿Pagó carnet?: {{elem.pago_carnet}}</p>
+            <p>Instructor: {{elem.instructor}}</p>
+        {% endfor %}
+        <br>
+    <button class="editar">Editar</button>
+    </div>
+</div>
+
+<div class="editar row" style="margin-top: 20px; margin-left: 30px;" hidden="True">
+    <div class="col-xs-12">
+        <h4>Nombre: </h4>
+        <input value="{{usuario.nombre}}" readonly>
+        <h4>Apellido: </h4>
+        <input value="{{usuario.apellido}}" readonly>
+        <h4>Identificacion: </h4>
+        <input value="{{usuario.identificacion}}" readonly>
+        <h4>Teléfono: </h4>
+        <input value="{{usuario.telefono}}" readonly>
+        <h4>Correo: </h4>
+        <input value="{{usuario.correo}}" readonly>
+    </div>
+    <br>
+    <div class="col-xs-12">
+        <h3>Biciescuelas: </h3>
+        <h4>Número de biciescuelas realizadas: {{num_biciescuelas}}</h4>
+        {% for elem in biciescuelas %}
+            <form id="{{elem.pk}}" method="GET" action="{% url 'editar_biciescuela' elem.pk %}">
+                {% csrf_token %}
+                <p>Fecha: </p>
+                <input name="fecha" id="{{elem.pk}}_fecha" class="fecha" value="{{elem.fecha}}" readonly>
+                <p>¿Sabe manejar?: </p>
+                <input name="maneja" id="{{elem.pk}}_maneja" value="{{elem.sabe_manejar}}">
+                <p>¿Aprobó?: </p>
+                <input name="aprobo" id="{{elem.pk}}_aprobo" value="{{elem.aprobado}}">
+                <p>¿Pagó carnet?: </p>
+                <input name="pago" id="{{elem.pk}}_pago" value="{{elem.pago_carnet}}">
+                <p>Instructor: </p>
+                <input name="instructor" id="{{elem.pk}}_instructor" value="{{elem.instructor}}">
+                <button class="editar">Guardar</button>
+            </form>
+        {% endfor %}
+        <br>
+    </div>
+</div>
+
+<script type="text/javascript">
+$('.editar').on('click',function(){
+    $('.editar').show();
+    $('.ver').hide();
+})
+</script>
