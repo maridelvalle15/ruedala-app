@@ -144,7 +144,7 @@ def login_request(request):
                     reverse_lazy('prestamos'))
             elif (user.groups.first().name == 'corredor'):
                 return HttpResponseRedirect(
-                    reverse_lazy('resumen'))
+                    reverse_lazy('prestamos'))
         else:
             return HttpResponseRedirect(
                 reverse_lazy('status-credito', kwargs={'pk': user.pk}))
@@ -168,7 +168,7 @@ def login_request(request):
                                     reverse_lazy('prestamos'))
                             elif (user.groups.first().name == 'corredor'):
                                 return HttpResponseRedirect(
-                                    reverse_lazy('resumen'))
+                                    reverse_lazy('prestamos'))
                         else:
                             return HttpResponseRedirect(
                                 reverse_lazy('status-credito',
