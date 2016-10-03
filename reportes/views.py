@@ -40,7 +40,8 @@ class AgregarPrestamoView(CreateView):
         usuario = Usuario.objects.get(identificacion=request.POST['identificacion'])
         prestamo = Prestamos(usuario=usuario,sabe_manejar=request.POST['sabe_manejar'],hora_salida=request.POST['hora_salida'],
                             hora_estimada=request.POST['hora_estimada'],hora_llegada=request.POST['hora_llegada'],bicicleta=request.POST['bicicleta'],
-                            tiempo_uso=request.POST['tiempo_uso'],pagado=request.POST['pagado'],fecha=request.POST['fecha'])
+                            tiempo_uso=request.POST['tiempo_uso'],bicipunto=request.POST['bicipunto'],
+                            pagado=request.POST['pagado'],fecha=request.POST['fecha'])
         prestamo.save()
         if form.is_valid():
             return render(request, 'reportes/registro_exitoso.html')

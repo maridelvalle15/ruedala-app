@@ -45,6 +45,7 @@ class PrestamosForm(forms.ModelForm):
         }
 
 
+
 class BiciescuelasForm(forms.ModelForm):
 
     nombre = forms.CharField(label="Nombre")
@@ -52,6 +53,7 @@ class BiciescuelasForm(forms.ModelForm):
     identificacion = forms.CharField(label="Cédula/Carnet")
     correo = forms.EmailField(label="Correo")
     telefono = forms.CharField(label="Teléfono")
+    aprobado = forms.CharField(label="¿Aprobado?",required=False)
 
     class Meta:
         model = Biciescuelas
