@@ -18,14 +18,12 @@ class Usuario(models.Model):
 class Prestamos(models.Model):
     bicipunto = models.CharField(max_length=100, blank=False, default='')
     sabe_manejar = models.CharField(max_length=2, blank=False,
-                            choices=[('---------','---------'),
-                                    ('Si', 'Si'),
-                                    ('Si', 'Si'),
+                            choices=[('Si', 'Si'),
                                      ('No', 'No'),
                                      ])
     hora_salida = models.CharField(max_length=100, blank=False)
     hora_estimada = models.CharField(max_length=100, blank=False)
-    hora_llegada = models.CharField(max_length=100, blank=False)
+    hora_llegada = models.CharField(max_length=100, blank=True, null=True)
     bicicleta = models.CharField(max_length=100, blank=False)
     tiempo_uso = models.CharField(max_length=3, blank=False,
                             choices=[('30m', '30m'),
@@ -33,7 +31,7 @@ class Prestamos(models.Model):
                                      ('2h', '2h'),
                                      ('3h', '3h'),
                                      ])
-    pagado = models.CharField(max_length=2, blank=False,
+    pagado = models.CharField(max_length=9, blank=False,
                             choices=[('---------','---------'),
                                     ('Si', 'Si'),
                                      ('No', 'No'),
@@ -52,14 +50,17 @@ class Biciescuelas(models.Model):
                                      ('No', 'No'),
                                      ])
     fecha = models.DateTimeField()
-    aprobado = models.CharField(max_length=2, blank=True, null=True,
-                            choices=[('Si', 'Si'),
+    aprobado = models.CharField(max_length=9, blank=False, default='---------',
+                            choices=[('---------','---------'),
+                                    ('Si', 'Si'),
                                      ('No', 'No'),
                                      ])
-    pago_carnet = models.CharField(max_length=2, blank=False,
-                            choices=[('Si', 'Si'),
+    pago_carnet = models.CharField(max_length=9, blank=False,
+                            choices=[('---------','---------'),
+                                    ('Si', 'Si'),
                                      ('No', 'No'),
                                      ])
+
     instructor = models.CharField(max_length=100, blank=False)
     usuario = models.ForeignKey(Usuario)
     def __str__(self):
