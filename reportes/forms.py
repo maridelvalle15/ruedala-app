@@ -33,6 +33,7 @@ class PrestamosForm(forms.ModelForm):
         }
         labels = {
 
+            'bicipunto': 'Bicipunto',
             'sabe_manejar': '¿Sabe manejar bicicleta?',
             'hora_salida': 'Hora de salida',
             'hora_estimada': 'Hora estimada de llegada',

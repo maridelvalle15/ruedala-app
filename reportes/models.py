@@ -16,6 +16,7 @@ class Usuario(models.Model):
 		return self.nombre+' '+self.apellido
 
 class Prestamos(models.Model):
+    bicipunto = models.CharField(max_length=100, blank=False)
     sabe_manejar = models.CharField(max_length=2, blank=False,
                             choices=[('Si', 'Si'),
                                      ('No', 'No'),
