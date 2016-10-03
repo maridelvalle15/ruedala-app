@@ -18,7 +18,9 @@ class Usuario(models.Model):
 class Prestamos(models.Model):
     bicipunto = models.CharField(max_length=100, blank=False, default='')
     sabe_manejar = models.CharField(max_length=2, blank=False,
-                            choices=[('Si', 'Si'),
+                            choices=[('---------','---------'),
+                                    ('Si', 'Si'),
+                                    ('Si', 'Si'),
                                      ('No', 'No'),
                                      ])
     hora_salida = models.CharField(max_length=100, blank=False)
