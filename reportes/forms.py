@@ -57,7 +57,7 @@ class BiciescuelasForm(forms.ModelForm):
                                         ('Si', 'Si'),
                                      ('No', 'No'),
                                      ])
-    pago_carnet = forms.ChoiceField(label="¿Aprobado?",required=False,choices=[('---------','---------'),
+    pago_carnet = forms.ChoiceField(label="¿Pagó carnet?",required=False,choices=[('---------','---------'),
                                         ('Si', 'Si'),
                                      ('No', 'No'),
                                      ])
