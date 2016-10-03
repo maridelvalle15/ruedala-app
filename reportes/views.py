@@ -124,23 +124,8 @@ class AgregarBiciescuelaView(CreateView):
         form = BiciescuelasForm(request.POST)
         if form.is_valid():
             try:
-                usuario.objects.get(
+                usuario = Usuario.objects.get(
                     identificacion=request.POST['identificacion'])
-                if usuario.aprobado == 'Si':
-                    return HttpResponseRedirect(reverse_lazy('usuario_ya_aprobado'))
-                else:
-                    biciescuela = Biciescuelas(usuario=usuario,
-                                               sabe_manejar=request.POST
-                                               ['sabe_manejar'],
-                                               fecha=request.POST['fecha'],
-                                               aprobado=request.POST
-                                               ['aprobado'],
-                                               pago_carnet=request.POST
-                                               ['pago_carnet'],
-                                               instructor=request.POST
-                                               ['instructor'])
-                    biciescuela.save()
-                    return HttpResponseRedirect(reverse_lazy('registro_exitoso'))
             except:
                 usuario = Usuario(
                     nombre=request.POST['nombre'],
@@ -150,16 +135,16 @@ class AgregarBiciescuelaView(CreateView):
                     correo=request.POST['correo']
                 )
                 usuario.save()
-                biciescuela = Biciescuelas(
-                    usuario=usuario,
-                    sabe_manejar=request.POST['sabe_manejar'],
-                    fecha=request.POST['fecha'],
-                    aprobado=request.POST['aprobado'],
-                    pago_carnet=request.POST['pago_carnet'],
-                    instructor=request.POST['instructor']
-                )
-                biciescuela.save()
-                return HttpResponseRedirect(reverse_lazy('registro_exitoso'))
+            biciescuela = Biciescuelas(
+                usuario=usuario,
+                sabe_manejar=request.POST['sabe_manejar'],
+                fecha=request.POST['fecha'],
+                aprobado=request.POST['aprobado'],
+                pago_carnet=request.POST['pago_carnet'],
+                instructor=request.POST['instructor']
+            )
+            biciescuela.save()
+            return HttpResponseRedirect(reverse_lazy('registro_exitoso'))
         else:
             return render(request, self.template_name, {'form': form})
 

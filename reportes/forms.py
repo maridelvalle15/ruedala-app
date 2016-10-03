@@ -68,7 +68,11 @@ class BiciescuelasForm(forms.ModelForm):
 
     def clean_identificacion(self):
         identificacion = self.cleaned_data.get('identificacion')
-
-        if Usuario.objects.filter(identificacion=identificacion).count() != 0:
-            raise forms.ValidationError(u'Este carnet/cédula ya realizó la biciescuela.')
+        usuarios = Usuario.objects.filter(identificacion=identificacion)
+        for elem in usuarios:
+            print elem
+            biciescuelas = Biciescuelas.objects.filter(usuario=elem)
+            for elem in biciescuelas:
+                if elem.aprobado == "Si":
+                    raise forms.ValidationError(u'Este carnet/cédula ya aprobó la biciescuela.')
         return identificacion
