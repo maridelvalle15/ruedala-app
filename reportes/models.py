@@ -17,7 +17,7 @@ class Usuario(models.Model):
 
 class Prestamos(models.Model):
     bicipunto = models.CharField(max_length=100, blank=False, default='')
-    sabe_manejar = models.CharField(max_length=2, blank=False,
+    sabe_manejar = models.CharField(max_length=10, blank=False,
                             choices=[('Si', 'Si'),
                                      ('No', 'No'),
                                      ])
@@ -31,7 +31,7 @@ class Prestamos(models.Model):
                                      ('2h', '2h'),
                                      ('3h', '3h'),
                                      ])
-    pagado = models.CharField(max_length=9, blank=False,
+    pagado = models.CharField(max_length=10, blank=False,
                             choices=[('---------','---------'),
                                     ('Si', 'Si'),
                                      ('No', 'No'),
@@ -45,17 +45,17 @@ class Prestamos(models.Model):
 
 
 class Biciescuelas(models.Model):
-    sabe_manejar = models.CharField(max_length=2, blank=False,
+    sabe_manejar = models.CharField(max_length=10, blank=False,
                             choices=[('Si', 'Si'),
                                      ('No', 'No'),
                                      ])
     fecha = models.DateTimeField()
-    aprobado = models.CharField(max_length=9, blank=False, default='---------',
+    aprobado = models.CharField(max_length=10, blank=False, default='---------',
                             choices=[('---------','---------'),
                                     ('Si', 'Si'),
                                      ('No', 'No'),
                                      ])
-    pago_carnet = models.CharField(max_length=9, blank=False,
+    pago_carnet = models.CharField(max_length=10, blank=False,
                             choices=[('---------','---------'),
                                     ('Si', 'Si'),
                                      ('No', 'No'),
