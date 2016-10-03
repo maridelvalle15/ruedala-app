@@ -32,7 +32,8 @@ class Prestamos(models.Model):
                                      ('3h', '3h'),
                                      ])
     pagado = models.CharField(max_length=2, blank=False,
-                            choices=[('Si', 'Si'),
+                            choices=[('---------','---------'),
+                                    ('Si', 'Si'),
                                      ('No', 'No'),
                                      ])
 
