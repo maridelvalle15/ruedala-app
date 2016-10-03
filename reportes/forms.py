@@ -53,7 +53,9 @@ class BiciescuelasForm(forms.ModelForm):
     identificacion = forms.CharField(label="Cédula/Carnet")
     correo = forms.EmailField(label="Correo")
     telefono = forms.CharField(label="Teléfono")
-    aprobado = forms.CharField(label="¿Aprobado?",required=False)
+    aprobado = forms.ChoiceField(label="¿Aprobado?",required=False,choices=[('Si', 'Si'),
+                                     ('No', 'No'),
+                                     ])
 
     class Meta:
         model = Biciescuelas
