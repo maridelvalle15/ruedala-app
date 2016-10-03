@@ -21,7 +21,7 @@ class DateCotizationForm(forms.Form):
 class PrestamosForm(forms.ModelForm):
 
     identificacion = forms.CharField(label="Cédula/Carnet")
-    hora_llegada = models.CharField(label="Hora de llegada", required=False)
+    hora_llegada = forms.CharField(label="Hora de llegada", required=False)
 
     class Meta:
         model = Prestamos
