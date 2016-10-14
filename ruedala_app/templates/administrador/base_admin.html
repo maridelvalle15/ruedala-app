@@ -323,6 +323,11 @@
                         <i class="fa fa-search"></i> <span>Buscar usuario</span>
                       </a>
                     </li>
+                    <li class="treeview">
+                      <a href="{% url 'carnetizacion' %}">
+                        <i class="fa fa-credit-card"></i> <span>Carnetización</span>
+                      </a>
+                    </li>
 
                   {% elif user.groups.all.0.name == 'corredor' %}
 

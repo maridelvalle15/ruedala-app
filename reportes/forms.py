@@ -62,6 +62,10 @@ class BiciescuelasForm(forms.ModelForm):
                                         ('Si', 'Si'),
                                      ('No', 'No'),
                                      ])
+    entrego_foto = forms.ChoiceField(label="¿Entregó foto?",required=False,choices=[('---------','---------'),
+                                        ('Si', 'Si'),
+                                     ('No', 'No'),
+                                     ])
 
     class Meta:
         model = Biciescuelas

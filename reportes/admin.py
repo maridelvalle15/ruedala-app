@@ -4,3 +4,4 @@ from reportes.models import *
 admin.site.register(Usuario)
 admin.site.register(Prestamos)
 admin.site.register(Biciescuelas)
+admin.site.register(Carnet)

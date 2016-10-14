@@ -1,0 +1,203 @@
+{% extends "administrador/base_admin.html" %}
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+{% load static %}
+{% load humanize %}
+{% block title %}<title>Carnets</title>{% endblock title %}
+{% block extracss %}
+<link href="{% static 'plugins/datatables/dataTables.bootstrap.css' %}" rel="stylesheet">
+<style type="text/css">
+    .box {
+        border-top: 3px solid #F3F3F3 !important;
+        border-left: 2px solid #F3F3F3 !important;
+        border-right: 2px solid #F3F3F3 !important;
+        border-bottom: 2px solid #F3F3F3 !important;
+        min-width: 130px;
+    }
+    .box.box-danger {
+    border-top-color: #3c6ab4 !important;
+    }
+    @media screen and (max-width: 768px) {
+        h4{
+            font-size:16px;
+        }
+        h3{
+            font-size: 18px;
+        }
+    }
+
+        #titulo-login {
+        font-family: Arial;
+        font-size: 29px;
+        color: #B5B6B8;
+    }
+    @media only screen and (max-width: 435px) {
+        #titulo-login {
+            font-family: Arial;
+            font-size: 15px;
+            color: #B5B6B8;
+        }
+    }
+    #link-acerta {
+        color: #ED673B;
+    }
+    input:focus {
+        border-color: #ED673B !important;
+        color: #ED673B !important;
+    }
+    input:focus::-webkit-input-placeholder {
+        color: #ED673B !important;
+    }
+    input:focus::-moz-placeholder {
+        color: #ED673B !important;
+    }
+    input:focus:-moz-placeholder {
+        color: #ED673B !important;
+    }
+    input:focus:-ms-input-placeholder {
+        color: #ED673B !important;
+    }
+    .calculate {
+        color: #FFFFFF;
+        background-color: #727270;
+        text-align: center;
+    }
+    .calculate {
+      transition: all 0.8s ease;
+    }
+    .calculate:hover {
+      background: #82C539;
+      color: #FFFFFF;
+    }
+    .first {
+        padding-top: 10%;
+    }
+    @media only screen and (max-width: 435px) {
+        .first {
+          padding-top: 20%;
+        }
+    }
+    .form-group.has-error label {
+        color: #D16153;
+    }
+    .form-group.has-error .form-control {
+        border-color: #D16153;
+    }
+
+</style>
+{% endblock extracss %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xs-12" style="padding-right: 2%;">
+        <div class="box box-default color-palette-box">
+            <div class="box-header">
+                <h3 class="box-title">Carnets con status: {{status}}</h3>
+            </div>
+            <div class="box-body table-responsive no-padding">
+              <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Carnet/Cédula</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                        <th>Fecha Biciescuela</th>
+                        <th>¿Foto?</th>
+                        <th>Status</th>
+                        <th>Fecha Entrega</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for carnet in carnets %}
+                    <tr role="row">
+                      <td> {{ carnet.usuario.nombre }} {{ carnet.usuario.apellido }}</td>
+                      <td>{{ carnet.usuario.identificacion }}</td>
+                      <td>{{ carnet.usuario.telefono }}</td>
+                      <td>{{ carnet.usuario.correo }}</td>
+                      <td>{{ carnet.fecha_biciescuela|date:"M j o" }}</td>
+                      {% if carnet.foto == 'No' %}
+                      <td>
+                        <div class="btn-group">
+                              <button type="button" class="btn btn-default">{{ carnet.foto }}</button>
+                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                              </button>
+                          <ul class="dropdown-menu" role="menu">
+                            <li class="divider"></li>
+                            {% if carnet.foto == 'No' %}
+                            <li><a href=""><i class="fa fa-check-circle" style="color: green;">  Si</i></a></li>
+                            {% endif %}
+                          </ul>
+                        </div>
+                      </td>
+                      {% else %}
+                      <td>{{ carnet.foto }}</td>
+                      {% endif %}
+                      {% if carnet.status != 'Entregado' %}
+                      <td>
+                        <div class="btn-group">
+                              <button type="button" class="btn btn-default">{{ carnet.status }}</button>
+                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                              </button>
+                          <ul class="dropdown-menu" role="menu">
+                            {% if carnet.status == 'Sin empezar' %}
+                            <li><a href="#"><i class="fa fa-check-circle" style="color: green;">  En proceso </i></a></li>
+                            {% elif carnet.status == 'En proceso' %}
+                            <li><a href="#"><i class="fa fa-check-circle" style="color: green;">  Listo </i></a></li>
+                            {% elif carnet.status == 'Listo' %}
+                            <li><a href="#"><i class="fa fa-check-circle" style="color: green;">  Entregado </i></a></li>
+                            {% endif %}
+                          </ul>
+                        </div>
+                      </td>
+                      {% endif %}
+                      {% if carnet.fecha_entrega == None %}
+                      <td>
+                        <div class="btn-group">
+                              <button type="button" class="btn btn-default">Agregar fecha entrega</button>
+                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                              </button>
+                          <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><i class="fa fa-check-circle" style="color: green;">Carnet entregado</i></a></li>
+                          </ul>
+                        </div>
+                      </td>
+                      {% else %}
+                      <td>{{ carnet.fecha_entrega }}</td>
+                      {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block custom_script %}
+<script>
+    $(document).ready(function(){
+        $(function () {
+            $("#example1").DataTable();
+        });
+    });
+</script>
+
+{% endblock custom_script %}
+
