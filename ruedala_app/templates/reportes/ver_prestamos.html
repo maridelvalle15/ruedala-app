@@ -37,6 +37,7 @@
 			            <th>¿Pagó?</th>
 			            <th>Bicipunto</th>
 			            <th>Fecha</th>
+			            <th>Detalle</th>
 				    </tr>
 			    </thead>
 			    <tbody>
@@ -52,7 +53,8 @@
 				      <td> {{ prestamo.tiempo_uso }}</td>
 				      <td> {{ prestamo.pagado }}</td>
 				      <td> {{ prestamo.bicipunto }}</td>
-				      <td> {{ prestamo.fecha }}</td>
+				      <td> {{ prestamo.fecha|date:"M j o" }}</td>
+				      <td><a href="{% url 'detalle_prestamo' prestamo.pk %}">Ver</a></td>
 
 				    </tr>
 			    {% endfor %}

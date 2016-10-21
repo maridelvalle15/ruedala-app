@@ -43,7 +43,6 @@ class AgregarPrestamoView(CreateView):
             ['identificacion'])
         prestamo = Prestamos(
             usuario=usuario,
-            sabe_manejar=request.POST['sabe_manejar'],
             hora_salida=request.POST['hora_salida'],
             hora_estimada=request.POST['hora_estimada'],
             hora_llegada=request.POST['hora_llegada'],
@@ -72,16 +71,15 @@ class VerPrestamosView(ListView):
         return context
 
 
-class BuscarPrestamoView(ListView):
-    template_name = 'reportes/buscar_prestamo.html'
+class DetallePrestamoView(TemplateView):
+    template_name = 'reportes/detalle_prestamo.html'
     model = Prestamos
 
     def get_context_data(self, **kwargs):
         context = super(
-            BuscarPrestamoView, self).get_context_data(**kwargs)
-        prestamos = Prestamos.objects.all()
-        print prestamos
-        context['prestamos'] = prestamos
+            DetallePrestamoView, self).get_context_data(**kwargs)
+        prestamo = Prestamos.objects.get(pk=kwargs['id'])
+        context['prestamo'] = prestamo
         return context
 
 
@@ -100,7 +98,7 @@ def editar_biciescuela(request, id):
     biciescuela.pago_carnet = request.GET['pago']
     biciescuela.instructor = request.GET['instructor']
     biciescuela.save()
-    return HttpResponseRedirect(reverse_lazy('buscar_usuario'))
+    return HttpResponseRedirect(reverse_lazy('detalle_biciescuela', kwargs={'id': biciescuela.pk}))
 
 class AgregarBiciescuelaView(CreateView):
     form_class = BiciescuelasForm
@@ -160,21 +158,31 @@ class VerBiciescuelasView(ListView):
         return context
 
 
+class DetalleBiciescuelaView(TemplateView):
+    template_name = 'reportes/detalle_biciescuela.html'
+    model = Biciescuelas
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            DetalleBiciescuelaView, self).get_context_data(**kwargs)
+        biciescuela = Biciescuelas.objects.get(pk=kwargs['id'])
+        context['biciescuela'] = biciescuela
+        return context
+
+
 class RegistroExitoso(TemplateView):
     template_name = 'reportes/registro_exitoso.html'
 
 
-class BuscarUsuarioView(ListView):
-    template_name = 'reportes/buscar_usuario.html'
+class verUsuariosView(ListView):
+    template_name = 'reportes/ver_usuarios.html'
     model = Usuario
 
     def get_context_data(self, **kwargs):
         context = super(
-            BuscarUsuarioView, self).get_context_data(**kwargs)
-        prestamos = Prestamos.objects.all()
-        info = ''
-        context['prestamos'] = prestamos
-        context['info'] = info
+            VerUsuariosView, self).get_context_data(**kwargs)
+        usuarios = Usuario.objects.all()
+        context['usuarios'] = usuarios
         return context
 
     def post(self, request, *args, **kwargs):
@@ -197,6 +205,10 @@ class BuscarUsuarioView(ListView):
 class UsuarioYaAprobado(TemplateView):
     template_name = 'reportes/usuario_ya_aprobado.html'
 
+
+##########################################################
+###################### CARNETS ###########################
+##########################################################
 
 class Carnetizacion(TemplateView):
     template_name = 'reportes/carnetizacion.html'
@@ -231,3 +243,57 @@ class VerCarnets(ListView):
         context['status'] = status
 
         return self.render_to_response(context)
+
+
+def cambiar_carnet_foto(request, id):
+    carnet = Carnet.objects.get(pk=id)
+    carnet.foto = 'Si'
+    status = carnet.status
+
+    if (status == 'Sin empezar'):
+        return HttpResponseRedirect(reverse_lazy('ver_carnets',
+                                                 kwargs={'id': 1}))
+    elif (status == 'En proceso'):
+        return HttpResponseRedirect(reverse_lazy('ver_carnets',
+                                                 kwargs={'id': 2}))
+    elif (status == 'Listo'):
+        return HttpResponseRedirect(reverse_lazy('ver_carnets',
+                                                 kwargs={'id': 3}))
+    else:
+        return HttpResponseRedirect(reverse_lazy('ver_carnets',
+                                                 kwargs={'id': 4}))
+
+
+def actualizar_status_carnet(request, id):
+    carnet = Carnet.objects.get(pk=id)
+    status = carnet.status
+
+    if (status == 'Sin empezar'):
+        carnet.status = 'En proceso'
+        carnet.save()
+        return HttpResponseRedirect(reverse_lazy('ver_carnets',
+                                                 kwargs={'id': 1}))
+    elif (status == 'En proceso'):
+        carnet.status = 'Listo'
+        carnet.save()
+        return HttpResponseRedirect(reverse_lazy('ver_carnets',
+                                                 kwargs={'id': 2}))
+    elif (status == 'Listo'):
+        carnet.status = 'Entregado'
+        carnet.save()
+        return HttpResponseRedirect(reverse_lazy('ver_carnets',
+                                                 kwargs={'id': 3}))
+
+    return HttpResponseRedirect(reverse_lazy('ver_carnets',
+                                             kwargs={'id': 4}))
+
+
+def agregar_fecha_entrega(request, id):
+    carnet = Carnet.objects.get(pk=id)
+    fecha = request.POST['fecha_entrega']
+    carnet.fecha_entrega = datetime.datetime.strptime(
+        str(fecha), '%m/%d/%Y').strftime('%Y-%m-%d')
+    carnet.status = 'Entregado'
+    carnet.save()
+
+    return HttpResponseRedirect(reverse_lazy('ver_carnets', kwargs={'id': 4}))

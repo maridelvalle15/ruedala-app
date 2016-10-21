@@ -7,17 +7,6 @@ from bootstrap3_datetime.widgets import DateTimePicker
 from django.contrib.admin import widgets
 
 
-class DateCotizationForm(forms.Form):
-    start_date = forms.DateField(
-        label='Fecha inicial', required=True,
-        widget=DateTimePicker(options={"format": "YYYY-MM-DD",
-                                       "pickTime": False}))
-    end_date = forms.DateField(
-        label='Fecha final', required=True,
-        widget=DateTimePicker(options={"format": "YYYY-MM-DD",
-                                       "pickTime": False}))
-
-
 class PrestamosForm(forms.ModelForm):
 
     identificacion = forms.CharField(label="Cédula/Carnet")
@@ -27,15 +16,14 @@ class PrestamosForm(forms.ModelForm):
         model = Prestamos
         exclude = ['usuario']
         widgets = {
-            'hora_salida' : forms.DateInput(attrs={'type':'time'}),
-            'hora_estimada' : forms.DateInput(attrs={'type':'time'}),
-            'hora_llegada' : forms.DateInput(attrs={'type':'time'}),
-            'fecha' : forms.DateInput(attrs={'type':'date'}),
+            'hora_salida': forms.DateInput(attrs={'type': 'time'}),
+            'hora_estimada': forms.DateInput(attrs={'type': 'time'}),
+            'hora_llegada': forms.DateInput(attrs={'type': 'time'}),
+            'fecha': forms.DateInput(attrs={'type': 'date'}),
         }
         labels = {
 
             'bicipunto': 'Bicipunto',
-            'sabe_manejar': '¿Sabe manejar bicicleta?',
             'hora_salida': 'Hora de salida',
             'hora_estimada': 'Hora estimada de llegada',
             'hora_llegada': 'Hora de llegada',
@@ -46,7 +34,6 @@ class PrestamosForm(forms.ModelForm):
         }
 
 
-
 class BiciescuelasForm(forms.ModelForm):
 
     nombre = forms.CharField(label="Nombre")
@@ -54,18 +41,21 @@ class BiciescuelasForm(forms.ModelForm):
     identificacion = forms.CharField(label="Cédula/Carnet")
     correo = forms.EmailField(label="Correo")
     telefono = forms.CharField(label="Teléfono")
-    aprobado = forms.ChoiceField(label="¿Aprobado?",required=False,choices=[('---------','---------'),
-                                        ('Si', 'Si'),
-                                     ('No', 'No'),
-                                     ])
-    pago_carnet = forms.ChoiceField(label="¿Pagó carnet?",required=False,choices=[('---------','---------'),
-                                        ('Si', 'Si'),
-                                     ('No', 'No'),
-                                     ])
-    entrego_foto = forms.ChoiceField(label="¿Entregó foto?",required=False,choices=[('---------','---------'),
-                                        ('Si', 'Si'),
-                                     ('No', 'No'),
-                                     ])
+    aprobado = forms.ChoiceField(label="¿Aprobado?",
+                                 required=False,
+                                 choices=[('---------', '---------'),
+                                          ('Si', 'Si'),
+                                          ('No', 'No')])
+    pago_carnet = forms.ChoiceField(label="¿Pagó carnet?",
+                                    required=False,
+                                    choices=[('---------', '---------'),
+                                             ('Si', 'Si'),
+                                             ('No', 'No')])
+    entrego_foto = forms.ChoiceField(label="¿Entregó foto?",
+                                     required=False,
+                                     choices=[('---------', '---------'),
+                                              ('Si', 'Si'),
+                                              ('No', 'No')])
 
     class Meta:
         model = Biciescuelas

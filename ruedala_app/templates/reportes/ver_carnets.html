@@ -12,6 +12,10 @@
 {% load humanize %}
 {% block title %}<title>Carnets</title>{% endblock title %}
 {% block extracss %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link href="{% static 'plugins/datatables/dataTables.bootstrap.css' %}" rel="stylesheet">
 <style type="text/css">
     .box {
@@ -135,7 +139,7 @@
                           <ul class="dropdown-menu" role="menu">
                             <li class="divider"></li>
                             {% if carnet.foto == 'No' %}
-                            <li><a href=""><i class="fa fa-check-circle" style="color: green;">  Si</i></a></li>
+                            <li><a href="{% url 'cambiar_carnet_foto' carnet.pk %}"><i class="fa fa-check-circle" style="color: green;">  Si</i></a></li>
                             {% endif %}
                           </ul>
                         </div>
@@ -143,7 +147,7 @@
                       {% else %}
                       <td>{{ carnet.foto }}</td>
                       {% endif %}
-                      {% if carnet.status != 'Entregado' %}
+                      {% if carnet.status != 'Entregado' and carnet.status != 'Listo'  %}
                       <td>
                         <div class="btn-group">
                               <button type="button" class="btn btn-default">{{ carnet.status }}</button>
@@ -153,31 +157,27 @@
                               </button>
                           <ul class="dropdown-menu" role="menu">
                             {% if carnet.status == 'Sin empezar' %}
-                            <li><a href="#"><i class="fa fa-check-circle" style="color: green;">  En proceso </i></a></li>
+                            <li><a href="{% url 'actualizar_status_carnet' carnet.pk %}"><i class="fa fa-check-circle" style="color: green;">  En proceso </i></a></li>
                             {% elif carnet.status == 'En proceso' %}
-                            <li><a href="#"><i class="fa fa-check-circle" style="color: green;">  Listo </i></a></li>
-                            {% elif carnet.status == 'Listo' %}
-                            <li><a href="#"><i class="fa fa-check-circle" style="color: green;">  Entregado </i></a></li>
+                            <li><a href="{% url 'actualizar_status_carnet' carnet.pk %}"><i class="fa fa-check-circle" style="color: green;">  Listo </i></a></li>
                             {% endif %}
                           </ul>
                         </div>
                       </td>
-                      {% endif %}
-                      {% if carnet.fecha_entrega == None %}
-                      <td>
-                        <div class="btn-group">
-                              <button type="button" class="btn btn-default">Agregar fecha entrega</button>
-                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <span class="caret"></span>
-                                <span class="sr-only">Toggle Dropdown</span>
-                              </button>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="#"><i class="fa fa-check-circle" style="color: green;">Carnet entregado</i></a></li>
-                          </ul>
-                        </div>
-                      </td>
                       {% else %}
-                      <td>{{ carnet.fecha_entrega }}</td>
+                      <td>{{ carnet.status }}</td>
+                      {% endif %}
+                      {% if carnet.status == 'Listo' %}
+                      <td>
+                        <form action="{% url 'agregar_fecha_entrega' carnet.pk %}" method="POST">
+                        {% csrf_token %}
+                        <input label='Agregar fecha de entrega' name='fecha_entrega' id='datepicker'>
+                        <button>Carnet Listo</button>
+                      </td>
+                      {% elif carnet.status == 'Entregado' %}
+                      <td>{{carnet.fecha_entrega}}</td>
+                      {% else %}
+                      <td style="text-align: center;"> ------- </td>
                       {% endif %}
                     </tr>
                 {% endfor %}
@@ -197,6 +197,9 @@
             $("#example1").DataTable();
         });
     });
+    $( function() {
+      $( "#datepicker" ).datepicker();
+    } );
 </script>
 
 {% endblock custom_script %}

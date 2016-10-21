@@ -1,0 +1,84 @@
+{% extends "administrador/base_admin.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}<title>Detalle Préstamo</title>{% endblock title %}
+{% block extracss %}
+<style type="text/css">
+    .box {
+        border-top: 3px solid #F3F3F3 !important;
+        border-left: 2px solid #F3F3F3 !important;
+        border-right: 2px solid #F3F3F3 !important;
+        border-bottom: 2px solid #F3F3F3 !important;
+    }
+</style>
+{% endblock extracss %}
+
+{% block content %}
+
+<div class="ver row" style="margin-top: 20px; margin-left: 30px;">
+    <div class="col-xs-12" style="padding-right: 2%;">
+              <p>Nombre: {{prestamo.usuario.nombre}} {{prestamo.usuario.apellido}}</p>
+              <p>Carnet/Cédula: {{prestamo.usuario.identificacion}}</p>
+              <p>Teléfono: {{prestamo.usuario.telefono}}</p>
+              <p>Correo: {{prestamo.usuario.correo}}</p>
+              <p>Bicipunto: {{prestamo.bicipunto}}</p>
+              <p>Hora Salida: {{prestamo.hora_salida}}</p>
+              <p>Hora Estimada: {{prestamo.hora_estimada}}</p>
+              <p>Hora Llegada: {{prestamo.hora_llegada}}</p>
+              <p>Bicicleta: {{prestamo.bicicleta}}</p>
+              <p>Tiempo de uso: {{prestamo.tiempo_uso}}</p>
+              <p>Pagado: {{prestamo.pagado}}</p>
+              <p>Fecha de realización: {{prestamo.fecha|date:"M j o"}}</p>
+            </div>
+            <button id="editar">Editar</button>
+</div>
+
+<div class="editar row" style="margin-top: 20px; margin-left: 30px;" hidden="True">
+    <div class="col-xs-12" style="padding-right: 2%;">
+            <div class="box-body" style="overflow-x:auto;">
+              <h4>Nombre: </h4>
+              <input value="{{prestamo.usuario.nombre}} {{prestamo.usuario.apellido}}" readonly>
+              <h4>Identificacion: </h4>
+              <input value="{{prestamo.usuario.identificacion}}" readonly>
+              <h4>Teléfono: </h4>
+              <input value="{{prestamo.usuario.telefono}}" readonly>
+              <h4>Correo: </h4>
+              <input value="{{prestamo.usuario.correo}}" readonly>
+              <h4>Bicipunto: </h4>
+              <input value="{{prestamo.bicipunto}}" readonly>
+              <h4>Hora de salida: </h4>
+              <input value="{{prestamo.hora_salida}}" readonly>
+              <h4>Hora de estimada: </h4>
+              <input value="{{prestamo.hora_estimada}}" readonly>
+              <h4>Fecha de realización: </h4>
+              <input value="{{prestamo.fecha}}" readonly>
+    </div>
+    <br>
+    <div class="col-xs-12">
+            <form id="{{prestamo.pk}}" method="GET" action="#">
+                {% csrf_token %}
+                <p>Hora de llegada: </p>
+                <input name="llegada" id="{{prestamo.pk}}_llegada" value="{{prestamo.hora_llegada}}">
+                <p>Bicicleta: </p>
+                <input name="bicicleta" id="{{prestamo.pk}}_bicicleta" value="{{prestamo.bicicleta}}">
+                <p>Tiempo de uso: </p>
+                <input name="tiempo" id="{{prestamo.pk}}_tiempo" value="{{prestamo.tiempo_uso}}">
+                <p>Pagado: </p>
+                <input name="pagado" id="{{prestamo.pk}}_pagado" value="{{prestamo.pagado}}">
+                <button class="editar">Guardar</button>
+            </form>
+        <br>
+    </div>
+</div>
+{% endblock content %}
+
+{% block custom_script %}
+<script>
+$('#editar').on('click',function(){
+    $('.editar').show();
+    $('.ver').hide();
+})
+</script>
+
+{% endblock custom_script %}
+

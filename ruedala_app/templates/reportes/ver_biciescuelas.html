@@ -35,6 +35,7 @@
                         <th>¿Pagó carnet?</th>
                         <th>Instructor</th>
                         <th>Fecha</th>
+                        <th>Detalle</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,7 +49,8 @@
                       <td> {{ biciescuela.aprobado }}</td>
                       <td> {{ biciescuela.pago_carnet }}</td>
                       <td> {{ biciescuela.instructor }}</td>
-                      <td> {{ biciescuela.fecha }}</td>
+                      <td> {{ biciescuela.fecha|date:"M j o" }}</td>
+                      <td><a href="{% url 'detalle_biciescuela' biciescuela.pk %}">Ver</a></td>
 
                     </tr>
                 {% endfor %}

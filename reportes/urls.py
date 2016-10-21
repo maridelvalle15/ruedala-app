@@ -18,13 +18,9 @@ urlpatterns = patterns(
         VerPrestamosView.as_view(),
         name='ver_prestamos'),
     url(
-        r'^buscar-prestamo/$',
-        BuscarPrestamoView.as_view(),
-        name='buscar_prestamo'),
-    url(
-        r'^editar-biciescuela/(?P<id>\d+)/$',
-        'reportes.views.editar_biciescuela',
-        name='editar_biciescuela'),
+        r'^detalle-prestamo/(?P<id>\d+)/$',
+        DetallePrestamoView.as_view(),
+        name='detalle_prestamo'),
     url(
         r'^biciescuela/$',
         BiciescuelaView.as_view(),
@@ -38,9 +34,17 @@ urlpatterns = patterns(
         VerBiciescuelasView.as_view(),
         name='ver_biciescuelas'),
     url(
-        r'^buscar-usuario/$',
-        BuscarUsuarioView.as_view(),
-        name='buscar_usuario'),
+        r'^detalle-biciescuela/(?P<id>\d+)/$',
+        DetalleBiciescuelaView.as_view(),
+        name='detalle_biciescuela'),
+    url(
+        r'^editar-biciescuela/(?P<id>\d+)/$',
+        'reportes.views.editar_biciescuela',
+        name='editar_biciescuela'),
+    url(
+        r'^ver-usuarios/$',
+        verUsuariosView.as_view(),
+        name='ver_usuarios'),
     url(
         r'^registro-exitoso/$',
         RegistroExitoso.as_view(),
@@ -53,4 +57,16 @@ urlpatterns = patterns(
         r'^ver-carnets/(?P<id>\d+)/$',
         VerCarnets.as_view(),
         name='ver_carnets'),
+    url(
+        r'^cambiar-foto-carnet/(?P<id>\d+)/$',
+        'reportes.views.cambiar_carnet_foto',
+        name='cambiar_carnet_foto'),
+    url(
+        r'^actualizar-status-carnet/(?P<id>\d+)/$',
+        'reportes.views.actualizar_status_carnet',
+        name='actualizar_status_carnet'),
+    url(
+        r'^agregar-fecha-entrega/(?P<id>\d+)/$',
+        'reportes.views.agregar_fecha_entrega',
+        name='agregar_fecha_entrega'),
 )

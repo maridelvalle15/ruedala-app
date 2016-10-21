@@ -97,20 +97,19 @@ WSGI_APPLICATION = 'ruedala_app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config()
+# DATABASES = {}
+# DATABASES['default'] = dj_database_url.config()
 
-# DATABASES = {
-#       'default': {
-#           'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': os.path.join(BASE_DIR, 'ruedala.db'),
-#         'NAME': 'd8l46kpuhjh0jn',
-#         'USER': 'grqrhqnwteimjm',
-#         'PASSWORD': '6NzRVVS8yIasntkB9aNbMV6Hv4',
-#         'HOST': 'ec2-54-243-203-87.compute-1.amazonaws.com',
-#         'PORT': '5432',
-#       }
-#   }
+DATABASES = {
+      'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd8l46kpuhjh0jn',
+        'USER': 'grqrhqnwteimjm',
+        'PASSWORD': '6NzRVVS8yIasntkB9aNbMV6Hv4',
+        'HOST': 'ec2-54-243-203-87.compute-1.amazonaws.com',
+        'PORT': '5432',
+      }
+  }
 
 # DATABASES = {
 #     'default': {
@@ -156,6 +155,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+DATE_INPUT_FORMATS = ('%d-%m-%Y','%Y-%m-%d')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/

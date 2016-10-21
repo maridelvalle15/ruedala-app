@@ -19,10 +19,6 @@ class Usuario(models.Model):
 
 class Prestamos(models.Model):
     bicipunto = models.CharField(max_length=100, blank=False, default='')
-    sabe_manejar = models.CharField(max_length=10, blank=                           False,
-                                    choices=[('Si', 'Si'),
-                                            ('No', 'No'),
-                                    ])
     hora_salida = models.CharField(max_length=100, blank=False)
     hora_estimada = models.CharField(max_length=100, blank=False)
     hora_llegada = models.CharField(max_length=100, blank=True, null=True)
@@ -82,7 +78,7 @@ class Carnet(models.Model):
                                      ('No', 'No'),
                                      ])
     fecha_biciescuela = models.DateTimeField(blank=True,null=True)
-    fecha_entrega = models.DateTimeField(blank=True,null=True)
+    fecha_entrega = models.DateField(blank=True,null=True)
 
     def __str__(self):
         return self.usuario.nombre+' '+self.usuario.apellido

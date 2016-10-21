@@ -1,0 +1,74 @@
+{% extends "administrador/base_admin.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}<title>Detalle Biciescuela</title>{% endblock title %}
+{% block extracss %}
+<style type="text/css">
+    .box {
+        border-top: 3px solid #F3F3F3 !important;
+        border-left: 2px solid #F3F3F3 !important;
+        border-right: 2px solid #F3F3F3 !important;
+        border-bottom: 2px solid #F3F3F3 !important;
+    }
+</style>
+{% endblock extracss %}
+
+{% block content %}
+
+<div class="ver row" style="margin-top: 20px; margin-left: 30px;">
+    <div class="col-xs-12" style="padding-right: 2%;">
+              <p>Nombre: {{biciescuela.usuario.nombre}} {{biciescuela.usuario.apellido}}</p>
+              <p>Carnet/Cédula: {{biciescuela.usuario.identificacion}}</p>
+              <p>Teléfono: {{biciescuela.usuario.telefono}}</p>
+              <p>Correo: {{biciescuela.usuario.correo}}</p>
+              <p>¿Sabe manejar?: {{biciescuela.sabe_manejar}}</p>
+              <p>¿Pagó carnet?: {{biciescuela.pago_carnet}}</p>
+              <p>Instructor: {{biciescuela.instructor}}</p>
+              <p>Fecha de realización: {{biciescuela.fecha|date:"M j o"}}</p>
+            </div>
+            <button id="editar">Editar</button>
+</div>
+
+<div class="editar row" style="margin-top: 20px; margin-left: 30px;" hidden="True">
+    <div class="col-xs-12" style="padding-right: 2%;">
+            <div class="box-body" style="overflow-x:auto;">
+              <h4>Nombre: </h4>
+              <input value="{{biciescuela.usuario.nombre}} {{biciescuelausuario.apellido}}" readonly>
+              <h4>Identificacion: </h4>
+              <input value="{{biciescuela.usuario.identificacion}}" readonly>
+              <h4>Teléfono: </h4>
+              <input value="{{biciescuela.usuario.telefono}}" readonly>
+              <h4>Correo: </h4>
+              <input value="{{biciescuela.usuario.correo}}" readonly>
+    </div>
+    <br>
+    <div class="col-xs-12">
+            <form id="{{biciescuela.pk}}" method="GET" action="{% url 'editar_biciescuela' biciescuela.pk %}">
+                {% csrf_token %}
+                <p>Fecha: </p>
+                <input name="fecha" id="{{biciescuela.pk}}_fecha" class="fecha" value="{{biciescuela.fecha}}" readonly>
+                <p>¿Sabe manejar?: </p>
+                <input name="maneja" id="{{biciescuela.pk}}_maneja" value="{{biciescuela.sabe_manejar}}">
+                <p>¿Aprobó?: </p>
+                <input name="aprobo" id="{{biciescuela.pk}}_aprobo" value="{{biciescuela.aprobado}}">
+                <p>¿Pagó carnet?: </p>
+                <input name="pago" id="{{biciescuela.pk}}_pago" value="{{biciescuela.pago_carnet}}">
+                <p>Instructor: </p>
+                <input name="instructor" id="{{biciescuela.pk}}_instructor" value="{{biciescuela.instructor}}">
+                <button class="editar">Guardar</button>
+            </form>
+        <br>
+    </div>
+</div>
+{% endblock content %}
+
+{% block custom_script %}
+<script>
+$('#editar').on('click',function(){
+    $('.editar').show();
+    $('.ver').hide();
+})
+</script>
+
+{% endblock custom_script %}
+
