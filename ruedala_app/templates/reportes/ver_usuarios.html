@@ -41,7 +41,7 @@
               <td> {{ usuario.apellido }}</td>
               <td> {{ usuario.identificacion }}</td>
               <td> {{ usuario.telefono }}</td>
-              <td><a href="#">Ver Biciescuelas</a></td>
+              <td><a href="{% url 'biciescuelas_usuario' usuario.pk %}">Ver Biciescuelas</a></td>
               <td><a href="#">Ver Préstamos</a></td>
 
             </tr>
