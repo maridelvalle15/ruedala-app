@@ -1,4 +1,3 @@
-{% extends "base.html" %}
 {# Load the tag library #}
 {% load bootstrap3 %}
 
@@ -11,107 +10,82 @@
 
 {% load static %}
 {% block extracss %}
-
 <style type="text/css">
-    #titulo-login {
-        font-family: Arial;
-        font-size: 29px;
-        color: #B5B6B8;
+    button{
+        border: none;
+        background: none;
     }
-    @media only screen and (max-width: 435px) {
-        #titulo-login {
-            font-family: Arial;
-            font-size: 15px;
-            color: #B5B6B8;
-        }
+    .logo{
+        width: 5%;
     }
-    #link-acerta {
-        color: #7587FC;
-    }
-    input:focus {
-        border-color: #7587FC !important;
-        color: #7587FC !important;
-    }
-    input:focus::-webkit-input-placeholder {
-        color: #7587FC !important;
-    }
-    input:focus::-moz-placeholder {
-        color: #7587FC !important;
-    }
-    input:focus:-moz-placeholder {
-        color: #7587FC !important;
-    }
-    input:focus:-ms-input-placeholder {
-        color: #7587FC !important;
-    }
-    .login-box-body {
-        margin-left: 20%;
-        margin-right: 20%
-    }
-    .calculate {
-        color: #FFFFFF;
-        background-color: #727270;
-        text-align: center;
-    }
-    .calculate {
-      transition: all 0.8s ease;
-    }
-    .calculate:hover {
-      background: #7587FC;
-      color: #FFFFFF;
-    }
-    .first {
-        padding-top: 10%;
-    }
-    @media only screen and (max-width: 435px) {
-        .first {
-          padding-top: 20%;
-        }
+    .titulo{
+        font-size: 28px;
+        color: white;
     }
 </style>
-
-{% endblock extracss %}
-
-
+{% endblock %}
 {% block content %}
-<div class="row">
-    <div class="col-xs-12 first">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4"></div>
-                <div class="col-md-4 text-center">
-                    <h1 id="titulo-login" class="text-center"><strong>ACCESO AL ÁREA PRIVADA DE USUARIOS</strong></h1>
-                </div>
-                <div class="col-md-4"></div>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bootstrap Admin Theme v3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- styles -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="login-bg">
+    <div class="header">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <!-- Logo -->
+                  <div>
+                    <img class="logo" src="{% static 'img/logo-cembi-blanco.png' %}">
+                     <span class="titulo">Sistema de Control CEMBI Venezuela</span>
+                  </div>
+               </div>
             </div>
-            <div class="col-xs-1 col-sm-2 col-md-4"></div>
-            <div class="col-xs-10 col-sm-8 col-md-4">
-                {% bootstrap_form_errors form %}
-                <div class="login-box-body">
-                    <form action="" method="post" role="form" class="form-horizontal">
-                        {% csrf_token %}
+         </div>
+    </div>
 
-                        {% bootstrap_field form.username show_help=False layout='inline' %}
-                        {% bootstrap_field form.password layout='inline' %}
-                        <div class="text-center">
-                            <a id="link-acerta" href="{% url 'password_reset' %}">¿Olvidaste tu Contraseña?</a>
-                        </div><br>
-
-                        {% buttons %}
-                            <div class="col-md-2"></div>
-                            <div class="col-sm-4 col-md-8 text-center">
-                                <button type="submit" class="btn btn-lg calculate">
-                                    ENTRAR
-                                </button>
+    <div class="page-content container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-wrapper">
+                    <div class="box">
+                        <div class="content-wrap">
+                            <h6>Ingrese aquí:</h6>
+                            <form action="" method="post" role="form" class="form-horizontal">
+                                {% csrf_token %}
+                            <input class="form-control" type="text" placeholder="E-mail address" name="username">
+                            <input class="form-control" type="password" placeholder="Password" name="password">
+                            <div class="action">
+                                <button type="submit"><a class="btn btn-primary signup">Login</a></button>
                             </div>
-                            <div class="col-md-2"></div>
-                        {% endbuttons %}
-                    </form>
-                </div><!-- /.login-box-body -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+{% endblock %}
 
-{% endblock content %}
-
+{% block custom_js %}
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+  </body>
+</html>
+{% endblock %}

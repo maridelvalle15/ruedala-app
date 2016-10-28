@@ -147,7 +147,7 @@
                 {% endif %}
                 {% if user.is_authenticated and user.groups.all.0.name == 'admin' %}
                 {% endif %}
-                
+
                   <li style="float: right;">
                       <a href="{% url 'perfil' user.pk %}">Mi Perfil</a>
                   </li>

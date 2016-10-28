@@ -64,17 +64,18 @@ class VerPrestamosView(ListView):
         return context
 
 
-class PrestamosUsuarioView(ListView):
-    template_name = 'reportes/biciescuelas_usuario.html'
-    model = Biciescuelas
+class PrestamosUsuarioView(TemplateView):
+    template_name = 'reportes/prestamos_usuario.html'
+    model = Prestamos
 
     def get_context_data(self, **kwargs):
         context = super(
             PrestamosUsuarioView, self).get_context_data(**kwargs)
         usuario = Usuario.objects.get(pk=kwargs['id'])
-        biciescuelas = Biciescuelas.objects.filter(usuario=usuario)
-        context['biciescuelas'] = biciescuelas
-        context['num_biciescuelas'] = len(biciescuelas)
+        prestamos = Prestamos.objects.filter(usuario=usuario)
+        context['usuario'] = usuario
+        context['prestamos'] = prestamos
+        context['num_prestamos'] = len(prestamos)
         return context
 
 
