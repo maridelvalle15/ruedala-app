@@ -1,23 +1,16 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, render_to_response, get_object_or_404
 from django.views.generic import *
 from ruedala_app.views_mixins import *
 from ruedalaSessions.models import *
-from django.contrib.auth.models import User
-from django.views.defaults import page_not_found
 from reportes.forms import *
 from reportes.models import *
 import datetime
-#from datetime import *
 from time import *
-from dateutil.relativedelta import relativedelta
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
 from django.template.loader import get_template
 from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.template import Context
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
 
 
 ##########################################################
@@ -71,6 +64,20 @@ class VerPrestamosView(ListView):
         return context
 
 
+class PrestamosUsuarioView(ListView):
+    template_name = 'reportes/biciescuelas_usuario.html'
+    model = Biciescuelas
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            PrestamosUsuarioView, self).get_context_data(**kwargs)
+        usuario = Usuario.objects.get(pk=kwargs['id'])
+        biciescuelas = Biciescuelas.objects.filter(usuario=usuario)
+        context['biciescuelas'] = biciescuelas
+        context['num_biciescuelas'] = len(biciescuelas)
+        return context
+
+
 class DetallePrestamoView(TemplateView):
     template_name = 'reportes/detalle_prestamo.html'
     model = Prestamos
@@ -81,6 +88,17 @@ class DetallePrestamoView(TemplateView):
         prestamo = Prestamos.objects.get(pk=kwargs['id'])
         context['prestamo'] = prestamo
         return context
+
+
+def editar_prestamo(request, id):
+    prestamo = Prestamos.objects.get(pk=id)
+    prestamo.hora_llegada = request.POST['llegada']
+    prestamo.bicicleta = request.POST['bicicleta']
+    prestamo.tiempo_uso = request.POST['tiempo']
+    prestamo.pagado = request.POST['pagado']
+    prestamo.save()
+    return HttpResponseRedirect(reverse_lazy('detalle_prestamo',
+                                             kwargs={'id': prestamo.pk}))
 
 
 ##########################################################
@@ -98,7 +116,9 @@ def editar_biciescuela(request, id):
     biciescuela.pago_carnet = request.GET['pago']
     biciescuela.instructor = request.GET['instructor']
     biciescuela.save()
-    return HttpResponseRedirect(reverse_lazy('detalle_biciescuela', kwargs={'id': biciescuela.pk}))
+    return HttpResponseRedirect(reverse_lazy('detalle_biciescuela',
+                                             kwargs={'id': biciescuela.pk}))
+
 
 class AgregarBiciescuelaView(CreateView):
     form_class = BiciescuelasForm
@@ -134,11 +154,11 @@ class AgregarBiciescuelaView(CreateView):
             biciescuela.save()
             if biciescuela.aprobado == "Si":
                 carnet = Carnet(
-                usuario=usuario,
-                status='Sin empezar',
-                foto=request.POST['entrego_foto'],
-                fecha_biciescuela=datetime.date.today(),
-                fecha_entrega=None)
+                    usuario=usuario,
+                    status='Sin empezar',
+                    foto=request.POST['entrego_foto'],
+                    fecha_biciescuela=datetime.date.today(),
+                    fecha_entrega=None)
             carnet.save()
 
             return HttpResponseRedirect(reverse_lazy('registro_exitoso'))
@@ -158,6 +178,21 @@ class VerBiciescuelasView(ListView):
         return context
 
 
+class BiciescuelasUsuarioView(TemplateView):
+    template_name = 'reportes/biciescuelas_usuario.html'
+    model = Biciescuelas
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            BiciescuelasUsuarioView, self).get_context_data(**kwargs)
+        usuario = Usuario.objects.get(pk=kwargs['id'])
+        biciescuelas = Biciescuelas.objects.filter(usuario=usuario)
+        context['usuario'] = usuario
+        context['biciescuelas'] = biciescuelas
+        context['num_biciescuelas'] = len(biciescuelas)
+        return context
+
+
 class DetalleBiciescuelaView(TemplateView):
     template_name = 'reportes/detalle_biciescuela.html'
     model = Biciescuelas
@@ -170,11 +205,15 @@ class DetalleBiciescuelaView(TemplateView):
         return context
 
 
+##########################################################
+###################### USUARIOS ##########################
+##########################################################
+
 class RegistroExitoso(TemplateView):
     template_name = 'reportes/registro_exitoso.html'
 
 
-class verUsuariosView(ListView):
+class VerUsuariosView(ListView):
     template_name = 'reportes/ver_usuarios.html'
     model = Usuario
 
@@ -184,22 +223,6 @@ class verUsuariosView(ListView):
         usuarios = Usuario.objects.all()
         context['usuarios'] = usuarios
         return context
-
-    def post(self, request, *args, **kwargs):
-        try:
-            usuario = Usuario.objects.get(
-                identificacion=request.POST['identificacion'])
-            biciescuelas = Biciescuelas.objects.filter(usuario=usuario)
-            ctx = {
-                'usuario': usuario,
-                'biciescuelas': biciescuelas,
-                'num_biciescuelas': len(biciescuelas)
-            }
-
-            info = get_template('reportes/info_usuario.html').render(Context(ctx))
-            return render(request, self.template_name, {'info': info})
-        except:
-            return render(request, self.template_name, {'info': 'El usuario no está registrado'})
 
 
 class UsuarioYaAprobado(TemplateView):

@@ -18,9 +18,17 @@ urlpatterns = patterns(
         VerPrestamosView.as_view(),
         name='ver_prestamos'),
     url(
+        r'^prestamos-usuario/(?P<id>\d+)/$',
+        PrestamosUsuarioView.as_view(),
+        name='prestamos_usuario'),
+    url(
         r'^detalle-prestamo/(?P<id>\d+)/$',
         DetallePrestamoView.as_view(),
         name='detalle_prestamo'),
+    url(
+        r'^editar-prestamo/(?P<id>\d+)/$',
+        'reportes.views.editar_prestamo',
+        name='editar_prestamo'),
     url(
         r'^biciescuela/$',
         BiciescuelaView.as_view(),
@@ -34,6 +42,10 @@ urlpatterns = patterns(
         VerBiciescuelasView.as_view(),
         name='ver_biciescuelas'),
     url(
+        r'^biciescuelas-usuario/(?P<id>\d+)/$',
+        BiciescuelasUsuarioView.as_view(),
+        name='biciescuelas_usuario'),
+    url(
         r'^detalle-biciescuela/(?P<id>\d+)/$',
         DetalleBiciescuelaView.as_view(),
         name='detalle_biciescuela'),
@@ -43,7 +55,7 @@ urlpatterns = patterns(
         name='editar_biciescuela'),
     url(
         r'^ver-usuarios/$',
-        verUsuariosView.as_view(),
+        VerUsuariosView.as_view(),
         name='ver_usuarios'),
     url(
         r'^registro-exitoso/$',

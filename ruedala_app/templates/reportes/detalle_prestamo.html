@@ -55,7 +55,7 @@
     </div>
     <br>
     <div class="col-xs-12">
-            <form id="{{prestamo.pk}}" method="GET" action="#">
+            <form id="{{prestamo.pk}}" method="POST" action="{% url 'editar_prestamo' prestamo.pk %}">
                 {% csrf_token %}
                 <p>Hora de llegada: </p>
                 <input name="llegada" id="{{prestamo.pk}}_llegada" value="{{prestamo.hora_llegada}}">
