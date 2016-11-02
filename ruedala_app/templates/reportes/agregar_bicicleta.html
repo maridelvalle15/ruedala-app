@@ -9,10 +9,10 @@
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 {% load static %}
-{% block title %}<title>Agregar Biciescuela</title>{% endblock title %}
+{% block title %}<title>Agregar Bicicleta</title>{% endblock title %}
 {% block extracss %}
 <style type="text/css">
-	.box {
+    .box {
         border-top: 3px solid #F3F3F3 !important;
         border-left: 2px solid #F3F3F3 !important;
         border-right: 2px solid #F3F3F3 !important;
@@ -21,17 +21,17 @@
     }
     .box.box-danger {
     border-top-color: #3c6ab4 !important;
-	}
-	@media screen and (max-width: 768px) {
-	    h4{
-	        font-size:16px;
-	    }
-	    h3{
-	    	font-size: 18px;
-	    }
-	}
+    }
+    @media screen and (max-width: 768px) {
+        h4{
+            font-size:16px;
+        }
+        h3{
+            font-size: 18px;
+        }
+    }
 
-	    #titulo-login {
+        #titulo-login {
         font-family: Arial;
         font-size: 29px;
         color: #B5B6B8;
@@ -73,7 +73,7 @@
     .calculate:hover {
       background: #82C539;
       color: #FFFFFF;
-  	}
+    }
     .first {
         padding-top: 10%;
     }
@@ -83,11 +83,11 @@
         }
     }
     .form-group.has-error label {
-    	color: #D16153;
-	}
-	.form-group.has-error .form-control {
-    	border-color: #D16153;
-	}
+        color: #D16153;
+    }
+    .form-group.has-error .form-control {
+        border-color: #D16153;
+    }
 
 </style>
 {% endblock extracss %}
@@ -95,19 +95,19 @@
 {% block content %}
 
 <div class="row">
-	<div class="col-xs-12" style="padding-right: 2%;">
-		<div class="box box-default color-palette-box">
-			<div class="box-body" style="overflow-x:auto;">
-			<div class="col-xs-10 col-xs-push-1 ">
-			  <div class="box box-danger">
+    <div class="col-xs-12" style="padding-right: 2%;">
+        <div class="box box-default color-palette-box">
+            <div class="box-body" style="overflow-x:auto;">
+            <div class="col-xs-10 col-xs-push-1 ">
+              <div class="box box-danger">
                 <div class="box-header with-border">
-                	<div class="col-xs-12" style="text-align: center;position: relative;">
+                    <div class="col-xs-12" style="text-align: center;position: relative;">
                         <div class="col-md-12">
-                        	<h1 id="titulo-login" class="text-center"><strong>AGREGAR BICIESCUELA</strong></h1>
+                            <h1 id="titulo-login" class="text-center"><strong>AGREGAR BICICLETA</strong></h1>
                             <div class="hidden">
                                 {% bootstrap_form_errors form %}
                             </div>
-                            <form id="form-banco" action="{% url 'agregar-biciescuela' %}" method="post" role="form" class="form-horizontal form-group" enctype="multipart/form-data">
+                            <form id="form-banco" action="{% url 'agregar_bicicleta' %}" method="post" role="form" class="form-horizontal form-group" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <h2 id="titulo-login" class="text-center"><strong></strong></h2>
                             {% bootstrap_form form layout='horizontal' %}
@@ -124,13 +124,13 @@
                                 {% endbuttons %}
                             </form>
                         </div>
-					</div>
-			  	</div>
-			  </div>
-			  </div>
-			</div>
-		</div>
-	</div>
+                    </div>
+                </div>
+              </div>
+              </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
 </script>

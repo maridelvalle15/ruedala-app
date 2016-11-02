@@ -63,7 +63,6 @@ class VerPrestamosView(ListView):
         context = super(
             VerPrestamosView, self).get_context_data(**kwargs)
         prestamos = Prestamos.objects.all()
-        print prestamos
         context['prestamos'] = prestamos
         return context
 
@@ -326,3 +325,43 @@ def agregar_fecha_entrega(request, id):
     carnet.save()
 
     return HttpResponseRedirect(reverse_lazy('ver_carnets', kwargs={'id': 4}))
+
+
+##########################################################
+################# REGISTRO BICICLETAS ####################
+##########################################################
+class RegistroBicicletasView(TemplateView):
+    template_name = 'reportes/registro_bicicletas.html'
+
+
+class AgregarBicicletaView(CreateView):
+    form_class = BicicletaForm
+    template_name = 'reportes/agregar_bicicleta.html'
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handles POST requests, instantiating a form instance with the passed
+        POST variables and then checked for validity.
+        """
+        form = BicicletaForm(request.POST)
+        if form.is_valid():
+            bicicleta = Bicicleta(identificador=request.POST['identificador'],
+                                  rin=request.POST['rin'],
+                                  cambios=request.POST['cambios'],
+                                  modelo=request.POST['modelo'])
+            bicicleta.save()
+            return HttpResponseRedirect(reverse_lazy('registro_exitoso'))
+        else:
+            return render(request, self.template_name, {'form': form})
+
+
+class VerBicicletasView(ListView):
+    template_name = 'reportes/ver_bicicletas.html'
+    model = Bicicleta
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            VerBicicletasView, self).get_context_data(**kwargs)
+        bicicletas = Bicicleta.objects.all()
+        context['bicicletas'] = bicicletas
+        return context

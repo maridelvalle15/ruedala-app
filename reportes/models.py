@@ -82,3 +82,16 @@ class Carnet(models.Model):
 
     def __str__(self):
         return self.usuario.nombre+' '+self.usuario.apellido
+
+
+class Bicicleta(models.Model):
+    identificador = models.CharField(max_length=10, blank=False)
+    rin = models.CharField(max_length=10, blank=False)
+    cambios = models.CharField(max_length=10, blank=False,
+                            choices=[('Si', 'Si'),
+                                     ('No', 'No'),
+                                     ])
+    modelo = models.CharField(max_length=50, blank=False)
+
+    def __str__(self):
+        return self.identificador

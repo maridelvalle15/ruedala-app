@@ -81,3 +81,21 @@ class BiciescuelasForm(forms.ModelForm):
                 if elem.aprobado == "Si":
                     raise forms.ValidationError(u'Este carnet/cédula ya aprobó la biciescuela.')
         return identificacion
+
+
+class BicicletaForm(forms.ModelForm):
+
+    cambios = forms.ChoiceField(required=True,
+                            choices=[('Si', 'Si'),
+                                     ('No', 'No'),
+                                     ])
+
+    class Meta:
+        model = Bicicleta
+        fields = '__all__'
+
+    def clean_identificador(self):
+        identificador = self.cleaned_data.get('identificador')
+        if Bicicleta.objects.filter(identificador=identificador).count() != 0:
+            raise forms.ValidationError(u'Esta bicicleta ya existe.')
+        return identificador

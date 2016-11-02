@@ -81,4 +81,16 @@ urlpatterns = patterns(
         r'^agregar-fecha-entrega/(?P<id>\d+)/$',
         'reportes.views.agregar_fecha_entrega',
         name='agregar_fecha_entrega'),
+    url(
+        r'^registro-bicicletas/$',
+        RegistroBicicletasView.as_view(),
+        name='registro_bicicletas'),
+    url(
+        r'^agregar-bicicleta/$',
+        AgregarBicicletaView.as_view(),
+        name='agregar_bicicleta'),
+    url(
+        r'^ver-bicicletas/$',
+        VerBicicletasView.as_view(),
+        name='ver_bicicletas'),
 )
