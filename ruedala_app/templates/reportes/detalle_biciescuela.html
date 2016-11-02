@@ -15,6 +15,18 @@
 
 {% block content %}
 
+<div class="row">
+  <div class="col-xs-12" style="padding-right: 2%;">
+    <div class="box box-default color-palette-box">
+      <div class="box-body" style="overflow-x:auto;">
+      <div class="col-xs-10 col-xs-push-1 ">
+        <div class="box box-danger">
+                <div class="box-header with-border">
+                  <div class="col-xs-12" style="text-align: center;position: relative;">
+                        <div class="col-md-12">
+                          <h3 id="titulo-login" class="text-center"><strong>Detalle Biciescuela</strong></h3>
+
+
 <div class="ver row" style="margin-top: 20px; margin-left: 30px;">
     <div class="col-xs-12" style="padding-right: 2%;">
               <p>Nombre: {{biciescuela.usuario.nombre}} {{biciescuela.usuario.apellido}}</p>
@@ -46,7 +58,7 @@
             <form id="{{biciescuela.pk}}" method="GET" action="{% url 'editar_biciescuela' biciescuela.pk %}">
                 {% csrf_token %}
                 <p>Fecha: </p>
-                <input name="fecha" id="{{biciescuela.pk}}_fecha" class="fecha" value="{{biciescuela.fecha}}" readonly>
+                <input name="fecha" id="{{biciescuela.pk}}_fecha" class="fecha" value="{{biciescuela.fecha|date:"M j o"}}" readonly>
                 <p>¿Sabe manejar?: </p>
                 <input name="maneja" id="{{biciescuela.pk}}_maneja" value="{{biciescuela.sabe_manejar}}">
                 <p>¿Aprobó?: </p>
@@ -59,6 +71,17 @@
             </form>
         <br>
     </div>
+</div>
+
+
+</div>
+          </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock content %}
 

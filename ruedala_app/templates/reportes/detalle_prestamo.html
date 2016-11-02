@@ -15,6 +15,17 @@
 
 {% block content %}
 
+<div class="row">
+  <div class="col-xs-12" style="padding-right: 2%;">
+    <div class="box box-default color-palette-box">
+      <div class="box-body" style="overflow-x:auto;">
+      <div class="col-xs-10 col-xs-push-1 ">
+        <div class="box box-danger">
+                <div class="box-header with-border">
+                  <div class="col-xs-12" style="text-align: center;position: relative;">
+                        <div class="col-md-12">
+                          <h3 id="titulo-login" class="text-center"><strong>Detalle Biciescuela</strong></h3>
+
 <div class="ver row" style="margin-top: 20px; margin-left: 30px;">
     <div class="col-xs-12" style="padding-right: 2%;">
               <p>Nombre: {{prestamo.usuario.nombre}} {{prestamo.usuario.apellido}}</p>
@@ -58,7 +69,7 @@
             <form id="{{prestamo.pk}}" method="POST" action="{% url 'editar_prestamo' prestamo.pk %}">
                 {% csrf_token %}
                 <p>Hora de llegada: </p>
-                <input name="llegada" id="{{prestamo.pk}}_llegada" value="{{prestamo.hora_llegada}}">
+                <input name="llegada" type="time" id="{{prestamo.pk}}_llegada" value="{{prestamo.hora_llegada}}">
                 <p>Bicicleta: </p>
                 <input name="bicicleta" id="{{prestamo.pk}}_bicicleta" value="{{prestamo.bicicleta}}">
                 <p>Tiempo de uso: </p>
@@ -69,6 +80,16 @@
             </form>
         <br>
     </div>
+</div>
+
+</div>
+          </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock content %}
 
