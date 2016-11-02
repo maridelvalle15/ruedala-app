@@ -122,14 +122,14 @@
                 </thead>
                 <tbody>
                 {% for carnet in carnets %}
-                    <tr role="row">
-                      <td> {{ carnet.usuario.nombre }} {{ carnet.usuario.apellido }}</td>
-                      <td>{{ carnet.usuario.identificacion }}</td>
-                      <td>{{ carnet.usuario.telefono }}</td>
-                      <td>{{ carnet.usuario.correo }}</td>
-                      <td>{{ carnet.fecha_biciescuela|date:"M j o" }}</td>
+                    <tr role="row" style="height: 100px; padding-top: 30px;">
+                      <td style="padding-top: 30px;"> {{ carnet.usuario.nombre }} {{ carnet.usuario.apellido }}</td>
+                      <td style="padding-top: 30px;">{{ carnet.usuario.identificacion }}</td>
+                      <td style="padding-top: 30px;">{{ carnet.usuario.telefono }}</td>
+                      <td style="padding-top: 30px;">{{ carnet.usuario.correo }}</td>
+                      <td style="padding-top: 30px;">{{ carnet.fecha_biciescuela|date:"M j o" }}</td>
                       {% if carnet.foto == 'No' %}
-                      <td>
+                      <td style="padding-top: 30px;">
                         <div class="btn-group">
                               <button type="button" class="btn btn-default">{{ carnet.foto }}</button>
                               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -137,7 +137,6 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                               </button>
                           <ul class="dropdown-menu" role="menu">
-                            <li class="divider"></li>
                             {% if carnet.foto == 'No' %}
                             <li><a href="{% url 'cambiar_carnet_foto' carnet.pk %}"><i class="fa fa-check-circle" style="color: green;">  Si</i></a></li>
                             {% endif %}
@@ -145,10 +144,10 @@
                         </div>
                       </td>
                       {% else %}
-                      <td>{{ carnet.foto }}</td>
+                      <td style="padding-top: 30px;">{{ carnet.foto }}</td>
                       {% endif %}
                       {% if carnet.status != 'Entregado' and carnet.status != 'Listo'  %}
-                      <td>
+                      <td style="padding-top: 30px;">
                         <div class="btn-group">
                               <button type="button" class="btn btn-default">{{ carnet.status }}</button>
                               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -163,21 +162,21 @@
                             {% endif %}
                           </ul>
                         </div>
-                      </td>
+                      </td style="padding-top: 30px;">
                       {% else %}
-                      <td>{{ carnet.status }}</td>
+                      <td style="padding-top: 30px;">{{ carnet.status }}</td>
                       {% endif %}
                       {% if carnet.status == 'Listo' %}
-                      <td>
+                      <td style="padding-top: 30px;">
                         <form action="{% url 'agregar_fecha_entrega' carnet.pk %}" method="POST">
                         {% csrf_token %}
                         <input label='Agregar fecha de entrega' name='fecha_entrega' id='datepicker'>
                         <button>Carnet Listo</button>
                       </td>
                       {% elif carnet.status == 'Entregado' %}
-                      <td>{{carnet.fecha_entrega}}</td>
+                      <td style="padding-top: 30px;">{{carnet.fecha_entrega}}</td>
                       {% else %}
-                      <td style="text-align: center;"> ------- </td>
+                      <td style="text-align: center; padding-top: 30px;"> ------- </td>
                       {% endif %}
                     </tr>
                 {% endfor %}
@@ -191,7 +190,10 @@
 {% endblock content %}
 
 {% block custom_script %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
+
     $(document).ready(function(){
         $(function () {
             $("#example1").DataTable();
