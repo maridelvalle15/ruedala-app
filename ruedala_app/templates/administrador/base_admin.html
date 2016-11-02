@@ -64,13 +64,13 @@
 
     <div class="page-content">
         <div class="row">
-          <div class="col-md-2">
+          <div class="col-md-3">
             <div class="sidebar content-box" style="display: block;">
                 <ul class="nav">
                     <!-- Main menu -->
                     <li>
                       <a href="{% url 'prestamos' %}">
-                        <i class="fa fa-bicycle"></i> <span>Préstamos</span>
+                        <i class="fa fa-money"></i> <span>Préstamos</span>
                       </a>
                     </li>
                     <li>
@@ -86,6 +86,11 @@
                     <li>
                       <a href="{% url 'carnetizacion' %}">
                         <i class="fa fa-credit-card"></i> <span>Carnetización</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'carnetizacion' %}">
+                        <i class="fa fa-bicycle"></i> <span>Registro Bicicletas</span>
                       </a>
                     </li>
                     <!--
@@ -104,7 +109,7 @@
                 </ul>
              </div>
           </div>
-          <div class="col-md-10" style="height: 100%;">
+          <div class="col-md-9" style="height: 100%;">
             <div class="row" style="width: 100%; height: 100%; ">
               {% block content %}
               {% endblock content %}
