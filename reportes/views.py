@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.template.loader import get_template
 from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.template import Context
+from django.shortcuts import render
 
 
 ##########################################################
@@ -31,9 +32,12 @@ class AgregarPrestamoView(CreateView):
         POST variables and then checked for validity.
         """
         form = PrestamosForm(request.POST)
-        usuario = Usuario.objects.get(
-            identificacion=request.POST
-            ['identificacion'])
+        try:
+            usuario = Usuario.objects.get(
+                identificacion=request.POST
+                ['identificacion'])
+        except:
+            return render(request, 'reportes/usuario_no_sistema.html')
         prestamo = Prestamos(
             usuario=usuario,
             hora_salida=request.POST['hora_salida'],
@@ -272,20 +276,21 @@ class VerCarnets(ListView):
 def cambiar_carnet_foto(request, id):
     carnet = Carnet.objects.get(pk=id)
     carnet.foto = 'Si'
+    carnet.save()
     status = carnet.status
 
     if (status == 'Sin empezar'):
         return HttpResponseRedirect(reverse_lazy('ver_carnets',
-                                                 kwargs={'id': 1}))
+                                                 kwargs={'id': 0}))
     elif (status == 'En proceso'):
         return HttpResponseRedirect(reverse_lazy('ver_carnets',
-                                                 kwargs={'id': 2}))
+                                                 kwargs={'id': 1}))
     elif (status == 'Listo'):
         return HttpResponseRedirect(reverse_lazy('ver_carnets',
-                                                 kwargs={'id': 3}))
+                                                 kwargs={'id': 2}))
     else:
         return HttpResponseRedirect(reverse_lazy('ver_carnets',
-                                                 kwargs={'id': 4}))
+                                                 kwargs={'id': 3}))
 
 
 def actualizar_status_carnet(request, id):
