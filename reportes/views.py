@@ -372,4 +372,75 @@ class VerBicicletasView(ListView, LoginRequiredMixin):
 
 
 class CrearHistorialView(CreateView, LoginRequiredMixin):
+    form_class = HistorialForm
+    template_name = 'reportes/crear_historial.html'
 
+    def post(self, request, *args, **kwargs):
+        """
+        Handles POST requests, instantiating a form instance with the passed
+        POST variables and then checked for validity.
+        """
+        form = HistorialForm(request.POST)
+        bicicleta = Bicicleta.objects.get(pk=kwargs['id'])
+        if request.POST['fecha_arreglo']:
+            fecha_arreglo = request.POST['fecha_arreglo']
+        else:
+            fecha_arreglo = None
+        historial = HistorialMecanico(
+            reportado_por=request.POST['reportado_por'],
+            fecha_reporte=request.POST['fecha_reporte'],
+            reporte=request.POST['reporte'],
+            arreglado=request.POST['arreglado'],
+            fecha_arreglo=fecha_arreglo,
+            bicicleta=bicicleta)
+        historial.save()
+        return HttpResponseRedirect(reverse_lazy('registro_exitoso'))
+
+
+class HistorialBicicletaView(TemplateView, LoginRequiredMixin):
+    template_name = 'reportes/historial_bicicleta.html'
+    model = HistorialMecanico
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            HistorialBicicletaView, self).get_context_data(**kwargs)
+        bicicleta = Bicicleta.objects.get(pk=kwargs['id'])
+        historial = HistorialMecanico.objects.filter(bicicleta=bicicleta)
+        context['historial'] = historial
+        context['bicicleta'] = bicicleta
+        return context
+
+
+class CargarHistorialView(TemplateView, LoginRequiredMixin):
+    template_name = 'reportes/cargar_historial.html'
+    model = HistorialMecanico
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            CargarHistorialView, self).get_context_data(**kwargs)
+        historial = HistorialMecanico.objects.all()
+        context['historial'] = historial.order_by('fecha_reporte')
+        return context
+
+
+class EditarHistorialView(TemplateView, LoginRequiredMixin):
+    template_name = 'reportes/editar_historial.html'
+    model = HistorialMecanico
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            EditarHistorialView, self).get_context_data(**kwargs)
+        historial = HistorialMecanico.objects.get(pk=kwargs['id'])
+        context['historial'] = historial
+        return context
+
+
+@login_required
+def editar_historial(request, id):
+    historial = HistorialMecanico.objects.get(pk=id)
+    historial.arreglado = request.POST['arreglado']
+    fecha = datetime.datetime.strptime(request.POST['fecha_arreglo'], '%m/%d/%Y').strftime('%Y-%m-%d')
+    historial.fecha_arreglo = fecha
+    historial.save()
+
+    return HttpResponseRedirect(reverse_lazy('editar_historial', kwargs={'id': id}))

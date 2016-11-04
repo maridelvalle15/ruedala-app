@@ -1,7 +1,7 @@
 {% extends "administrador/base_admin.html" %}
 {% load static %}
 {% load humanize %}
-{% block title %}<title>Bicicletas</title>{% endblock title %}
+{% block title %}<title>Historial Bicicleta</title>{% endblock title %}
 {% block extracss %}
 <link href="{% static 'plugins/datatables/dataTables.bootstrap.css' %}" rel="stylesheet">
 <style type="text/css">
@@ -20,29 +20,31 @@
     <div class="col-xs-12" style="padding-right: 2%;">
         <div class="box box-default color-palette-box">
             <div class="box-header">
-                <h3 class="box-title">Bicicletas</h3>
+                <h3 class="box-title">Historial General</h3>
             </div>
             <div class="box-body" style="overflow-x:auto;">
               <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
                 <thead>
                     <tr>
-                        <th>Identificador</th>
-                        <th>Rin</th>
-                        <th>Cambios</th>
-                        <th>Modelo</th>
-                        <th>Historial Mecánico</th>
-                        <th></th>
+                        <th>Bicicleta</th>
+                        <th>Reportado por</th>
+                        <th>Fecha reporte</th>
+                        <th>Reporte</th>
+                        <th>¿Arreglado?</th>
+                        <th>Fecha arreglo</th>
+                        <th>Editar</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for bicicleta in bicicletas %}
+                {% for elem in historial %}
                     <tr role="row">
-                      <td> {{ bicicleta.identificador }}</td>
-                      <td> {{ bicicleta.rin }}</td>
-                      <td> {{ bicicleta.cambios }}</td>
-                      <td> {{ bicicleta.modelo }}</td>
-                      <td><a href="{% url 'crear_historial' bicicleta.pk %}">Crear nuevo historial</a></td>
-                      <td><a href="{% url 'historial_bicicleta' bicicleta.pk %}">Ver historial</a></td>
+                      <td> {{ elem.bicicleta.identificador }}</td>
+                      <td> {{ elem.reportado_por }}</td>
+                      <td> {{ elem.fecha_reporte }}</td>
+                      <td> {{ elem.reporte }}</td>
+                      <td> {{ elem.arreglado }}</td>
+                      <td> {{ elem.fecha_arreglo }}</td>
+                      <td><a href="{% url 'editar_historial' elem.pk %}">Editar</a></td>
 
                     </tr>
                 {% endfor %}

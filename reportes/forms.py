@@ -5,6 +5,7 @@ from datetime import *
 from reportes.models import *
 from bootstrap3_datetime.widgets import DateTimePicker
 from django.contrib.admin import widgets
+from django.conf import settings
 
 
 class PrestamosForm(forms.ModelForm):
@@ -79,16 +80,18 @@ class BiciescuelasForm(forms.ModelForm):
             biciescuelas = Biciescuelas.objects.filter(usuario=elem)
             for elem in biciescuelas:
                 if elem.aprobado == "Si":
-                    raise forms.ValidationError(u'Este carnet/cédula ya aprobó la biciescuela.')
+                    raise forms.ValidationError(
+                        u'Este carnet/cédula ya aprobó la biciescuela.')
         return identificacion
 
 
 class BicicletaForm(forms.ModelForm):
 
     cambios = forms.ChoiceField(required=True,
-                            choices=[('Si', 'Si'),
-                                     ('No', 'No'),
-                                     ])
+                                choices=[
+                                    ('Si', 'Si'),
+                                    ('No', 'No'),
+                                ])
 
     class Meta:
         model = Bicicleta
@@ -99,3 +102,17 @@ class BicicletaForm(forms.ModelForm):
         if Bicicleta.objects.filter(identificador=identificador).count() != 0:
             raise forms.ValidationError(u'Esta bicicleta ya existe.')
         return identificador
+
+
+class HistorialForm(forms.ModelForm):
+
+    fecha_reporte = forms.DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    fecha_arreglo = forms.DateField(input_formats=settings.DATE_INPUT_FORMATS)
+
+    class Meta:
+        model = HistorialMecanico
+        fields = '__all__'
+        widgets = {
+            'fecha_reporte': forms.DateInput(attrs={'type': 'date'}),
+            'fecha_arreglo': forms.DateInput(attrs={'type': 'date'}),
+        }

@@ -100,10 +100,12 @@ class Bicicleta(models.Model):
 
 
 class HistorialMecanico(models.Model):
-    reportado_por = models.CharField(max_length=50, null=True, blank=True),
-    reporte = models.TextField(max_length=200, null=True, blank=True),
+    reportado_por = models.CharField(max_length=100, null=True, blank=True)
+    fecha_reporte = models.DateField(null=True, blank=True)
+    reporte = models.CharField(max_length=100, null=True, blank=True)
     arreglado = models.CharField(max_length=10, null=True, blank=True,
                                  choices=[('Si', 'Si'),
                                           ('No', 'No'),
                                           ])
+    fecha_arreglo = models.DateField(null=True, blank=True)
     bicicleta = models.ForeignKey(Bicicleta)

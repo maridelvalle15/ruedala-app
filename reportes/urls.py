@@ -93,7 +93,23 @@ urlpatterns = patterns(
         VerBicicletasView.as_view(),
         name='ver_bicicletas'),
     url(
-        r'^crear-historial/$',
+        r'^crear-historial/(?P<id>\d+)/$',
         CrearHistorialView.as_view(),
         name='crear_historial'),
+    url(
+        r'^historial-bicicleta/(?P<id>\d+)/$',
+        HistorialBicicletaView.as_view(),
+        name='historial_bicicleta'),
+    url(
+        r'^cargar-historial$',
+        CargarHistorialView.as_view(),
+        name='cargar_historial'),
+    url(
+        r'^editar-historial/(?P<id>\d+)/$',
+        EditarHistorialView.as_view(),
+        name='editar_historial'),
+    url(
+        r'^editar-historial-f/(?P<id>\d+)/$',
+        'reportes.views.editar_historial',
+        name='editar_historial_f'),
 )
