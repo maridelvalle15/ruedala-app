@@ -18,11 +18,11 @@ from django.shortcuts import render
 #################### PRESTAMOS ###########################
 ##########################################################
 
-class PrestamosView(TemplateView):
+class PrestamosView(TemplateView, LoginRequiredMixin):
     template_name = 'reportes/prestamos.html'
 
 
-class AgregarPrestamoView(CreateView):
+class AgregarPrestamoView(CreateView, LoginRequiredMixin):
     form_class = PrestamosForm
     template_name = 'reportes/agregar_prestamo.html'
 
@@ -55,7 +55,7 @@ class AgregarPrestamoView(CreateView):
             return render(request, 'reportes/registro_fallido.html')
 
 
-class VerPrestamosView(ListView):
+class VerPrestamosView(ListView, LoginRequiredMixin):
     template_name = 'reportes/ver_prestamos.html'
     model = Prestamos
 
@@ -67,7 +67,7 @@ class VerPrestamosView(ListView):
         return context
 
 
-class PrestamosUsuarioView(TemplateView):
+class PrestamosUsuarioView(TemplateView, LoginRequiredMixin):
     template_name = 'reportes/prestamos_usuario.html'
     model = Prestamos
 
@@ -82,7 +82,7 @@ class PrestamosUsuarioView(TemplateView):
         return context
 
 
-class DetallePrestamoView(TemplateView):
+class DetallePrestamoView(TemplateView, LoginRequiredMixin):
     template_name = 'reportes/detalle_prestamo.html'
     model = Prestamos
 
@@ -94,6 +94,7 @@ class DetallePrestamoView(TemplateView):
         return context
 
 
+@login_required
 def editar_prestamo(request, id):
     prestamo = Prestamos.objects.get(pk=id)
     prestamo.hora_llegada = request.POST['llegada']
@@ -109,7 +110,7 @@ def editar_prestamo(request, id):
 ################## BICIESCUELAS ##########################
 ##########################################################
 
-class BiciescuelaView(TemplateView):
+class BiciescuelaView(TemplateView, LoginRequiredMixin):
     template_name = 'reportes/biciescuela.html'
 
 
@@ -124,7 +125,7 @@ def editar_biciescuela(request, id):
                                              kwargs={'id': biciescuela.pk}))
 
 
-class AgregarBiciescuelaView(CreateView):
+class AgregarBiciescuelaView(CreateView, LoginRequiredMixin):
     form_class = BiciescuelasForm
     template_name = 'reportes/agregar_biciescuela.html'
 
@@ -170,7 +171,7 @@ class AgregarBiciescuelaView(CreateView):
             return render(request, self.template_name, {'form': form})
 
 
-class VerBiciescuelasView(ListView):
+class VerBiciescuelasView(ListView, LoginRequiredMixin):
     template_name = 'reportes/ver_biciescuelas.html'
     model = Biciescuelas
 
@@ -182,7 +183,7 @@ class VerBiciescuelasView(ListView):
         return context
 
 
-class BiciescuelasUsuarioView(TemplateView):
+class BiciescuelasUsuarioView(TemplateView, LoginRequiredMixin):
     template_name = 'reportes/biciescuelas_usuario.html'
     model = Biciescuelas
 
@@ -197,7 +198,7 @@ class BiciescuelasUsuarioView(TemplateView):
         return context
 
 
-class DetalleBiciescuelaView(TemplateView):
+class DetalleBiciescuelaView(TemplateView, LoginRequiredMixin):
     template_name = 'reportes/detalle_biciescuela.html'
     model = Biciescuelas
 
@@ -213,11 +214,11 @@ class DetalleBiciescuelaView(TemplateView):
 ###################### USUARIOS ##########################
 ##########################################################
 
-class RegistroExitoso(TemplateView):
+class RegistroExitoso(TemplateView, LoginRequiredMixin):
     template_name = 'reportes/registro_exitoso.html'
 
 
-class VerUsuariosView(ListView):
+class VerUsuariosView(ListView, LoginRequiredMixin):
     template_name = 'reportes/ver_usuarios.html'
     model = Usuario
 
@@ -229,7 +230,7 @@ class VerUsuariosView(ListView):
         return context
 
 
-class UsuarioYaAprobado(TemplateView):
+class UsuarioYaAprobado(TemplateView, LoginRequiredMixin):
     template_name = 'reportes/usuario_ya_aprobado.html'
 
 
@@ -237,11 +238,11 @@ class UsuarioYaAprobado(TemplateView):
 ###################### CARNETS ###########################
 ##########################################################
 
-class Carnetizacion(TemplateView):
+class Carnetizacion(TemplateView, LoginRequiredMixin):
     template_name = 'reportes/carnetizacion.html'
 
 
-class VerCarnets(ListView):
+class VerCarnets(ListView, LoginRequiredMixin):
     template_name = 'reportes/ver_carnets.html'
     model = Carnet
 
@@ -272,6 +273,7 @@ class VerCarnets(ListView):
         return self.render_to_response(context)
 
 
+@login_required
 def cambiar_carnet_foto(request, id):
     carnet = Carnet.objects.get(pk=id)
     carnet.foto = 'Si'
@@ -292,6 +294,7 @@ def cambiar_carnet_foto(request, id):
                                                  kwargs={'id': 3}))
 
 
+@login_required
 def actualizar_status_carnet(request, id):
     carnet = Carnet.objects.get(pk=id)
     status = carnet.status
@@ -316,6 +319,7 @@ def actualizar_status_carnet(request, id):
                                              kwargs={'id': 4}))
 
 
+@login_required
 def agregar_fecha_entrega(request, id):
     carnet = Carnet.objects.get(pk=id)
     fecha = request.POST['fecha_entrega']
@@ -330,11 +334,11 @@ def agregar_fecha_entrega(request, id):
 ##########################################################
 ################# REGISTRO BICICLETAS ####################
 ##########################################################
-class RegistroBicicletasView(TemplateView):
+class RegistroBicicletasView(TemplateView, LoginRequiredMixin):
     template_name = 'reportes/registro_bicicletas.html'
 
 
-class AgregarBicicletaView(CreateView):
+class AgregarBicicletaView(CreateView, LoginRequiredMixin):
     form_class = BicicletaForm
     template_name = 'reportes/agregar_bicicleta.html'
 
@@ -355,7 +359,7 @@ class AgregarBicicletaView(CreateView):
             return render(request, self.template_name, {'form': form})
 
 
-class VerBicicletasView(ListView):
+class VerBicicletasView(ListView, LoginRequiredMixin):
     template_name = 'reportes/ver_bicicletas.html'
     model = Bicicleta
 
@@ -365,3 +369,7 @@ class VerBicicletasView(ListView):
         bicicletas = Bicicleta.objects.all()
         context['bicicletas'] = bicicletas
         return context
+
+
+class CrearHistorialView(CreateView, LoginRequiredMixin):
+
