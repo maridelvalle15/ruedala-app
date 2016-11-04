@@ -1,6 +1,5 @@
 from django.conf.urls import url, patterns
 from reportes.views import *
-from administrador.views import *
 from ruedalaSessions.views import *
 
 urlpatterns = patterns(
@@ -93,4 +92,8 @@ urlpatterns = patterns(
         r'^ver-bicicletas/$',
         VerBicicletasView.as_view(),
         name='ver_bicicletas'),
+    url(
+        r'^crear-historial/$',
+        CrearHistorialView.as_view(),
+        name='crear_historial'),
 )

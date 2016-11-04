@@ -14,7 +14,7 @@ class Usuario(models.Model):
     correo = models.EmailField()
 
     def __str__(self):
-        return self.nombre+' '+self.apellido
+        return self.nombre + ' ' + self.apellido
 
 
 class Prestamos(models.Model):
@@ -30,68 +30,80 @@ class Prestamos(models.Model):
                                      ('3h', '3h'),
                                      ])
     pagado = models.CharField(max_length=10, blank=False,
-                            choices=[('---------','---------'),
-                                    ('Si', 'Si'),
-                                     ('No', 'No'),
-                                     ])
+                              choices=[('---------', '---------'),
+                                       ('Si', 'Si'),
+                                       ('No', 'No'),
+                                       ])
 
     fecha = models.DateTimeField()
     usuario = models.ForeignKey(Usuario)
 
     def __str__(self):
-        return self.usuario.nombre+' '+self.usuario.apellido
+        return self.usuario.nombre + ' ' + self.usuario.apellido
 
 
 class Biciescuelas(models.Model):
     sabe_manejar = models.CharField(max_length=10, blank=False,
-                            choices=[('Si', 'Si'),
-                                     ('No', 'No'),
-                                     ])
+                                    choices=[('Si', 'Si'),
+                                             ('No', 'No'),
+                                             ])
     fecha = models.DateTimeField()
-    aprobado = models.CharField(max_length=10, blank=False, default='---------',
-                            choices=[('---------','---------'),
-                                    ('Si', 'Si'),
-                                     ('No', 'No'),
-                                     ])
+    aprobado = models.CharField(max_length=10, blank=False,
+                                default='---------',
+                                choices=[('---------', '---------'),
+                                         ('Si', 'Si'),
+                                         ('No', 'No'),
+                                         ])
     pago_carnet = models.CharField(max_length=10, blank=False,
-                            choices=[('---------','---------'),
-                                    ('Si', 'Si'),
-                                     ('No', 'No'),
-                                     ])
+                                   choices=[('---------', '---------'),
+                                            ('Si', 'Si'),
+                                            ('No', 'No'),
+                                            ])
 
     instructor = models.CharField(max_length=100, blank=False)
     usuario = models.ForeignKey(Usuario)
+
     def __str__(self):
-        return self.usuario.nombre+' '+self.usuario.apellido
+        return self.usuario.nombre + ' ' + self.usuario.apellido
 
 
 class Carnet(models.Model):
     usuario = models.ForeignKey(Usuario)
     status = models.CharField(max_length=50, blank=False,
-                            choices=[('Sin empezar', 'Sin empezar'),
-                                     ('En proceso', 'En proceso'),
-                                     ('Listo', 'Listo'),
-                                     ('Entregado', 'Entregado'),
-                                     ])
+                              choices=[('Sin empezar', 'Sin empezar'),
+                                       ('En proceso', 'En proceso'),
+                                       ('Listo', 'Listo'),
+                                       ('Entregado', 'Entregado'),
+                                       ])
     foto = models.CharField(max_length=10, blank=False,
                             choices=[('Si', 'Si'),
                                      ('No', 'No'),
                                      ])
-    fecha_biciescuela = models.DateTimeField(blank=True,null=True)
-    fecha_entrega = models.DateField(blank=True,null=True)
+    fecha_biciescuela = models.DateTimeField(blank=True, null=True)
+    fecha_entrega = models.DateField(blank=True, null=True)
 
     def __str__(self):
-        return self.usuario.nombre+' '+self.usuario.apellido
+        return self.usuario.nombre + ' ' + self.usuario.apellido
 
 
 class Bicicleta(models.Model):
     identificador = models.CharField(max_length=10, blank=False)
     rin = models.CharField(max_length=10, blank=False)
     cambios = models.CharField(max_length=10, blank=False,
-                            choices=[('Si', 'Si'),
-                                     ('No', 'No'),
-                                     ])
+                               choices=[('Si', 'Si'),
+                                        ('No', 'No'),
+                                        ])
     modelo = models.CharField(max_length=50, blank=False)
 
     def __str__(self):
         return self.identificador
+
+
+class HistorialMecanico(models.Model):
+    reportado_por = models.CharField(max_length=50, null=True, blank=True),
+    reporte = models.TextField(max_length=200, null=True, blank=True),
+    arreglado = models.CharField(max_length=10, null=True, blank=True,
+                                 choices=[('Si', 'Si'),
+                                          ('No', 'No'),
+                                          ])
+    bicicleta = models.ForeignKey(Bicicleta)
