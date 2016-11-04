@@ -106,9 +106,6 @@ class BicicletaForm(forms.ModelForm):
 
 class HistorialForm(forms.ModelForm):
 
-    fecha_reporte = forms.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-    fecha_arreglo = forms.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-
     class Meta:
         model = HistorialMecanico
         fields = '__all__'
