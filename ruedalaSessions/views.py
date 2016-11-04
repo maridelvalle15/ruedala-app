@@ -304,38 +304,6 @@ def password_reset(request, is_admin_site=False,
                             current_app=current_app)
 
 
-class EditUser(LoginRequiredMixin, GroupRequiredMixin, generic.UpdateView):
-    template_name = "update_user_form.html"
-    model = User
-    form_class = UserEditForm
-    context_object_name = "usuario"
-    success_url = 'corredor_vendedor_detail'
-
-    def get_initial(self):
-        """
-        Returns the initial data to use for forms on this view.
-        """
-        datos = DatosEjecutivo.objects.get(user=self.object)
-        initial = self.initial.copy()
-        initial['ruc'] = datos.ruc
-        initial['licencia'] = datos.licencia
-        initial['razon_social'] = datos.razon_social
-        return initial
-
-    def form_valid(self, form):
-        """
-        If the form is valid, redirect to the supplied URL.
-        """
-        self.object = form.save()
-        user = User.objects.get(email=form.cleaned_data['email'])
-        corredor = DatosEjecutivo.objects.get(user=user)
-        corredor.licencia = form.cleaned_data['licencia']
-        corredor.ruc = form.cleaned_data['ruc']
-        corredor.razon_social = form.cleaned_data['razon_social']
-        corredor.save()
-        return HttpResponseRedirect(
-            reverse_lazy(self.success_url, kwargs={'pk': user.pk}))
-
 
 class EditPassword(LoginRequiredMixin, generic.UpdateView):
     template_name = "update_password_form.html"

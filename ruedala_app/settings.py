@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'ruedalaSessions',
     'bootstrap3',
-    'administrador',
     'reportes',
     'bootstrap3_datetime',
 ]

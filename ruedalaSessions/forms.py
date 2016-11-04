@@ -15,6 +15,7 @@ from random import choice
 from string import ascii_lowercase, digits
 from ruedalaSessions.models import *
 
+
 def generate_random_username(length=16, chars=ascii_lowercase + digits, split=4, delimiter='-'):
 
     username = ''.join([choice(chars) for i in xrange(length)])
@@ -117,51 +118,6 @@ class UserCreateForm(forms.ModelForm):
         return user
 
 
-class EjecutivoCreateForm(forms.ModelForm):
-    direccion = forms.CharField(required=True,
-                                label="Dirección",
-                               widget=forms.TextInput(attrs={'placeholder': 'Dirección'}))
-    tlf = forms.CharField(required=True,
-                                label="Teléfono de contacto",
-                               widget=forms.TextInput(attrs={'placeholder': 'Teléfono de contacto'}))
-
-    class Meta:
-        model = User
-        fields = ('first_name', 'last_name', 'email')
-
-        error_messages = {
-            'email': {
-                'required': "El correo es requerido."
-            }
-        }
-
-        widgets = {
-            'username': forms.HiddenInput(attrs={'required': 'false'}),
-            'email': forms.TextInput(attrs={'required': 'true'})
-        }
-
-        labels = {
-            'email': 'Correo de contacto'
-        }
-
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        username = self.cleaned_data.get('username')
-        if User.objects.filter(email=email).exclude(username=username).count() != 0:
-            raise forms.ValidationError(u'Este correo ya existe.')
-        return email
-
-    def save(self, commit=True):
-        user = super(EjecutivoCreateForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
-        user.username = generate_random_username()
-        user.is_active = 0
-        password = User.objects.make_random_password()
-        user.set_password(password)
-        user.save()
-        return user
-
-
 class LoginForm(forms.Form):
 
     username = forms.CharField(
@@ -171,54 +127,6 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput(
             attrs={'placeholder': 'Clave'}), required=True, label='')
 
-
-class UserEditForm(forms.ModelForm):
-
-    licencia = forms.CharField(required=True,
-                               label="",
-                               widget=forms.TextInput(attrs={'placeholder': 'Nro. de Licencia'}))
-    ruc = forms.CharField(required=True,
-                          label="",
-                          widget=forms.TextInput(attrs={'placeholder': 'RUC'}))
-    razon_social = forms.CharField(
-        required=False,
-        label="",
-        widget=forms.TextInput(attrs={'placeholder': 'Razón Social'}))
-
-    class Meta:
-        model = User
-        fields = ("first_name", "last_name", "email", "username")
-
-        error_messages = {
-            'username': {
-                'required': "El correo es requerido."
-            }
-        }
-
-        widgets = {
-            'username': forms.HiddenInput(attrs={'required': 'false'}),
-            'email': forms.TextInput(attrs={'required': 'true'})
-        }
-
-        labels = {
-            'email': 'Correo',
-            'first_name': 'Nombre',
-            'last_name': 'Apellido',
-        }
-
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        username = self.cleaned_data.get('username')
-        if User.objects.filter(email=email).exclude(username=username).count() != 0:
-            raise forms.ValidationError(u'Este correo ya existe.')
-        return email
-
-    def save(self, commit=True):
-        user = super(UserEditForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
-        user.username = self.cleaned_data['email']
-        user.save()
-        return user
 
 
 class UserPasswordEditForm(forms.ModelForm):
@@ -258,73 +166,5 @@ class UserPasswordEditForm(forms.ModelForm):
     def save(self, commit=True):
         user = super(UserPasswordEditForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password"])
-        user.save()
-        return user
-
-class SolicitanteForm(forms.ModelForm):
-
-    fecha_nacimiento = forms.CharField(
-        widget=forms.DateInput(attrs={'type':'date'}),
-        label='Fecha de nacimiento'
-    )
-    fecha_ingreso = forms.CharField(
-        widget=forms.DateInput(attrs={'type':'date'}),
-        label='Fecha de ingreso'
-    )
-    identificador = forms.CharField(label='Cédula o Pasaporte')
-    ingreso = forms.FloatField(label='Ingreso familiar mensual')
-    telefono = forms.CharField(label='Número de teléfono')
-    lugar_trabajo = forms.CharField(label='Lugar de trabajo')
-    ocupacion = forms.CharField(label='Ocupación')
-    direccion = forms.CharField(label='Dirección')
-    cargo = forms.CharField(label='Cargo que ocupa')
-    salario = forms.CharField(label='Salario')
-    password2 = forms.CharField(
-        required=True,
-        widget=forms.PasswordInput(attrs={'placeholder': 'Repetir contraseña'}),
-        label="Repetir Contraseña"
-    )
-
-    class Meta:
-
-        model = User
-
-        fields = ('first_name', 'last_name', 'email', 'password')
-
-        required_css_class = 'required'
-
-        widgets = {
-            'password' : forms.PasswordInput()
-        }
-
-        labels = {
-            'first_name' : 'Nombre del solicitante',
-            'last_name' : 'Apellido del solicitante',
-            'email' : 'Email del solicitante',
-            'password' : 'Ingrese su contraseña'
-        }
-
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        username = self.cleaned_data.get('username')
-        if User.objects.filter(email=email).exclude(username=username).count() != 0:
-            raise forms.ValidationError(u'Este correo ya existe.')
-        return email
-
-    def clean(self):
-        password = self.cleaned_data['password']
-        password2 = self.cleaned_data['password2']
-        if password == password2:
-            return self.cleaned_data
-        else:
-            raise forms.ValidationError(u'Ambas contraseñas deben coincidir.')
-
-    def save(self, commit=True):
-        user = super(SolicitanteForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
-        user.username = generate_random_username()
-        user.is_active = 1
-        password = self.cleaned_data['password']
-        user.set_password(password)
         user.save()
         return user

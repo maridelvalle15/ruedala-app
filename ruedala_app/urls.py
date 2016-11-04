@@ -22,7 +22,6 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('ruedalaSessions.urls')),
-    url(r'^administrador/', include('administrador.urls')),
     url(r'^reportes/', include('reportes.urls')),
 ]
 urlpatterns += staticfiles_urlpatterns()
