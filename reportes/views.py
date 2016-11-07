@@ -123,6 +123,15 @@ def editar_biciescuela(request, id):
     biciescuela.sabe_manejar = request.GET['maneja']
     biciescuela.aprobado = request.GET['aprobo']
     biciescuela.pago_carnet = request.GET['pago']
+    if ((biciescuela.aprobado == "Si") and
+       (biciescuela.pago_carnet == "Si")):
+        carnet = Carnet(
+            usuario=biciescuela.usuario,
+            status='Sin empezar',
+            foto=request.GET['entrego_foto'],
+            fecha_biciescuela=datetime.date.today(),
+            fecha_entrega=None)
+        carnet.save()
     biciescuela.instructor = request.GET['instructor']
     biciescuela.save()
     return HttpResponseRedirect(reverse_lazy('detalle_biciescuela',
@@ -161,14 +170,15 @@ class AgregarBiciescuelaView(CreateView, LoginRequiredMixin):
                 instructor=request.POST['instructor']
             )
             biciescuela.save()
-            if biciescuela.aprobado == "Si":
+            if ((biciescuela.aprobado == "Si") and
+               (biciescuela.pago_carnet == "Si")):
                 carnet = Carnet(
                     usuario=usuario,
                     status='Sin empezar',
                     foto=request.POST['entrego_foto'],
                     fecha_biciescuela=datetime.date.today(),
                     fecha_entrega=None)
-            carnet.save()
+                carnet.save()
 
             return HttpResponseRedirect(reverse_lazy('registro_exitoso'))
         else:

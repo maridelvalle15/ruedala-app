@@ -65,6 +65,16 @@
                 <input name="aprobo" id="{{biciescuela.pk}}_aprobo" value="{{biciescuela.aprobado}}">
                 <p>¿Pagó carnet?: </p>
                 <input name="pago" id="{{biciescuela.pk}}_pago" value="{{biciescuela.pago_carnet}}">
+                <p>
+                <p> ¿Entregó foto?</p>
+                <select name="entrego_foto">
+                  <option selected="selected">
+                    {{biciescuela.foto}}
+                  </option>
+                  <option value="Si">Si</option>
+                  <option value="No">No</option>
+                </select>
+                </p>
                 <p>Instructor: </p>
                 <input name="instructor" id="{{biciescuela.pk}}_instructor" value="{{biciescuela.instructor}}">
                 <button class="editar">Guardar</button>
