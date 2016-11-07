@@ -5,6 +5,10 @@ from ruedalaSessions.views import *
 urlpatterns = patterns(
     '',
     url(
+        r'^inicio/$',
+        InicioView.as_view(),
+        name='inicio'),
+    url(
         r'^prestamos/$',
         PrestamosView.as_view(),
         name='prestamos'),

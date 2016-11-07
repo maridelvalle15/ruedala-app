@@ -14,6 +14,10 @@ from django.template import Context
 from django.shortcuts import render
 
 
+class InicioView(TemplateView, LoginRequiredMixin):
+    template_name = 'reportes/inicio.html'
+
+
 ##########################################################
 #################### PRESTAMOS ###########################
 ##########################################################

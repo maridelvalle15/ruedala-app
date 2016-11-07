@@ -55,10 +55,6 @@ urlpatterns = patterns(
         'ruedalaSessions.views.generate_key',
         name='generate_key'),
     url(
-        r'^register/$',
-        'ruedalaSessions.views.user_registration',
-        name='register'),
-    url(
         r'^logout/$',
         'django.contrib.auth.views.logout',
         {

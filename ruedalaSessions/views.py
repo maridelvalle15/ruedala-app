@@ -25,100 +25,6 @@ from django.template.response import TemplateResponse
 from django.views.defaults import page_not_found
 
 
-def user_registration(request):
-    if request.user.is_authenticated():
-        # We obtain the user group by the user logged.
-        # Sellers will created by agents
-        # Agents will created by admins
-        if (request.user.groups.first().name == "corredor")\
-           or (request.user.groups.first().name == "admin"):
-            if request.method == 'POST':
-                if request.user.groups.first().name == "corredor":
-                    form = UserCreateForm(request.POST)
-                else:
-                    form = EjecutivoCreateForm(request.POST)
-
-                if form.is_valid():
-                    my_user = form.save()
-                    username = my_user.username
-                    email = form.cleaned_data['email']
-                    salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
-                    activation_key = hashlib.sha1(salt + email).hexdigest()
-                    key_expires = datetime.datetime.today() +\
-                        datetime.timedelta(2)
-                    user = User.objects.get(username=username)
-                    new_profile = UserProfile(user=user,
-                                              activation_key=activation_key,
-                                              key_expires=key_expires)
-                    new_profile.save()
-
-                    email_subject = 'Bienvenido(a) a CEMBI Venezuela'
-                    to = [email]
-                    link = 'http://' + request.get_host() + '/accounts/confirm/' + activation_key + '/' + str(user.pk)
-                    if user.first_name and user.last_name:
-                        iniciales = user.first_name[0] + user.last_name[0]
-                    else:
-                        iniciales = user.username[:2]
-                    ctx = {
-                        'user': user,
-                        'link': link,
-                        'iniciales': iniciales.upper(),
-                    }
-                    message = get_template('email_confirmation.html').render(Context(ctx))
-                    msg = EmailMessage(email_subject, message, to=to)
-                    msg.content_subtype = 'html'
-                    msg.send()
-                    # Add the user into the group: Seller or Agent.
-                    if request.user.groups.first().name == "admin":
-                        group = Group.objects.get(name='corredor')
-                        user.groups.add(group)
-                    else:
-                        group = Group.objects.get(name='vendedor')
-                        user.groups.add(group)
-
-                    # Add relationship Seller-Agent. If required.
-                    if group.name == "vendedor":
-                        new_relat = CorredorVendedor(corredor=request.user,
-                                                     vendedor=user)
-                        new_relat.save()
-                    if request.user.groups.first().name == "admin":
-                        datos_ejecutivo = DatosEjecutivo(user=user,
-                                                        direccion=form.cleaned_data['direccion'],
-                                                        tlf=form.cleaned_data['tlf'])
-                        datos_ejecutivo.save()
-                    return HttpResponseRedirect(
-                        reverse_lazy('login'))
-                else:
-                    if request.user.groups.first().name == "admin":
-                        context = {'form': form}
-                        return render_to_response(
-                            'reportes/registrar_banco.html', context,
-                            context_instance=RequestContext(request))
-                    else:
-                        context = {'form': form}
-                        return render_to_response(
-                            'register.html', context,
-                            context_instance=RequestContext(request))
-            else:
-                if request.user.groups.first().name == "admin":
-                    form = EjecutivoCreateForm()
-                    context = {'form': form}
-                    return render_to_response(
-                        'reportes/registrar_banco.html', context,
-                        context_instance=RequestContext(request))
-                else:
-                    form = UserCreateForm()
-                    context = {'form': form}
-                    return render_to_response(
-                        'register.html', context,
-                        context_instance=RequestContext(request))
-        else:
-            return HttpResponseRedirect(
-                reverse_lazy('vehiculo'))
-    else:
-        return HttpResponseRedirect(
-            reverse_lazy('login'))
-
 
 def authenticate_user(username=None, password=None):
         """ Authenticate a user based on email address as the user name. """
@@ -141,10 +47,10 @@ def login_request(request):
         if (len(user.groups.all()) != 0):
             if (user.groups.first().name == 'admin'):
                 return HttpResponseRedirect(
-                    reverse_lazy('prestamos'))
+                    reverse_lazy('inicio'))
             elif (user.groups.first().name == 'corredor'):
                 return HttpResponseRedirect(
-                    reverse_lazy('prestamos'))
+                    reverse_lazy('inicio'))
         else:
             return HttpResponseRedirect(
                 reverse_lazy('status-credito', kwargs={'pk': user.pk}))
@@ -165,14 +71,13 @@ def login_request(request):
                         if (len(user.groups.all()) != 0):
                             if (user.groups.first().name == 'admin'):
                                 return HttpResponseRedirect(
-                                    reverse_lazy('prestamos'))
+                                    reverse_lazy('inicio'))
                             elif (user.groups.first().name == 'corredor'):
                                 return HttpResponseRedirect(
-                                    reverse_lazy('prestamos'))
+                                    reverse_lazy('inicio'))
                         else:
                             return HttpResponseRedirect(
-                                reverse_lazy('status-credito',
-                                    kwargs={'pk': user.pk}))
+                                reverse_lazy('inicio'))
                     else:
                         form.add_error(
                             None, "Tu correo o contraseña no son correctos")
@@ -213,14 +118,14 @@ def editAccount(request):
 def register_confirm(request, activation_key):
 
     if request.user.is_authenticated():
-        return HttpResponseRedirect(reverse_lazy('vehiculo'))
+        return HttpResponseRedirect(reverse_lazy('inicio'))
 
     user_profile = get_object_or_404(UserProfile,
                                      activation_key=activation_key)
     user = user_profile.user
 
     if user.is_active:
-        return HttpResponseRedirect(reverse_lazy('vehiculo'))
+        return HttpResponseRedirect(reverse_lazy('inicio'))
 
     if user_profile.key_expires < timezone.now():
         return HttpResponseRedirect(reverse_lazy('generate_key',
@@ -234,7 +139,7 @@ def register_confirm(request, activation_key):
 def generate_key(request, pk):
 
     if request.user.is_authenticated():
-        HttpResponseRedirect(reverse_lazy('vehiculo'))
+        HttpResponseRedirect(reverse_lazy('inicio'))
 
     user = User.objects.get(pk=pk)
     UserProfile.objects.filter(user=user).delete()
@@ -310,7 +215,7 @@ class EditPassword(LoginRequiredMixin, generic.UpdateView):
     model = User
     form_class = UserPasswordEditForm
     context_object_name = "usuario"
-    success_url = 'vehiculo'
+    success_url = 'inicio'
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
