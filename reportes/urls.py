@@ -112,4 +112,8 @@ urlpatterns = patterns(
         r'^editar-historial-f/(?P<id>\d+)/$',
         'reportes.views.editar_historial',
         name='editar_historial_f'),
+    url(
+        r'^eliminar_bicicleta/(?P<id>\d+)/$',
+        'reportes.views.eliminar_bicicleta',
+        name='eliminar_bicicleta'),
 )

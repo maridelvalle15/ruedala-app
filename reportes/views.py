@@ -444,3 +444,11 @@ def editar_historial(request, id):
     historial.save()
 
     return HttpResponseRedirect(reverse_lazy('editar_historial', kwargs={'id': id}))
+
+
+@login_required
+def eliminar_bicicleta(request, id):
+    bicicleta = Bicicleta.objects.get(pk=id)
+    bicicleta.delete()
+
+    return HttpResponseRedirect(reverse_lazy('ver_bicicletas'))

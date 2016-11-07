@@ -68,30 +68,52 @@
             <div class="sidebar content-box" style="display: block;">
                 <ul class="nav">
                     <!-- Main menu -->
-                    <li>
-                      <a href="{% url 'prestamos' %}">
-                        <i class="fa fa-money"></i> <span>Préstamos</span>
-                      </a>
+                    <li class="submenu">
+                         <a href="">
+                          <i class="fa fa-money"></i> <span>Préstamos</span>
+                        </a>
+                         <!-- Sub menu -->
+                         <ul>
+                            <li><a href="{% url 'agregar-prestamo' %}"><i class="fa fa-plus"></i> Agregar Préstamo</a></li>
+                            <li><a href="{% url 'ver_prestamos' %}"><i class="fa fa-bars"></i> Registro Préstamos</a></li>
+                        </ul>
                     </li>
-                    <li>
-                      <a href="{% url 'biciescuela' %}">
+                    <li class="submenu">
+                         <a href="#">
                         <i class="fa fa-child"></i> <span>Biciescuela</span>
                       </a>
+                         <!-- Sub menu -->
+                         <ul>
+                            <li><a href="{% url 'agregar-biciescuela' %}"><i class="fa fa-plus"></i> Agregar Biciescuela</a></li>
+                            <li><a href="{% url 'ver_biciescuelas' %}"><i class="fa fa-bars"></i> Registro Biciescuelas</a></li>
+                        </ul>
                     </li>
                     <li>
                       <a href="{% url 'ver_usuarios' %}">
                         <i class="fa fa-users"></i> <span>Usuarios</span>
                       </a>
                     </li>
-                    <li>
-                      <a href="{% url 'carnetizacion' %}">
+                    <li class="submenu">
+                         <a href="#">
                         <i class="fa fa-credit-card"></i> <span>Carnetización</span>
                       </a>
+                         <!-- Sub menu -->
+                         <ul>
+                            <li><a href="{% url 'ver_carnets' 0 %}" style="color: red;"><i class="fa fa-folder-o"></i> Carnets sin empezar</a></li>
+                            <li><a href="{% url 'ver_carnets' 1 %}"><i class="fa fa-spinner"></i> Carnets en proceso</a></li>
+                            <li><a href="{% url 'ver_carnets' 2 %}" style="color: orange;"><i class="fa fa-check"></i> Carnets listos</a></li>
+                            <li><a href="{% url 'ver_carnets' 3 %}" style="color: green;"><i class="fa fa-credit-card"></i> Carnets entregados</a></li>
+                        </ul>
                     </li>
-                    <li>
-                      <a href="{% url 'registro_bicicletas' %}">
+                    <li class="submenu">
+                         <a href="{% url 'registro_bicicletas' %}">
                         <i class="fa fa-bicycle"></i> <span>Registro Bicicletas</span>
                       </a>
+                         <!-- Sub menu -->
+                         <ul>
+                            <li><a href="{% url 'agregar_bicicleta' %}"><i class="fa fa-plus"></i> Agregar Bicicleta</a></li>
+                            <li><a href="{% url 'ver_bicicletas' %}"><i class="fa fa-bars"></i> Registro Bicicletas</a></li>
+                        </ul>
                     </li>
                     <li>
                       <a href="{% url 'cargar_historial' %}">

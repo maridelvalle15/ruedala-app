@@ -32,6 +32,7 @@
                         <th>Modelo</th>
                         <th>Historial Mecánico</th>
                         <th></th>
+                        <th>Eliminar Bicicleta</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,6 +44,9 @@
                       <td> {{ bicicleta.modelo }}</td>
                       <td><a href="{% url 'crear_historial' bicicleta.pk %}">Crear nuevo historial</a></td>
                       <td><a href="{% url 'historial_bicicleta' bicicleta.pk %}">Ver historial</a></td>
+                      <td><a href="{% url 'eliminar_bicicleta' bicicleta.pk %}" style="color: red;">
+                      <i class="fa fa-close"></i> Eliminar
+                      </a></td>
 
                     </tr>
                 {% endfor %}
