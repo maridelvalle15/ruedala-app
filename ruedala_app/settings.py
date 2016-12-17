@@ -170,10 +170,8 @@ MEDIA_URL = '/media/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'app54185388@heroku.com'
-EMAIL_HOST_PASSWORD = 'yn6pwtdq2528'
+# EMAIL_HOST = ''
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = ''
+# EMAIL_HOST_PASSWORD = ''
 DEFAULT_FROM_EMAIL = 'CEMBI Venezuela <noreply@cembi-venezuela.com>'
-
-GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyB3vIO8-FSOpwFg0_jAVFeaH8OY1VBtOss'
