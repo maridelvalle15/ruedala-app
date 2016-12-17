@@ -58,6 +58,7 @@
                 <tfoot>
                 </tfoot>
               </table>
+                <a href="{% url 'descargar-biciescuelas' %}" style="color: black; font-size: 18px;">Descargar data</a>
             </div>
         </div>
     </div>
@@ -66,12 +67,11 @@
 
 {% block custom_script %}
 <script>
-    $(document).ready(function(){
-        $(function () {
-            $("#example1").DataTable();
-        });
-    });
+  $(document).ready(function(){
+      $(function () {
+          $("#example1").DataTable();
+      });
+  });
 </script>
-
 {% endblock custom_script %}
 

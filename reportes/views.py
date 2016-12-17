@@ -6,12 +6,14 @@ from reportes.forms import *
 from reportes.models import *
 import datetime
 from time import *
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse_lazy
 from django.template.loader import get_template
 from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.template import Context
 from django.shortcuts import render
+import csv
+import StringIO
 
 
 class InicioView(TemplateView, LoginRequiredMixin):
@@ -466,3 +468,199 @@ def eliminar_bicicleta(request, id):
     bicicleta.delete()
 
     return HttpResponseRedirect(reverse_lazy('ver_bicicletas'))
+
+
+@login_required
+def descargar_biciescuelas(request):
+    biciescuelas = Biciescuelas.objects.all()
+    # use a StringIO buffer rather than opening a file
+    output = StringIO.StringIO()
+    w = csv.writer(output)
+    w.writerow(['Nombre',
+                'Cédula/Carnet',
+                'Teléfono',
+                'Correo',
+                '¿Sabe manejar?',
+                'Aprobado',
+                '¿Pagó carnet?',
+                'Instructor',
+                'Fecha'])
+    for elem in biciescuelas:
+        nombre = elem.usuario.nombre + ' ' + elem.usuario.apellido
+        w.writerow([nombre,
+                   elem.usuario.identificacion,
+                   elem.usuario.telefono,
+                   elem.usuario.correo,
+                   elem.sabe_manejar,
+                   elem.aprobado,
+                   elem.pago_carnet,
+                   elem.instructor,
+                   elem.fecha])
+        # rewind the virtual file
+    output.seek(0)
+    return HttpResponse(output.read(),
+                        content_type='application/ms-excel')
+
+
+@login_required
+def descargar_prestamos(request):
+    biciescuelas = Prestamos.objects.all()
+    # use a StringIO buffer rather than opening a file
+    output = StringIO.StringIO()
+    w = csv.writer(output)
+    w.writerow(['Nombre',
+                'Cédula/Carnet',
+                'Teléfono',
+                'Hora Salida',
+                'Hora Estimada',
+                'Hora Llegada',
+                'Bicicleta',
+                'Tiempo de Uso',
+                '¿Pagó?',
+                'Bicipunto',
+                'Fecha'])
+    for elem in biciescuelas:
+        nombre = elem.usuario.nombre + ' ' + elem.usuario.apellido
+        w.writerow([nombre,
+                   elem.usuario.identificacion,
+                   elem.usuario.telefono,
+                   elem.hora_salida,
+                   elem.hora_estimada,
+                   elem.hora_llegada,
+                   elem.bicicleta,
+                   elem.tiempo_uso,
+                   elem.pagado,
+                   elem.bicipunto,
+                   elem.fecha])
+        # rewind the virtual file
+    output.seek(0)
+    return HttpResponse(output.read(),
+                        content_type='application/ms-excel')
+
+
+@login_required
+def descargar_carnets_listos(request):
+    biciescuelas = Carnet.objects.filter(status='Listo')
+    # use a StringIO buffer rather than opening a file
+    output = StringIO.StringIO()
+    w = csv.writer(output)
+    w.writerow(['Nombre',
+                'Cédula/Carnet',
+                'Teléfono',
+                'Correo',
+                'Fecha Biciescuela',
+                '¿Foto?',
+                'Status'])
+    for elem in biciescuelas:
+        nombre = elem.usuario.nombre + ' ' + elem.usuario.apellido
+        w.writerow([nombre,
+                   elem.usuario.identificacion,
+                   elem.usuario.telefono,
+                   elem.usuario.correo,
+                   elem.fecha_biciescuela,
+                   elem.foto,
+                   elem.status])
+        # rewind the virtual file
+    output.seek(0)
+    return HttpResponse(output.read(),
+                        content_type='application/ms-excel')
+
+
+@login_required
+def descargar_carnets_entregados(request):
+    biciescuelas = Carnet.objects.filter(status='Entregado')
+    # use a StringIO buffer rather than opening a file
+    output = StringIO.StringIO()
+    w = csv.writer(output)
+    w.writerow(['Nombre',
+                'Cédula/Carnet',
+                'Teléfono',
+                'Correo',
+                'Fecha Biciescuela',
+                '¿Foto?',
+                'Status',
+                'Fecha Entrega'])
+    for elem in biciescuelas:
+        nombre = elem.usuario.nombre + ' ' + elem.usuario.apellido
+        w.writerow([nombre,
+                   elem.usuario.identificacion,
+                   elem.usuario.telefono,
+                   elem.usuario.correo,
+                   elem.fecha_biciescuela,
+                   elem.foto,
+                   elem.status,
+                   elem.fecha_entrega])
+        # rewind the virtual file
+    output.seek(0)
+    return HttpResponse(output.read(),
+                        content_type='application/ms-excel')
+
+
+@login_required
+def descargar_bicicletas(request):
+    biciescuelas = Bicicleta.objects.all()
+    # use a StringIO buffer rather than opening a file
+    output = StringIO.StringIO()
+    w = csv.writer(output)
+    w.writerow(['Identificador',
+                'Rin',
+                'Cambios',
+                'Modelo'])
+    for elem in biciescuelas:
+        w.writerow([elem.identificador,
+                   elem.rin,
+                   elem.cambios,
+                   elem.modelo])
+        # rewind the virtual file
+    output.seek(0)
+    return HttpResponse(output.read(),
+                        content_type='application/ms-excel')
+
+
+@login_required
+def descargar_historial(request, id):
+    bici = Bicicleta.objects.get(pk=id)
+    biciescuelas = HistorialMecanico.objects.filter(bicicleta=bici)
+    # use a StringIO buffer rather than opening a file
+    output = StringIO.StringIO()
+    w = csv.writer(output)
+    w.writerow(['Reportado por',
+                'Fecha reporte',
+                'Reporte',
+                '¿Arreglado?',
+                'Fecha Arreglo'])
+    for elem in biciescuelas:
+        w.writerow([elem.reportado_por,
+                   elem.fecha_reporte,
+                   elem.reporte,
+                   elem.arreglado,
+                   elem.fecha_arreglo])
+        # rewind the virtual file
+    output.seek(0)
+    return HttpResponse(output.read(),
+                        content_type='application/ms-excel')
+
+
+@login_required
+def descargar_historial_general(request):
+    biciescuelas = HistorialMecanico.objects.all()
+    # use a StringIO buffer rather than opening a file
+    output = StringIO.StringIO()
+    w = csv.writer(output)
+    w.writerow(['Bicicleta',
+               'Reportado por',
+                'Fecha reporte',
+                'Reporte',
+                '¿Arreglado?',
+                'Fecha Arreglo'])
+    for elem in biciescuelas:
+        w.writerow([elem.bicicleta.identificador,
+                   elem.reportado_por,
+                   elem.fecha_reporte,
+                   elem.reporte,
+                   elem.arreglado,
+                   elem.fecha_arreglo])
+        # rewind the virtual file
+    output.seek(0)
+    return HttpResponse(output.read(),
+                        content_type='application/ms-excel')

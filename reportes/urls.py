@@ -120,4 +120,32 @@ urlpatterns = patterns(
         r'^eliminar_bicicleta/(?P<id>\d+)/$',
         'reportes.views.eliminar_bicicleta',
         name='eliminar_bicicleta'),
+    url(
+        r'^descargar-biciescuelas/$',
+        'reportes.views.descargar_biciescuelas',
+        name='descargar-biciescuelas'),
+    url(
+        r'^descargar-prestamos/$',
+        'reportes.views.descargar_prestamos',
+        name='descargar-prestamos'),
+    url(
+        r'^descargar-carnets-listos/$',
+        'reportes.views.descargar_carnets_listos',
+        name='descargar-carnets-listos'),
+    url(
+        r'^descargar-carnets-entregados/$',
+        'reportes.views.descargar_carnets_entregados',
+        name='descargar-carnets-entregados'),
+    url(
+        r'^descargar-bicicletas/$',
+        'reportes.views.descargar_bicicletas',
+        name='descargar-bicicletas'),
+    url(
+        r'^descargar-historial/(?P<id>\d+)/$',
+        'reportes.views.descargar_historial',
+        name='descargar-historial'),
+    url(
+        r'^descargar-historial-general/$',
+        'reportes.views.descargar_historial_general',
+        name='descargar-historial-general'),
 )
